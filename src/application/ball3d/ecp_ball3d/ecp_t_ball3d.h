@@ -1,0 +1,25 @@
+#if !defined(_ECP_T_BALL3D_H)
+#define _ECP_T_BALL3D_H
+
+#include "base/ecp/ecp_task.h"
+
+namespace mrrocpp {
+namespace ecp {
+namespace common {
+namespace task {
+
+class ball3d : public common::task::task
+{
+public:
+	ball3d(lib::configurator &_config);
+};
+
+}
+} // namespace irp6ot
+} // namespace ecp
+} // namespace mrrocpp
+
+#endif
+
+// 
+// chcę mieć wektor metod na obiekty, tak, żebym mógł sobie wywoływać
