@@ -75,6 +75,32 @@ bool ball3d::first_step()
 	
 	log = boost::shared_ptr <logger_client>(new logger_client(500, "localhost", 7000, "np_0_0;np_0_1;np_0_2;np_0_3;np_1_0;np_1_1;np_1_2;np_1_3;np_2_0;np_2_1;np_2_2;np_2_3","lukaszowe"));
  	log->set_connect();
+	
+	
+	counter=0;
+ 	int step_no=10;
+
+	lib::Homog_matrix tool_frame(0.0, 0.0, 0.0);
+	the_robot->ecp_command.robot_model.tool_frame_def.tool_frame = tool_frame;
+
+	the_robot->ecp_command.instruction_type = lib::GET;
+	the_robot->ecp_command.get_type = ARM_DEFINITION; // arm - ORYGINAL
+	the_robot->ecp_command.set_type = ARM_DEFINITION | ROBOT_MODEL_DEFINITION;
+	//	the_robot->ecp_command.set_type = ARM_DEFINITION;
+	the_robot->ecp_command.robot_model.type = lib::TOOL_FRAME;
+	the_robot->ecp_command.get_robot_model_type = lib::TOOL_FRAME;
+	the_robot->ecp_command.set_arm_type = lib::PF_VELOCITY;
+//	the_robot->ecp_command.get_arm_type = lib::FRAME;
+	the_robot->ecp_command.motion_type = lib::ABSOLUTE;
+	the_robot->ecp_command.interpolation_type = lib::TCIM;
+	the_robot->ecp_command.motion_steps = step_no;
+	the_robot->ecp_command.value_in_step_no = step_no - 2;
+	
+ 	for (int i = 0; i < 6; i++) 
+	{
+		the_robot->ecp_command.arm.pf_def.force_xyz_torque_xyz[i] = 0.5;
+	}
+  
 
 	return true;
 }
@@ -107,30 +133,6 @@ bool ball3d::next_step()
 void ball3d::make_circle()
 {
  
-	counter=0;
- 	int step_no=10;
-
-	lib::Homog_matrix tool_frame(0.0, 0.0, 0.0);
-	the_robot->ecp_command.robot_model.tool_frame_def.tool_frame = tool_frame;
-
-	the_robot->ecp_command.instruction_type = lib::GET;
-	the_robot->ecp_command.get_type = ARM_DEFINITION; // arm - ORYGINAL
-	the_robot->ecp_command.set_type = ARM_DEFINITION | ROBOT_MODEL_DEFINITION;
-	//	the_robot->ecp_command.set_type = ARM_DEFINITION;
-	the_robot->ecp_command.robot_model.type = lib::TOOL_FRAME;
-	the_robot->ecp_command.get_robot_model_type = lib::TOOL_FRAME;
-	the_robot->ecp_command.set_arm_type = lib::PF_VELOCITY;
-//	the_robot->ecp_command.get_arm_type = lib::FRAME;
-	the_robot->ecp_command.motion_type = lib::ABSOLUTE;
-	the_robot->ecp_command.interpolation_type = lib::TCIM;
-	the_robot->ecp_command.motion_steps = step_no;
-	the_robot->ecp_command.value_in_step_no = step_no - 2;
-	
- 	for (int i = 0; i < 6; i++) 
-	{
-		the_robot->ecp_command.arm.pf_def.force_xyz_torque_xyz[i] = 0.5;
-	}
-  
 	the_robot->ecp_command.arm.pf_def.arm_coordinates[0] = 0.2* (sin(counter*3.14/50)); 
 	the_robot->ecp_command.arm.pf_def.arm_coordinates[1] = 0.2* (cos(counter*3.14/50)); // -0.1 lewo dols
 	the_robot->ecp_command.arm.pf_def.arm_coordinates[2] = 0; //-0.1 prawo troche do gory
