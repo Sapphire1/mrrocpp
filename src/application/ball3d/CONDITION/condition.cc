@@ -1,8 +1,14 @@
+/*!
+ * @file condition.cc
+ * @brief File containing the implementation of setters and getters of switch_task class
+ * 
+ * @author Lukasz Zmuda
+ * @date 2012
+ */
+
+
 #include "condition.h"
 
-// 2 zmienne globalne
-///TODO
-///poprawic to!
 bool condition::any_begin_condition_met;
 bool condition::any_terminate_condition_met;
 

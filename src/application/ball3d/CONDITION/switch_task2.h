@@ -1,5 +1,13 @@
-#ifndef SWITCH_TASK2_H_
-#define SWITCH_TASK2_H_
+/*!
+ * @file switch_task.h
+ * @brief File containing the declaration of switch_task class
+ * 
+ * @author Lukasz Zmuda
+ * @date 2012
+ */
+
+#ifndef SWITCH_TASK_H_
+#define SWITCH_TASK_H_
 
 #include <vector>
 #include <iostream>
@@ -8,94 +16,113 @@
 #include "base/ecp/ecp_generator.h"
 #include "base/lib/mrmath/mrmath.h"
 
-/**
- *	@params wskaznik na obiekt klasy T, wektor wskaznikow na metody klasy T, wektor waunkow poczatkowych, wektor warunkow koncowych
- *	@autor lzmuda
- * 
- */
-
-
 namespace mrrocpp {
 namespace ecp {
 namespace common {
 namespace generator {
 
+/*!
+ * @brief Class is responsible for switching executing tasks of object T 
+ */
 template <class T>
 class switch_task2
 {
-public:
+ /*!
+ * @brief Flag indicate whether the method is active or not.
+ */
     bool terminate;
+/*!
+ * @brief Flag indicate whether the method is terminate or not.
+ */
     bool action;
-    int actual, toexec;
+ /*!
+ * @brief Counter to the current method.
+ */
+    int actual; 
+/*!
+ * @brief Numbers of methods to perform.
+ */
+    int toexec;
+ /*!
+ * @brief Object's pointer.
+ */
     T * g;
-    
-//  utworzenie wektora skladajacego sie ze wskaznikow do metod klasy T
+ /*!
+ * @brief Vector including pointers to object methods.
+ */
     typedef void (T::*Type)();
     std::vector<Type> wskz;
-
-//  tworzenie wektorow zawierajacych ograniczenia zaczynajace i konczace ruch
+ /*!
+ * @brief Vectors contains references to begin and terminate conditions.
+ */
     std::vector<boost::shared_ptr <begin_position_condition>> begin_conditions;
     std::vector<boost::shared_ptr <terminate_position_condition>> terminate_conditions;
-    
+public:
+ /*!
+ * @brief Constructor
+ * @param Pointer to an object of type T.
+ */
     switch_task2(T* gen)
     {
-        std::cout<<"Konstruktor switch_task2"<<std::endl;
+        std::cout<<"Konstruktor switch_task"<<std::endl;
         g=gen;
         actual=0;
     }
-    
+ /*!
+ * @brief Adding pointers to methods of class T.
+ * @param Pointer to an object of type T.
+ */
     void addMethod(Type ptr2Meth)
     {
       wskz.push_back(ptr2Meth);
     }
     
+/*!
+ * @brief Adding references to begin conditions.
+ * @param Reference to a begin position.
+ */
     void addBeginCondition(boost::shared_ptr <begin_position_condition> begptr)
     {
       begin_conditions.push_back(begptr);
     }
-    
+/*!
+ * @brief Adding references to terminate conditions.
+ * @param Reference to a terminate position.
+ */
     void addTerminateCondition(boost::shared_ptr <terminate_position_condition> terptr)
     {
       terminate_conditions.push_back(terptr);
     }
-    
+
+/*!
+ * @brief Method to perform all tasks
+ * @param Reference false when all tasks have been completed otherwise return true
+ */
     bool execute(lib::Xyz_Angle_Axis_vector & actual_position)
     {
        toexec=wskz.size();
-       
-//     zakoncz jesli wykonane zostaly wszystkie zadania
        if(actual>=toexec)
           return false;
-       std::cout<<"Switch_Task"<<std::endl;
        if(!action)
        {
- 	  std::cout<<"Begin Update!!!\n";
-//  	  sprawdzamy czy jest warunek i czy mozemy go egzekwowac
   	  action=begin_conditions[actual]->update(actual_position);
- 	  std::cout<<"Nie wykonuje zadnego zadania\n";
        }
        if(action)
        {
- 	 std::cout<<"Funkcja pracuje\n";
-// 	 wywolanie odpowiedniej metody
   	 (g->*wskz[actual])();
        }	
        if(!terminate)
        {
- 	  std::cout<<"Terminate Update!\n";
-//  	  sprawdzamy czy jest warunek i czy mozemy go egzekwowac
  	  terminate=terminate_conditions[actual]->update(actual_position);
        }
        if(terminate)
        {
- 	  std::cout<<"Terminate action\n";
   	  ++actual;
-// 	  resetuj flagi jesli kolejne zadanie zostalo zatrzymane
   	  action=false;
 	  terminate=false;
        }
        return true;
-}
+  }
 };
 
 } // namespace generator

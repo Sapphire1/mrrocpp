@@ -11,11 +11,6 @@
 using namespace logger;
 using namespace std;
 
-// w miejsce tych funkcji podstawic swoje wlasne
-
-// pamietac o tym, ze ja musze szybko niwelowac uchyb wiec dt=steps*time_of_step
-// gdzies bylo, ze time of step to 0.002 wiec podobny mam miec chyba dt
-// zeby od razu mi niwelowalo
 
 namespace mrrocpp {
 namespace ecp {

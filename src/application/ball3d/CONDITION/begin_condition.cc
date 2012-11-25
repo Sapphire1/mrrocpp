@@ -1,19 +1,28 @@
+/*!
+ * @file condition.h
+ * @brief File containing the declaration of switch_task class
+ * 
+ * @author Lukasz Zmuda
+ * @date 2012
+ */
+
+
 #include "begin_condition.h" 
 #include <iostream>
 
 bool begin_condition::check()
 {
-	if(get_any_begin_condition())						// begin 1->1
+	if(get_any_begin_condition())
 	{
 		std::cout<<"Some begin condition is active!!!\n";
 	}
-	else // trzeba sprawdzic czy terminate jest aktywna
+	else 
 	{
-		if(get_any_terminate_condition())				// begin 0->1 terminate 1
+		if(get_any_terminate_condition())
 		{
 			std::cout<<"Some terminate condition is active!!! This have no sense...\n";
 		}
-		else								// begin 0->1 terminate 0
+		else
 		{
 			std::cout<<"Active begin condition!\n";
  			set_any_begin_condition(true);
