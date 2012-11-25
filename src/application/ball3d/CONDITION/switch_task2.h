@@ -9,8 +9,8 @@
 #include "base/lib/mrmath/mrmath.h"
 
 /**
- *	@params wektor wskaznikow na metody klasy T, wektor waunkow poczatkowych, wektor warunkow koncowych
- *		 
+ *	@params wskaznik na obiekt klasy T, wektor wskaznikow na metody klasy T, wektor waunkow poczatkowych, wektor warunkow koncowych
+ *	@autor lzmuda
  * 
  */
 
@@ -28,24 +28,41 @@ public:
     bool action;
     int actual, toexec;
     T * g;
+    
 //  utworzenie wektora skladajacego sie ze wskaznikow do metod klasy T
     typedef void (T::*Type)();
     std::vector<Type> wskz;
+
 //  tworzenie wektorow zawierajacych ograniczenia zaczynajace i konczace ruch
     std::vector<boost::shared_ptr <begin_position_condition>> begin_conditions;
     std::vector<boost::shared_ptr <terminate_position_condition>> terminate_conditions;
-    switch_task2(T* gen, const std::vector<Type> & wsk, std::vector<boost::shared_ptr <begin_position_condition>>  & refbegin_conditions, const std::vector<boost::shared_ptr <terminate_position_condition>> & refterminate_conditions)
+    
+    switch_task2(T* gen)
     {
         std::cout<<"Konstruktor switch_task2"<<std::endl;
         g=gen;
-        wskz=wsk;
-        begin_conditions=refbegin_conditions;
-        terminate_conditions=refterminate_conditions;
         actual=0;
-        toexec=wskz.size();
     }
+    
+    void addMethod(Type ptr2Meth)
+    {
+      wskz.push_back(ptr2Meth);
+    }
+    
+    void addBeginCondition(boost::shared_ptr <begin_position_condition> begptr)
+    {
+      begin_conditions.push_back(begptr);
+    }
+    
+    void addTerminateCondition(boost::shared_ptr <terminate_position_condition> terptr)
+    {
+      terminate_conditions.push_back(terptr);
+    }
+    
     bool execute(lib::Xyz_Angle_Axis_vector & actual_position)
     {
+       toexec=wskz.size();
+       
 //     zakoncz jesli wykonane zostaly wszystkie zadania
        if(actual>=toexec)
           return false;

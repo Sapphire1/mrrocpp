@@ -49,33 +49,31 @@ bool ball3d::first_step()
 	right_begin_limit[0]=1.6;
 	right_begin_limit[1]=1.8;
 	
-// 	roboczy koncowy obiekt do przelaczania zadan
-	wskazniki.push_back(&ball3d::move_left);
-	wskazniki.push_back(&ball3d::move_right);
-	
 	boost::shared_ptr <begin_position_condition> in_left=boost::shared_ptr<begin_position_condition>(new begin_position_condition(left_begin_limit));
 	boost::shared_ptr <begin_position_condition> in_right=in_right=boost::shared_ptr<begin_position_condition>(new begin_position_condition(right_begin_limit));
 	
-	
+// 	skorzystac tutaj z enum
 	int left_opt=1;
 	int right_opt=2;
+	
 	boost::shared_ptr <terminate_position_condition>  terminate_in_left=boost::shared_ptr<terminate_position_condition>(new terminate_position_condition(1.7, left_opt));
 	boost::shared_ptr <terminate_position_condition>  terminate_in_right=boost::shared_ptr<terminate_position_condition>(new terminate_position_condition(2.2,right_opt));
-	
-	std::vector<boost::shared_ptr <begin_position_condition>> bpc_vcr;
-	bpc_vcr.push_back(in_left);
- 	bpc_vcr.push_back(in_right);
-	
-	std::vector<boost::shared_ptr <terminate_position_condition>> tpc_vcr;
-	tpc_vcr.push_back(terminate_in_left);	
-	tpc_vcr.push_back(terminate_in_right);
-	
+		
 	// stworzenie obiektu przelaczajacego zadania
- 	sch_tsk2 = boost::shared_ptr<switch_task2<ball3d>>(new switch_task2<ball3d>(this, wskazniki, bpc_vcr,tpc_vcr));
+ 	sch_tsk2 = boost::shared_ptr<switch_task2<ball3d>>(new switch_task2<ball3d>(this/*, wskazniki, bpc_vcr,tpc_vcr*/));
+	
+	// Dodanie metod i warunkow do obiektu przelaczajacego zadania
+	sch_tsk2->addMethod(&ball3d::move_left);
+	sch_tsk2->addMethod(&ball3d::move_right);
+	
+	sch_tsk2->addBeginCondition(in_left);	
+	sch_tsk2->addBeginCondition(in_right);
+	
+	sch_tsk2->addTerminateCondition(terminate_in_left);
+	sch_tsk2->addTerminateCondition(terminate_in_right);
 	
 	log = boost::shared_ptr <logger_client>(new logger_client(500, "localhost", 7000, "np_0_0;np_0_1;np_0_2;np_0_3;np_1_0;np_1_1;np_1_2;np_1_3;np_2_0;np_2_1;np_2_2;np_2_3","lukaszowe"));
  	log->set_connect();
-	
 	
 	counter=0;
  	int step_no=10;
