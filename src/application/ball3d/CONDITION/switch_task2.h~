@@ -96,7 +96,7 @@ public:
 
 /*!
  * @brief Method to perform all tasks
- * @param Reference false when all tasks have been completed otherwise return true
+ * @param false when all tasks have been completed otherwise return true
  */
     bool execute(lib::Xyz_Angle_Axis_vector & actual_position)
     {
