@@ -1,0 +1,50 @@
+#include "ecp_t_ball3d.h"
+
+// generators to be register headers
+
+#include "../generator_ball3d/ecp_g_ball3d.h"
+// ecp_robots headers
+// #include "robot/irp6ot_m/ecp_r_irp6ot_m.h"
+#include "robot/irp6p_m/ecp_r_irp6p_m.h"
+// #include "generator/ecp/get_position/ecp_g_get_position.h"
+
+namespace mrrocpp {
+namespace ecp {
+namespace common {
+namespace task {
+
+ball3d::ball3d(lib::configurator &_config) : common::task::task(_config)
+{
+
+	if(config.robot_name == lib::irp6p_m::ROBOT_NAME) 
+	{
+		ecp_m_robot = (boost::shared_ptr <robot_t>) new irp6p_m::robot(*this);
+	} 
+	else 
+	{
+		throw std::runtime_error("Robot not supported");
+	}
+	// generator registration
+  	register_generator(new generator::ball3d(*this));
+	common::generator::get_position* gp;
+	sr_ecp_msg->message("gp->Move");
+// 	gp->Move();
+// 	gp = new common::generator::get_position(*this, lib::ECP_XYZ_ANGLE_AXIS, 6);
+// 	delete gp;
+	
+	sr_ecp_msg->message("ecp loaded");
+}
+}
+}
+namespace common {
+namespace task {
+
+task_base* return_created_ecp_task(lib::configurator &_config)
+{
+	return new common::task::ball3d(_config);
+}
+
+} // namespace task
+} // namespace common
+} // namespace ecp
+} // namespace mrrocpp
