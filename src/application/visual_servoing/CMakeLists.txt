@@ -12,7 +12,11 @@ add_library(visual_servoing
     visual_servo_regulator.cc
     visual_servo_regulator_p.cc
     visual_servo_regulator_pid.cc
-    
+
+# added by me ##################
+#    wrist_ib_eih_visual_servo.cc
+################################
+
     position_constraint.cc
     cubic_constraint.cc
     
