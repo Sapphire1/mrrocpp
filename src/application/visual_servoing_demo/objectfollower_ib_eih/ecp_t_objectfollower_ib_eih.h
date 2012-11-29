@@ -36,7 +36,7 @@ namespace task {
 class ecp_t_objectfollower_ib_eih: public mrrocpp::ecp::common::task::task
 {
 public:
-	ecp_t_objectfollower_ib_eih(mrrocpp::lib::configurator& configurator);
+ 	ecp_t_objectfollower_ib_eih(mrrocpp::lib::configurator& configurator);
 
 	void main_task_algorithm(void);
 
@@ -47,6 +47,7 @@ protected:
 	shared_ptr<visual_servo_regulator> reg;
 	shared_ptr<termination_condition> term_cond;
 };
+
 
 /** @} */
 
