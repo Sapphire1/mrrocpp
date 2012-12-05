@@ -236,12 +236,11 @@ void task_base::get_next_state(void)
 	bool next_state_received = false;
 
 	while (!next_state_received) {
-		while (!command.isFresh()) {
+		while (!command.isFresh())
+		{
 			ReceiveSingleMessage(true);
 		}
-
 		command.markAsUsed();
-
 		switch (mp_command.command)
 		{
 			case lib::NEXT_STATE:
