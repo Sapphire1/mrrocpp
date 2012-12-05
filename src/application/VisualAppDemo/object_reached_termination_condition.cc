@@ -52,12 +52,15 @@ bool object_reached_termination_condition::check(mrrocpp::ecp::common::generator
 
  		if (v_bhr->vs->is_object_visible() && linear_error.norm() <= max_linear_error
  				&& angular_error.norm() <= max_angular_error) {
+ 			std::cout<<"Set object_visible_and_error_small \n";
  			object_visible_and_error_small = true;
  		}
-
+///Sprawdzic czemu dopiero za 4-ta iteracja tu wchodzi
+ 		// odp. v_bhr->get_linear_acceleration() <= max_linear_accel
  	if (object_visible_and_error_small && v_bhr->get_linear_speed() <= max_linear_speed && v_bhr->get_angular_speed()
  			<= max_angular_speed && v_bhr->get_linear_acceleration() <= max_linear_accel
  			&& v_bhr->get_angular_acceleration() <= max_angular_accel) {
+ 		std::cout<<"Increment steps_delay\n";
  		steps_delay++;
  		if (steps_delay >= min_steps) {
  			position = v_bhr->get_current_position();
