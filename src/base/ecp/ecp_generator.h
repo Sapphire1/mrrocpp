@@ -83,7 +83,7 @@ public:
 template <typename ECP_ROBOT_T>
 class _generator : public generator_base
 {
-private:
+protected:
 	/**
 	 * @brief initiates Move method
 	 */
@@ -104,8 +104,6 @@ private:
 
 		ecp_t.set_ecp_reply(lib::ECP_ACKNOWLEDGE);
 	}
-
-protected:
 	/**
 	 * @brief ECP task object type
 	 */
