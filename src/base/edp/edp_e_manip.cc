@@ -34,6 +34,15 @@ bool manip_effector::compute_servo_joints_and_frame(void)
 
 	static int catch_nr = 0;
 
+	// poprzedni pomiar
+	static lib::Xyz_Angle_Axis_vector servo_prev_real_kartez_pos;
+
+	// poprzedni pomiar
+	static lib::Xyz_Angle_Axis_vector servo_prev_desired_kartez_pos;
+
+	// poprzedni pomiar
+	static lib::Xyz_Angle_Axis_vector servo_prev_real_kartez_vel;
+
 	// wyznaczenie nowych wartosci joints and frame dla obliczen w servo
 	try {
 
@@ -43,7 +52,11 @@ bool manip_effector::compute_servo_joints_and_frame(void)
 		get_current_kinematic_model()->i2e_transform(servo_current_joints, local_matrix);
 		// Pobranie wsp. zewnetrznych w ukladzie
 
+		lib::Xyz_Angle_Axis_vector servo_desired_kartez_vel; // by Y polozenie we wspolrzednych xyz_euler_zyz obliczane co krok servo   XXXXX
 		lib::Xyz_Angle_Axis_vector servo_real_kartez_pos; // by Y polozenie we wspolrzednych xyz_euler_zyz obliczane co krok servo   XXXXX
+		lib::Xyz_Angle_Axis_vector servo_real_kartez_vel; // by Y polozenie we wspolrzednych xyz_euler_zyz obliczane co krok servo   XXXXX
+		lib::Xyz_Angle_Axis_vector servo_real_kartez_acc; // by Y polozenie we wspolrzednych xyz_euler_zyz obliczane co krok servo   XXXXX
+
 		local_matrix.get_xyz_angle_axis(servo_real_kartez_pos);
 
 		//obliczanie zadanej pozycji koncowki wedlug aktualnego rozkazu przetwarzanego w servo
@@ -65,12 +78,22 @@ bool manip_effector::compute_servo_joints_and_frame(void)
 		lib::Xyz_Angle_Axis_vector servo_desired_kartez_pos; // by Y polozenie we wspolrzednych xyz_euler_zyz obliczane co krok servo   XXXXX
 		local_matrix.get_xyz_angle_axis(servo_desired_kartez_pos);
 
+		servo_real_kartez_vel = (servo_real_kartez_pos - servo_prev_real_kartez_pos) / (lib::EDP_STEP);
+		servo_real_kartez_acc = (servo_real_kartez_vel - servo_prev_real_kartez_vel) / (lib::EDP_STEP);
+		servo_desired_kartez_vel = (servo_desired_kartez_pos - servo_prev_desired_kartez_pos) / (lib::EDP_STEP);
+		servo_prev_real_kartez_pos = servo_real_kartez_pos;
+		servo_prev_real_kartez_vel = servo_real_kartez_vel;
+		servo_prev_desired_kartez_pos = servo_desired_kartez_pos;
+
 		// scope-locked reader data update
 		{
 			boost::mutex::scoped_lock lock(rb_obj->reader_mutex);
 
 			servo_real_kartez_pos.to_table(rb_obj->step_data.real_cartesian_position);
+			servo_real_kartez_vel.to_table(rb_obj->step_data.real_cartesian_vel);
+			servo_real_kartez_acc.to_table(rb_obj->step_data.real_cartesian_acc);
 			servo_desired_kartez_pos.to_table(rb_obj->step_data.desired_cartesian_position);
+			servo_desired_kartez_vel.to_table(rb_obj->step_data.desired_cartesian_vel);
 		}
 
 		// Obliczenie polozenia robota we wsp. zewnetrznych bez narzedzia.
@@ -314,7 +337,7 @@ void manip_effector::iterate_macrostep(const lib::JointArray & begining_joints, 
 	const uint16_t &ECP_value_in_step_no = instruction.value_in_step_no; // liczba krokow po ktorych bedzie wyslana odpowiedz do ECP o przewidywanym zakonczeniu ruchu
 	const lib::POSE_SPECIFICATION &set_arm_type = instruction.set_arm_type;
 
-	double force_xyz_torque_xyz[6]; // wartosci zadana sily
+	lib::Ft_v_vector desired_force_torque; // wartosci zadana sily
 	double inertia[6];
 	double reciprocal_damping[6];
 
@@ -332,22 +355,31 @@ void manip_effector::iterate_macrostep(const lib::JointArray & begining_joints, 
 			case lib::UNGUARDED_MOTION:
 				inertia[i] = 0.0;
 				reciprocal_damping[i] = 0.0; // the force influence is eliminated
-				force_xyz_torque_xyz[i] = instruction.arm.pf_def.force_xyz_torque_xyz[i];
+				desired_force_torque[i] = instruction.arm.pf_def.force_xyz_torque_xyz[i];
 				// inertia is not eleliminated
 				break;
 			case lib::GUARDED_MOTION:
 				inertia[i] = instruction.arm.pf_def.inertia[i];
 				reciprocal_damping[i] = instruction.arm.pf_def.reciprocal_damping[i];
-				force_xyz_torque_xyz[i] = 0.0; // the desired force is set to zero
+				desired_force_torque[i] = 0.0; // the desired force is set to zero
 				break;
 			case lib::CONTACT:
 				inertia[i] = instruction.arm.pf_def.inertia[i];
 				reciprocal_damping[i] = instruction.arm.pf_def.reciprocal_damping[i];
-				force_xyz_torque_xyz[i] = instruction.arm.pf_def.force_xyz_torque_xyz[i];
+				desired_force_torque[i] = instruction.arm.pf_def.force_xyz_torque_xyz[i];
 				break;
 			default:
 				break;
 		}
+	}
+
+	if (rb_obj) {
+		boost::mutex::scoped_lock lock(rb_obj->reader_mutex);
+
+		desired_force_torque.to_table(rb_obj->step_data.desired_force);
+
+	} else {
+		//	std::cerr << " " << std::endl;
 	}
 
 	const unsigned long PREVIOUS_MOVE_VECTOR_NULL_STEP_VALUE = 10;
@@ -425,7 +457,7 @@ void manip_effector::iterate_macrostep(const lib::JointArray & begining_joints, 
 			}
 
 			// PRAWO STEROWANIA
-			move_rot_vector[i] = ((reciprocal_damping[i] * (force_xyz_torque_xyz[i] - current_force_torque[i])
+			move_rot_vector[i] = ((reciprocal_damping[i] * (desired_force_torque[i] - current_force_torque[i])
 					+ pos_xyz_rot_xyz_vector[i]) * lib::EDP_STEP * lib::EDP_STEP
 					+ reciprocal_damping[i] * inertia[i] * previous_move_rot_vector[i])
 					/ (lib::EDP_STEP + reciprocal_damping[i] * inertia[i]);
