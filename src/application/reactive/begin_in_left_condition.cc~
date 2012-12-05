@@ -1,0 +1,34 @@
+#include "begin_in_left_condition.h"
+#include "behaviour.h"
+namespace mrrocpp {
+namespace ecp {
+namespace common {
+namespace generator {
+
+
+begin_position_condition::begin_position_condition(std::vector<double>  & a)
+{
+  limitation=a;
+}
+// ta do wyrzucenia
+bool begin_position_condition::check(const boost::shared_ptr<mrrocpp::ecp::common::generator::behaviour> & bh)
+{
+      return true;
+}
+
+bool  begin_position_condition::check(const mrrocpp::ecp::common::generator::behaviour& bh)const
+{
+
+  return true;
+  
+}
+// ta bedzie wykorzystywana
+
+
+} // namespace generator
+
+} // namespace common
+
+} // namespace ecp
+
+} // namespace mrrocpp

@@ -61,7 +61,9 @@ bool object_reached_termination_condition::check(mrrocpp::ecp::common::generator
  		steps_delay++;
  		if (steps_delay >= min_steps) {
  			position = v_bhr->get_current_position();
+ 			std::cout<<"Object reached terminate condition\n";
  			return true;
+ 			//return false;
  		}
  	} else {
  		steps_delay = 0;

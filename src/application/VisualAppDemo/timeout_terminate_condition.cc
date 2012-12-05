@@ -35,6 +35,7 @@ void timeout_terminate_condition::reset()
 bool timeout_terminate_condition::check(mrrocpp::ecp::common::generator::behaviour * bh)
 {
 	if (get_time_s() - start_time >= timeout) {
+		std::cout<<"Timeout terminate_condition\n";
 		return true;
 	}
 	return false;

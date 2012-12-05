@@ -98,12 +98,13 @@ bool visual_behaviour::first_step()
  	angular_acceleration.setZero();
  	vs->reset();
  
-	log_dbg("visual_servo_manager::first_step() end\n"); 
+	log_dbg("visual_behaviour::first_step() end\n");
 	return true;
 }
 
 bool visual_behaviour::next_step()
 {
+	std::cout<<"visual_behaviour::next_step\n";
  	if (!current_position_saved) { // save first position
  		current_position = the_robot->reply_package.arm.pf_def.arm_frame;
  		current_position_saved = true;
@@ -158,7 +159,8 @@ bool visual_behaviour::next_step()
  	if (log_client.get() != NULL) {
  		log_client->log(msg);
 	}
-	return /*!any_condition_met;*/false;
+ 	log_dbg("visual_behaviour::next_step() end\n");
+	return /*!any_condition_met;*/true;
 }
  // next_step()
  void visual_behaviour::constrain_position(lib::Homog_matrix & new_position)

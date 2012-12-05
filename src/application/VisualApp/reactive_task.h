@@ -65,22 +65,26 @@ void reactive_task::main_task_algorithm(void)
 {
 	while (1) 
 	{
+	  // to moze byc wykonane tyklo raz!
 	  get_next_state();
 // 	  for every behaviour
-	  std::cout<<"main_task_algorithm\n";
-	  for ( it=bh_map.begin() ; it != bh_map.end(); it++ )
+	  while(1)
 	  {
-		  //	for every begin condition
-		  for(int i=0; i<(*it).second->begin_conditions.size(); i++)
+		  std::cout<<"main_task_algorithm\n";
+		  for ( it=bh_map.begin() ; it != bh_map.end(); it++ )
 		  {
-			  if((*it).second->begin_conditions[i]->check((*it).second)==true)
+			  //	for every begin condition
+			  for(int i=0; i<(*it).second->begin_conditions.size(); i++)
 			  {
-				  std::cout<<"move()\n";
-				  (*it).second->Move();
-				  (*it).second->begin_conditions[i]->reset();
-			  }
+				  if((*it).second->begin_conditions[i]->check((*it).second)==true)
+				  {
+					  std::cout<<"move()\n";
+					  (*it).second->Move();
+					  (*it).second->begin_conditions[i]->reset();
+				  }
+			  }//for
 		  }//for
-	  }//for
+	  }//while
 
 	}//while
 	
