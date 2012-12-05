@@ -8,6 +8,7 @@
 #ifndef REACTIVE_TASK_H_
 #define REACTIVE_TASK_H_
 
+#include "application/visual_servoing_demo/ecp_mp_g_visual_servo_tester.h"
 #include <boost/shared_ptr.hpp>
 #include "base/ecp/ecp_task.h"
 #include "robot/irp6p_m/ecp_r_irp6p_m.h"
@@ -63,30 +64,28 @@ void reactive_task::add_behaviour(int prior, behaviour* bh)
 
 void reactive_task::main_task_algorithm(void)
 {
-	while (1) 
-	{
-	  // to moze byc wykonane tyklo raz!
 	  get_next_state();
-// 	  for every behaviour
-	  while(1)
+	  if (mp_2_ecp_next_state_string == mrrocpp::ecp_mp::generator::ECP_GEN_VISUAL_SERVO_TEST)
 	  {
-		  std::cout<<"main_task_algorithm\n";
-		  for ( it=bh_map.begin() ; it != bh_map.end(); it++ )
+		  while(1)
 		  {
-			  //	for every begin condition
-			  for(int i=0; i<(*it).second->begin_conditions.size(); i++)
+			  std::cout<<"main_task_algorithm\n";
+			  // 	  for every behaviour
+			  for ( it=bh_map.begin() ; it != bh_map.end(); it++ )
 			  {
-				  if((*it).second->begin_conditions[i]->check((*it).second)==true)
+				  //	for every begin condition
+				  for(int i=0; i<(*it).second->begin_conditions.size(); i++)
 				  {
-					  std::cout<<"move()\n";
-					  (*it).second->Move();
-					  (*it).second->begin_conditions[i]->reset();
-				  }
+					  if((*it).second->begin_conditions[i]->check((*it).second)==true)
+					  {
+						  std::cout<<"move()\n";
+						  (*it).second->Move();
+						  (*it).second->begin_conditions[i]->reset();
+					  }
+				  }//for
 			  }//for
-		  }//for
-	  }//while
-
-	}//while
+		  	}//while
+	  }//if
 	
 	termination_notice();
 }

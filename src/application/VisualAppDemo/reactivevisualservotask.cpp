@@ -47,7 +47,7 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 	 	obj_reach_ter_cond = boost::shared_ptr <terminate_condition>(new object_reached_termination_condition(configurator, config_section_name));
 	 	log_dbg("reactive_servo_task: 5\n");
 
-	 	time_ter_cond = boost::shared_ptr <terminate_condition>(new timeout_terminate_condition(5));
+	 	time_ter_cond = boost::shared_ptr <terminate_condition>(new timeout_terminate_condition(500));
 	 	log_dbg("reactive_servo_task: 6\n");
 
 	 	bgVisCond = boost::shared_ptr<begin_condition>(new begin_visible_condition());
