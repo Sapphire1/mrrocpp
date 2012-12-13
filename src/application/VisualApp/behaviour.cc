@@ -1,14 +1,12 @@
 /*!
- * @file
- * @brief 
+ * @file behaviour.cc
+ * @brief Implementation of behaviour class
  * @author lzmuda
- *
- * @ingroup generators
+ * @date 2012
  */
 
 #include "base/ecp/ecp_robot.h"
 #include "behaviour.h"
-using namespace logger;
 using namespace std;
 
 
@@ -20,23 +18,23 @@ namespace generator {
 void behaviour::Move()
 {
 	bool ex=true;
-	// Funkcja ruchu dla ECP
+	// Function of motion
 	move_init();
 	if (!first_step()) {
-		return; // Warunek koncowy spelniony w pierwszym kroku
+		return; // termination condtion is met
 	}
-		// realizacja ruchu
+		// implementation of motion
 	do {
 		if (ecp_t.peek_mp_message()) 
 		{
 			// END_MOTION received
 			break;
 		}
-			// zlecenie przygotowania danych przez czujniki
+			// order to prepare data for sensors
 		initiate_sensors_readings();
 			if (the_robot) 
 			{
-				// zlecenie ruchu SET oraz odczyt stanu robota GET
+				// set motion order and read the state of a robot-get order
 			if (!(ecp_t.continuous_coordination)) 
 			{
 				// for data ports purpose
@@ -48,26 +46,26 @@ void behaviour::Move()
 					the_robot->finalize_data_port_command();
 				}
 			}
-				// wykonanie kroku ruchu
+				// execution of step motion
 			if (the_robot->communicate_with_edp) 
 			{
 					execute_motion();
 					the_robot->get_reply();
 			}
 		}
-			// odczytanie danych z wszystkich czujnikow
+			// reading data from all sensors
 		get_sensors_readings();
 		node_counter++;
 		if (ecp_t.pulse_check()) 
 		{
 			set_trigger();
 		}
-		// for every terminate condition
+		// for every termination condition
 		for(int i=0; i<terminate_conditions.size(); i++)
-		{  
+		{  	// if condition is met then end Move method
 			if(terminate_conditions[i]->check(this)==true)
 			{
-				std::cout<<"Warunek koncowy spelniony!!!\n";
+				std::cout<<"Fulfilled termination condition!\n";
 				ex=false;
 				break;
 			}
@@ -78,7 +76,9 @@ void behaviour::Move()
 	ecp_t.command.markAsUsed();
 }
 
+  // constructor
   behaviour::behaviour(common::task::task& _ecp_task) :	common::generator::generator(_ecp_task){}
+
   void behaviour::add_begin_condition(boost::shared_ptr <begin_condition> & begptr)
   {
       begin_conditions.push_back(begptr);

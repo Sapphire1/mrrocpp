@@ -1,11 +1,9 @@
 /*!
- * @file condition.h
+ * @file begin_condition.h
  * @brief File containing the declaration of begin_condition class
- * 
- * @author Lukasz Zmuda
+ * @author lzmuda
  * @date 2012
  */
-
 
 #ifndef BEGIN_CONDITION_H_
 #define BEGIN_CONDITION_H_
@@ -21,9 +19,8 @@ namespace generator {
 
 
 /*!
- * @brief class for begin conditions 
+ * @brief class for begin condition
  */
-
 
 class begin_condition : public condition
 {

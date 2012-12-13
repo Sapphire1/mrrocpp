@@ -1,9 +1,10 @@
-/*
- * reactive_task.h
- *
- *  Created on: Dec 3 2012
- *      Author: lzmuda
- */
+/**
+  *  @file reactive_task.h
+  *  @brief Class contains reimplemented main_task_algorith method.
+  *  @date 2012
+  *  @author lzmuda
+  */
+
 
 #ifndef REACTIVE_TASK_H_
 #define REACTIVE_TASK_H_
@@ -21,47 +22,49 @@ using namespace mrrocpp::ecp::common::generator;
 using namespace mrrocpp::ecp::common::task;
 using boost::shared_ptr;
 using std::map;
+
 namespace mrrocpp {
-
 namespace ecp {
-
 namespace common {
-
 namespace task {
-
-/** @addtogroup servovision
- *  @{
- */
-
-/**
- *
- */
 
 class reactive_task: public task
 {
 public:
+	/*!
+	* @brief Constructor.
+	* @param mrrocpp::lib::configurator
+	*/
  	reactive_task(mrrocpp::lib::configurator& configurator);
-
+ 	/*!
+ 	* @brief The method sorts all behaviours by the priority, then checks all behaviours, if it can to be execute,
+ 	* starting from this one with the highest priority.
+ 	*/
 	void main_task_algorithm(void);
+	/*!
+	* @brief virtual destructor
+	*/
 	virtual ~reactive_task(){};
 
 protected:
+	//! map containing the behaviours and their priorities
  	map<const int, behaviour*> bh_map;
+ 	//! iterator to the map bh_map
  	map<const int, behaviour*>::iterator it;
+ 	/*!
+ 	* @brief The method is responsible for add bahaviours to the reactive_task object.
+ 	* @param priority
+ 	* @param pointer to behaviour
+ 	*/
  	void add_behaviour(int, behaviour*);
-
 };
 
-reactive_task::reactive_task(mrrocpp::lib::configurator& configurator) : common::task::task(configurator)
-{
-
-}
+reactive_task::reactive_task(mrrocpp::lib::configurator& configurator) : common::task::task(configurator){}
 
 void reactive_task::add_behaviour(int prior, behaviour* bh)
 {	
- 	bh_map.insert ( std::pair<char,behaviour*>(prior,bh));
+ 	bh_map.insert(std::pair<char,behaviour*>(prior,bh));
 }
-
 void reactive_task::main_task_algorithm(void)
 {
 	  get_next_state();
@@ -70,12 +73,12 @@ void reactive_task::main_task_algorithm(void)
 		  while(1)
 		  {
 			  std::cout<<"main_task_algorithm\n";
-			  // 	  for every behaviour
+			  // for every behaviour
 			  for ( it=bh_map.begin() ; it != bh_map.end(); it++ )
 			  {
-				  //	for every begin condition
+				  // for every begin condition
 				  for(int i=0; i<(*it).second->begin_conditions.size(); i++)
-				  {
+				  {	  // check if it can to be execute
 					  if((*it).second->begin_conditions[i]->check((*it).second)==true)
 					  {
 						  std::cout<<"move()\n";
@@ -84,20 +87,14 @@ void reactive_task::main_task_algorithm(void)
 					  }
 				  }//for
 			  }//for
-		  	}//while
+		  }//while
 	  }//if
-	
-	termination_notice();
+	  termination_notice();
 }
-
-/** @} */
 
 }//namespace task
-
 }
-
 }
-
 }
 
 #endif /* REACTIVE_TASK_H_ */
