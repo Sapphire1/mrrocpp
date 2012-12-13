@@ -65,7 +65,7 @@ void behaviour::Move()
 		// for every terminate condition
 		for(int i=0; i<terminate_conditions.size(); i++)
 		{  
-			if(terminate_conditions[i]->check(*this)==false)
+			if(terminate_conditions[i]->check(this)==false)
 			{
 				std::cout<<"Wychodze z main_task_algorithm!!!\n";
 				ex=false;

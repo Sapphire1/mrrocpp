@@ -36,8 +36,7 @@ public:
 	/*!
 	* @brief Check if condition can to be activated
 	*/
-	virtual bool check(const boost::shared_ptr<mrrocpp::ecp::common::generator::behaviour> &)=0;
-	virtual bool check(const mrrocpp::ecp::common::generator::behaviour &)const=0;
+	virtual bool check(mrrocpp::ecp::common::generator::behaviour *)=0;
 };
 
 } // namespace generator

@@ -10,19 +10,14 @@ begin_in_left_condition::begin_in_left_condition(std::vector<double>  & a)
 {
   limitation=a;
 }
-// ta do wyrzucenia
-bool begin_in_left_condition::check(const boost::shared_ptr<mrrocpp::ecp::common::generator::behaviour> & bh)
-{
-      return true;
-}
 
-bool  begin_in_left_condition::check(const mrrocpp::ecp::common::generator::behaviour& bh)const
+
+bool  begin_in_left_condition::check(mrrocpp::ecp::common::generator::behaviour* bh)
 {
 
   return true;
   
 }
-// ta bedzie wykorzystywana
 
 
 } // namespace generator

@@ -18,8 +18,7 @@ public:
 	begin_in_left_condition(){};
 	begin_in_left_condition(std::vector<double> &);
 	~begin_in_left_condition(){};
-	bool check(const boost::shared_ptr<mrrocpp::ecp::common::generator::behaviour> &);
-	bool check(const mrrocpp::ecp::common::generator::behaviour &)const;
+	bool check(mrrocpp::ecp::common::generator::behaviour *);
 };
 
 } // namespace generator

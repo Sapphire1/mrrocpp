@@ -37,9 +37,9 @@ reactive_position_task::reactive_position_task(mrrocpp::lib::configurator & conf
 	{
 		throw std::runtime_error("Robot not supported");
 	}
- 		/// create_behaviour
-		bhv move_left=bhv(new in_left_behaviour(*this));
-  		bhv move_right=bhv(new in_right_behaviour(*this));
+ 		/// create_behaviour	
+		behaviour* move_left=new in_left_behaviour(*this);
+  		behaviour* move_right=new in_right_behaviour(*this);
 		///TODO
 		/// create_begin_cond
  		boost::shared_ptr<begin_condition> begLeftCod=boost::shared_ptr<begin_condition>(new begin_in_left_condition);

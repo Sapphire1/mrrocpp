@@ -35,7 +35,6 @@ namespace task {
 /**
  *
  */
-typedef boost::shared_ptr<behaviour> bhv;
 
 class reactive_task: public task
 {
@@ -46,9 +45,9 @@ public:
 	virtual ~reactive_task(){};
 
 protected:
- 	map<const int, bhv> bh_map;
-	map<const int, bhv>::iterator it;
- 	void add_behaviour(int, bhv &);
+ 	map<const int, behaviour*> bh_map;
+	map<const int, behaviour*>::iterator it;
+ 	void add_behaviour(int, behaviour*);
 
 };
 
@@ -59,9 +58,9 @@ reactive_task::reactive_task(mrrocpp::lib::configurator& configurator) : common:
 	
 }
 
-void reactive_task::add_behaviour(int prior, bhv & bh)
+void reactive_task::add_behaviour(int prior, behaviour * bh)
 {	
- 	bh_map.insert ( std::pair<char,bhv>(prior,bh));
+ 	bh_map.insert ( std::pair<char,behaviour*>(prior,bh));
 }
 
 void reactive_task::main_task_algorithm(void)
