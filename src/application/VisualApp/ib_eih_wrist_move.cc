@@ -1,13 +1,13 @@
 
 
-/*
- * ib_eih_visual_servo.cc
+/**
+ *  @file ib_eih_wrist_move.cc
  *
- *  Created on: Apr 21, 2010
- *      Author: mboryn
+ *  @date 2012
+ *  @lzmuda
  */
 
-#include "ib_eih_visual_servo.h"
+#include "ib_eih_wrist_move.h"
 #include "base/lib/logger.h"
 
 #include <iostream>
@@ -23,7 +23,7 @@ namespace ecp {
 
 namespace servovision {
 
-ib_eih_visual_servo::ib_eih_visual_servo(boost::shared_ptr <visual_servo_regulator> regulator, boost::shared_ptr <
+ib_eih_wrist_move::ib_eih_wrist_move(boost::shared_ptr <visual_servo_regulator> regulator, boost::shared_ptr <
                 mrrocpp::ecp_mp::sensor::discode::discode_sensor> sensor, const std::string & section_name, mrrocpp::lib::configurator& configurator) :
         visual_servo(regulator, sensor, section_name, configurator)
 {
@@ -37,11 +37,11 @@ ib_eih_visual_servo::ib_eih_visual_servo(boost::shared_ptr <visual_servo_regulat
         reading.objectVisible = false;
 }
 
-ib_eih_visual_servo::~ib_eih_visual_servo()
+ib_eih_wrist_move::~ib_eih_wrist_move()
 {
 }
 
-lib::Homog_matrix ib_eih_visual_servo::compute_position_change(const lib::Homog_matrix& current_position, double dt)
+lib::Homog_matrix ib_eih_wrist_move::compute_position_change(const lib::Homog_matrix& current_position, double dt)
 {
         log_dbg("ib_eih_visual_servo::compute_position_change() begin\n");
 
@@ -65,7 +65,7 @@ lib::Homog_matrix ib_eih_visual_servo::compute_position_change(const lib::Homog_
         log_dbg("ib_eih_visual_servo::get_position_change() control: [%+07.3lg; %+07.3lg; %+07.3lg; %+07.3lg]\n", control(0, 0), control(1, 0), control(2, 0), control(3, 0));
 
         Eigen::Matrix <double, 3, 1> camera_to_object_translation;
-        camera_to_object_translation(0, 0) = 0;//control(0, 0);
+        camera_to_object_translation(0, 0) = -0.0002;//control(0, 0);
         camera_to_object_translation(1, 0) = 0;//control(1, 0);
         camera_to_object_translation(2, 0) = 0;//control(2, 0);
 
@@ -85,13 +85,13 @@ lib::Homog_matrix ib_eih_visual_servo::compute_position_change(const lib::Homog_
         return delta_position;
 }
 
-bool ib_eih_visual_servo::is_object_visible_in_latest_reading()
+bool ib_eih_wrist_move::is_object_visible_in_latest_reading()
 {
         log_dbg("ib_eih_visual_servo::is_object_visible_in_latest_reading()\n");
         return reading.objectVisible;
 }
 
-void ib_eih_visual_servo::retrieve_reading()
+void ib_eih_wrist_move::retrieve_reading()
 {
         try {
                 //              log_dbg("pb_visual_servo::retrieve_reading()\n");
@@ -104,17 +104,17 @@ void ib_eih_visual_servo::retrieve_reading()
         }
 }
 
-void ib_eih_visual_servo::predict_reading()
+void ib_eih_wrist_move::predict_reading()
 {
 
 }
 
-Types::Mrrocpp_Proxy::IBReading* ib_eih_visual_servo::get_reading()
+Types::Mrrocpp_Proxy::IBReading* ib_eih_wrist_move::get_reading()
 {
         return &reading;
 }
 
-void ib_eih_visual_servo::reset()
+void ib_eih_wrist_move::reset()
 {
         visual_servo::reset();
         reading.objectVisible = false;

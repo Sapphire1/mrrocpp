@@ -33,8 +33,7 @@ visual_behaviour::visual_behaviour(mrrocpp::ecp::common::task::task & ecp_task, 
 		     max_angular_speed(0), max_acceleration(0), max_angular_acceleration(0)
 {
 	this->vs=vs;
- 		       new_motion_steps = motion_steps = motion_steps_base
- 			= ecp_task.config.exists("motion_steps", section_name) ? ecp_task.config.value <unsigned int> ("motion_steps", section_name) : motion_steps_default;
+	new_motion_steps = motion_steps = motion_steps_base = ecp_task.config.exists("motion_steps", section_name) ? ecp_task.config.value <unsigned int> ("motion_steps", section_name) : motion_steps_default;
  
  	dt = motion_steps * step_time;
  

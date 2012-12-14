@@ -13,6 +13,7 @@
 #include "../VisualApp/reactive_task.h"
 #include "visual_behaviour.h"
 #include "../VisualApp/ib_eih_visual_servo.h"
+#include "../VisualApp/ib_eih_wrist_move.h"
 #include "../VisualApp/visual_servo_regulator_p.h"
 #include "object_reached_termination_condition.h"
 #include "timeout_terminate_condition.h"
@@ -30,9 +31,11 @@ class reactive_visual_servo_task : public reactive_task
 {
 private:
 	visual_behaviour* v_bhr;
+	visual_behaviour* v_bhr2;
 	boost::shared_ptr<visual_servo_regulator> reg;
 	boost::shared_ptr<mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds;
 	boost::shared_ptr<visual_servo> vs;
+	boost::shared_ptr<visual_servo> wrist_vs;
 	boost::shared_ptr<terminate_condition> obj_reach_ter_cond;
 	boost::shared_ptr<terminate_condition> time_ter_cond;
 	boost::shared_ptr<begin_condition> bgVisCond;

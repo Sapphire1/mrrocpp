@@ -39,11 +39,12 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 	 	ds = boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor>(new mrrocpp::ecp_mp::sensor::discode::discode_sensor(configurator, config_section_name));
 	 	log_dbg("reactive_servo_task: 3\n");
 
-	 	vs = shared_ptr <visual_servo> (new ib_eih_visual_servo(reg, ds, config_section_name, configurator));
-	 	log_dbg("reactive_servo_task: 4\n");
-
-	 	v_bhr= new visual_behaviour(*this, config_section_name, vs);
-
+	 //	vs = shared_ptr <visual_servo> (new ib_eih_visual_servo(reg, ds, config_section_name, configurator));
+	 //	log_dbg("reactive_servo_task: 4\n");
+	 	wrist_vs = shared_ptr <visual_servo> (new ib_eih_wrist_move(reg, ds, config_section_name, configurator));
+	 	log_dbg("reactive_servo_task: 4.5\n");
+	 	//v_bhr= new visual_behaviour(*this, config_section_name, vs);
+	 	v_bhr2= new visual_behaviour(*this, config_section_name, wrist_vs);
 	 	obj_reach_ter_cond = boost::shared_ptr <terminate_condition>(new object_reached_termination_condition(configurator, config_section_name));
 	 	log_dbg("reactive_servo_task: 5\n");
 
@@ -52,13 +53,19 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 
 	 	bgVisCond = boost::shared_ptr<begin_condition>(new begin_visible_condition());
 
-		v_bhr->add_begin_condition(bgVisCond);
-		v_bhr->add_terminate_condition(obj_reach_ter_cond);
-		v_bhr->add_terminate_condition(time_ter_cond);
-		v_bhr->configure();
+		//v_bhr->add_begin_condition(bgVisCond);
+	 	//v_bhr->add_terminate_condition(obj_reach_ter_cond);
+		//v_bhr->add_terminate_condition(time_ter_cond);
+		//v_bhr->configure();
+
+		v_bhr2->add_begin_condition(bgVisCond);
+		v_bhr2->add_terminate_condition(obj_reach_ter_cond);
+		v_bhr2->configure();
+
+
 		log_dbg("reactive_servo_task: 7\n");
 
-		add_behaviour(1, v_bhr);
+		add_behaviour(1, v_bhr2);
 	}
 	catch(std::exception& ex)
 	{
@@ -70,7 +77,8 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 reactive_visual_servo_task::~reactive_visual_servo_task()
 {
 	// remove pointer
-	delete v_bhr;
+//	delete v_bhr;
+	delete v_bhr2;
 }
 
 task_base* return_created_ecp_task(lib::configurator &config)

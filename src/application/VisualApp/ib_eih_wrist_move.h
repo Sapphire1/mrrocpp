@@ -1,12 +1,12 @@
-/*
- * ib_eih_visual_servo.h
+/**
+ * ib_eih_wrist_move.h
  *
- *  Created on: Apr 21, 2010
- *      Author: mboryn
+ *  @date 2012
+ * 	@author lzmuda
  */
 
-#ifndef IB_EIH_VISUAL_SERVO_H_
-#define IB_EIH_VISUAL_SERVO_H_
+#ifndef IB_EIH_WRIST_MOVE_H_
+#define IB_EIH_WRIST_MOVE_H_
 
 #include "visual_servo.h"
 #include "IBReading.h"
@@ -17,18 +17,12 @@ namespace ecp {
 
 namespace servovision {
 
-/** @addtogroup servovision
- *  @{
- */
 
-/**
- *
- */
-class ib_eih_visual_servo : public visual_servo
+class ib_eih_wrist_move : public visual_servo
 {
 public:
-	ib_eih_visual_servo(boost::shared_ptr <visual_servo_regulator> regulator, boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> sensor, const std::string & section_name, mrrocpp::lib::configurator& configurator);
-	virtual ~ib_eih_visual_servo();
+	ib_eih_wrist_move(boost::shared_ptr <visual_servo_regulator> regulator, boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> sensor, const std::string & section_name, mrrocpp::lib::configurator& configurator);
+	virtual ~ib_eih_wrist_move();
 
 	virtual Types::Mrrocpp_Proxy::IBReading* get_reading();
 
@@ -45,7 +39,6 @@ private:
 	Types::Mrrocpp_Proxy::IBReading reading;
 };
 
-/** @} */
 
 }//namespace generator
 
@@ -53,4 +46,4 @@ private:
 
 }
 
-#endif /* IB_EIH_VISUAL_SERVO_H_ */
+#endif /* IB_EIH_WRIST_MOVE_H_ */

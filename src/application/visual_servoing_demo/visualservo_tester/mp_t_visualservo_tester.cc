@@ -67,14 +67,14 @@ void visualservo_tester::main_task_algorithm(void)
 		sr_ecp_msg->message("Visual servo started.");
 		wait_for_task_termination(false, robot_name);
 
-// 		char txt[128];
-// 		sprintf(txt, "Waiting for settle down (%d s)", vs_settle_time);
-// 		sr_ecp_msg->message(txt);
-// 		for (int i = vs_settle_time; i > 0; --i) {
-// 			log("Waiting for VS to stabilize %-4d   \r", i);
-// 			sleep(1);
-// 		}
-// 		log("\n");
+ 		char txt[128];
+ 		sprintf(txt, "Waiting for settle down (%d s)", vs_settle_time);
+ 		sr_ecp_msg->message(txt);
+ 		for (int i = vs_settle_time; i > 0; --i) {
+ 			log("Waiting for VS to stabilize %-4d   \r", i);
+ 			sleep(1);
+ 		}
+ 		log("\n");
 	}
 
 // 	if (run_conveyor) {
@@ -85,7 +85,7 @@ void visualservo_tester::main_task_algorithm(void)
 // 		sr_ecp_msg->message("Conveyor started.");
 // 	}
 
-//	wait_for_task_termination(false, robot_name, lib::conveyor::ROBOT_NAME);
+	wait_for_task_termination(false, robot_name);
 
 	log("visualservo_tester::main_task_algorithm() 4\n");
 }
