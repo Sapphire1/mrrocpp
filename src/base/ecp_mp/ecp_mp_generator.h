@@ -40,7 +40,7 @@ protected:
 	 * @brief the reference to sr communication object in multi thread version
 	 */
 	lib::sr_ecp& sr_ecp_msg;
-
+public:
 	/**
 	 * @brief calls initiate reading method for sensor from sensor map
 	 */
@@ -51,7 +51,7 @@ protected:
 	 */
 	void get_sensors_readings();
 
-public:
+
 	/**
 	 * @brief Constructor
 	 * @param _sr_ecp_msg the reference to sr communication object in multi thread version

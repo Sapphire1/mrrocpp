@@ -121,8 +121,6 @@ void ib_eih_wrist_move::reset()
 }
 
 }//namespace generator
-
 }
-
 }
 

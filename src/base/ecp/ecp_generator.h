@@ -113,7 +113,7 @@ protected:
 	 * @brief ECP generator itself object type
 	 */
 	typedef _generator <ECP_ROBOT_T> generator_t;
-
+public:
 	/**
 	 * @brief communicates with EDP
 	 */
@@ -122,7 +122,7 @@ protected:
 		the_robot->execute_motion();
 	}
 
-public:
+
 	/**
 	 * @brief executed by dispatcher
 	 */

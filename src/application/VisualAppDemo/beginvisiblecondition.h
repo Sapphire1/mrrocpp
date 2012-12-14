@@ -9,6 +9,8 @@
 #define BEGINVISIBLECONDITION_H_
 
 #include "../VisualApp/begin_condition.h"
+#include "base/ecp/ecp_robot.h"
+#include "base/ecp/ecp_generator.h"
 
 namespace mrrocpp {
 namespace ecp {
@@ -29,4 +31,5 @@ public:
 } /* namespace common */
 } /* namespace ecp */
 } /* namespace mrrocpp */
+
 #endif /* BEGINVISIBLECONDITION_H_ */

@@ -30,29 +30,47 @@ void behaviour::Move()
 			// END_MOTION received
 			break;
 		}
-			// order to prepare data for sensors
+		// order to prepare data for sensors
 		initiate_sensors_readings();
-			if (the_robot) 
-			{
-				// set motion order and read the state of a robot-get order
-			if (!(ecp_t.continuous_coordination)) 
-			{
-				// for data ports purpose
-				the_robot->is_new_data = false;
-				the_robot->is_new_request = false;
-				the_robot->create_command();
-				if (the_robot->data_ports_used) 
-				{
-					the_robot->finalize_data_port_command();
+		if (the_robot)
+					{
+						// set motion order and read the state of a robot-get order
+					if (!(ecp_t.continuous_coordination))
+					{
+						// for data ports purpose
+						the_robot->is_new_data = false;
+						the_robot->is_new_request = false;
+						the_robot->create_command();
+						if (the_robot->data_ports_used)
+						{
+							the_robot->finalize_data_port_command();
+						}
+					}
+						// execution of step motion
+					if (the_robot->communicate_with_edp)
+					{
+							execute_motion();
+							the_robot->get_reply();
+					}
 				}
-			}
-				// execution of step motion
-			if (the_robot->communicate_with_edp) 
-			{
-					execute_motion();
-					the_robot->get_reply();
-			}
-		}
+		 ///////////////////////////
+		std::vector<double> current_positionn(6);
+		lib::Homog_matrix actual_position_matrix;
+		actual_position_matrix = the_robot->reply_package.arm.pf_def.arm_frame;
+		lib::Xyz_Angle_Axis_vector angle_axis_vector;
+		actual_position_matrix.get_xyz_angle_axis(angle_axis_vector);
+		angle_axis_vector.to_vector(current_positionn);
+		std::cout << current_positionn[0]<<"\t"<<
+		current_positionn[1]<<"\t"<<
+		current_positionn[2]<<"\n"<<
+		current_positionn[3]<<"\t"<<
+		current_positionn[4]<<"\t"<<
+		current_positionn[5]<<"\n";
+
+		  ////////////////////////////
+
+
+
 			// reading data from all sensors
 		get_sensors_readings();
 		node_counter++;
@@ -60,6 +78,7 @@ void behaviour::Move()
 		{
 			set_trigger();
 		}
+
 		// for every termination condition
 		for(int i=0; i<terminate_conditions.size(); i++)
 		{  	// if condition is met then end Move method

@@ -17,6 +17,7 @@
 #include "../VisualApp/visual_servo_regulator_p.h"
 #include "object_reached_termination_condition.h"
 #include "timeout_terminate_condition.h"
+#include "terminate_in_left_condition.h"
 #include "beginvisiblecondition.h"
 using namespace mrrocpp::ecp::servovision;
 namespace mrrocpp {
@@ -38,6 +39,7 @@ private:
 	boost::shared_ptr<visual_servo> wrist_vs;
 	boost::shared_ptr<terminate_condition> obj_reach_ter_cond;
 	boost::shared_ptr<terminate_condition> time_ter_cond;
+	boost::shared_ptr<terminate_condition> term_in_left;
 	boost::shared_ptr<begin_condition> bgVisCond;
 public:
 	reactive_visual_servo_task(mrrocpp::lib::configurator & configurator);
