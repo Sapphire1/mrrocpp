@@ -8,6 +8,7 @@ add_library(visual_servoing2
     cubic_constraint.cc
     behaviour.cc
     ib_eih_visual_servo.cc
+    ib_eih_wrist_move.cc
 )
 
 # link with discode_sensor
