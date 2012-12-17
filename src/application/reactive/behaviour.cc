@@ -67,7 +67,7 @@ void behaviour::Move()
 		{  
 			if(terminate_conditions[i]->check(this)==false)
 			{
-				std::cout<<"Wychodze z main_task_algorithm!!!\n";
+				std::cout<<"Termination condition is met!!!\n";
 				ex=false;
 				break;
 			}

@@ -19,7 +19,6 @@ bool terminate_in_left_condition::check(mrrocpp::ecp::common::generator::behavio
  	tool_vector.to_table(current_position);
  	if(current_position[1]<=1.8)
  	{
-		std::cout<<"Terminate Condition!!!\n";
  		return false;
  	}
 	return true;

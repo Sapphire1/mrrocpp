@@ -7,6 +7,7 @@ add_executable(reactive
     behaviour.cc
     in_left_behaviour.cc
     in_right_behaviour.cc
+    begin_behaviour.cc
     
 )
 

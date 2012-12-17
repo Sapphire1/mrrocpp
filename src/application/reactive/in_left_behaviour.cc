@@ -42,7 +42,7 @@ bool in_left_behaviour::next_step()
 	double nextChange[6];
 	the_robot->ecp_command.instruction_type = lib::SET_GET;
 	nextChange[0]=0;
-	nextChange[1]=-0.02;
+	nextChange[1]=0.02;
 	nextChange[2]=0;
 	nextChange[3]=0;
 	nextChange[4]=0;

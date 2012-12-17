@@ -65,29 +65,25 @@ void reactive_task::add_behaviour(int prior, behaviour * bh)
 
 void reactive_task::main_task_algorithm(void)
 {
-	while (1) 
-	{
 	  get_next_state();
-// 	  for every behaviour
-	  std::cout<<"main_task_algorithmn\n";
-	/*  if (mp_2_ecp_next_state_string == mrrocpp::ecp_mp::generator::ECP_BEH_REACT)
-	  { */ 
-	      for ( it=bh_map.begin() ; it != bh_map.end(); it++ )
-	      {
-// 	    	for every begin condition
-		for(int i=0; i<(*it).second->begin_conditions.size(); i++)
-		{  
-			if((*it).second->begin_conditions[i]->check((*it).second)==true)
-			{
-				std::cout<<"move()\n";
-				(*it).second->Move();
-			}
-		}//for
-	      }//for
-// 	  }//if
-	}//while
-	
-	termination_notice();
+	  while(1)
+	  {
+		  std::cout<<"main_task_algorithm\n";
+		  // for every behaviour
+		  for ( it=bh_map.begin() ; it != bh_map.end(); it++ )
+		  {
+			  // for every begin condition
+			  for(int i=0; i<(*it).second->begin_conditions.size(); i++)
+			  {	  // check if it can to be execute
+				  if((*it).second->begin_conditions[i]->check((*it).second)==true)
+				  {
+					  std::cout<<"move()\n";
+					  (*it).second->Move();
+				  }
+			  }//for
+		  }//for
+	  }//while
+	  termination_notice();
 }
 
 /** @} */

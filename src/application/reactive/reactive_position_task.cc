@@ -14,16 +14,14 @@
 #include "begin_in_right_condition.h"
 #include "terminate_in_left_condition.h" 
 #include "terminate_in_right_condition.h"
+#include "begin_behaviour.h"
 
 using namespace mrrocpp::ecp::common::generator;
 using namespace mrrocpp::ecp::common::task;
  
 namespace mrrocpp {
- 
 namespace ecp {
- 
 namespace common {
- 
 namespace task {
 
 reactive_position_task::reactive_position_task(mrrocpp::lib::configurator & configurator) : common::task::reactive_task(configurator)
@@ -51,15 +49,21 @@ reactive_position_task::reactive_position_task(mrrocpp::lib::configurator & conf
  		move_left->add_begin_condition(begLeftCod);
  		move_right->add_begin_condition(begRightCod);
  		/// behaviour->add_beg_cond
- 		move_left->add_terminate_condition(terRightCod);
- 		move_right->add_terminate_condition(terLeftCod);
+ 		move_left->add_terminate_condition(terLeftCod);
+ 		move_right->add_terminate_condition(terRightCod);
 		/// add_behaviour
- 		add_behaviour(1,move_left);
+
+ 		behaviour* begin_behav =new begin_behaviour(*this);
+ 		begin_behav->add_begin_condition(begLeftCod);
+ 	/*	add_behaviour(1,move_left);
  		add_behaviour(4,move_right);
 		add_behaviour(2,move_left);
  		add_behaviour(5,move_right);
 		add_behaviour(3,move_left);
  		add_behaviour(6,move_right);
+ 	*/
+
+ 		add_behaviour(1, begin_behav);
 	}
 	catch(std::exception& ex)
 	{
@@ -75,9 +79,6 @@ reactive_position_task::reactive_position_task(mrrocpp::lib::configurator & conf
  }
  
  } // namespace task
- 
  }//namespace common
- 
  }//namespace ecp
- 
  }//namespace mrrocpp

@@ -42,7 +42,7 @@ bool in_right_behaviour::next_step()
 	double nextChange[6];
 	the_robot->ecp_command.instruction_type = lib::SET_GET;
 	nextChange[0]=0;
-	nextChange[1]=0.02;
+	nextChange[1]=-0.02;
 	nextChange[2]=0;
 	nextChange[3]=0;
 	nextChange[4]=0;
@@ -60,8 +60,7 @@ bool in_right_behaviour::next_step()
 	lib::Ft_v_vector force_torque(the_robot->reply_package.arm.pf_def.force_xyz_torque_xyz);
 	std::cout<< "Next_STEP \n"<<std::endl;
 
-
-	 return true;
+	return true;
 }
 
 

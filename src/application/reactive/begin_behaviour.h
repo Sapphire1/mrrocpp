@@ -1,5 +1,5 @@
-#if !defined(_POSITION_BEHAVIOUR_H)
-#define _POSITION_BEHAVIOUR_H
+#if !defined(_BEGIN_BEHAVIOUR_H)
+#define _BEGIN_BEHAVIOUR_H
 
 /*!
  * @file
@@ -24,18 +24,18 @@ namespace generator {
  * @author
  * @ingroup generators
  */
-//  in_left_behaviour
-//  in_rigth_bahaviour
-class position_behaviour : public common::generator::behaviour
+
+class begin_behaviour : public common::generator::behaviour
 {
 public:
 	/**
 	 * @brief Constructor
 	 * @param _ecp_task ecp task object referencex.
 	 */
-	position_behaviour(common::task::task& _ecp_task);
-	~position_behaviour(){};
-
+	bool arm_stop;
+	begin_behaviour(common::task::task& _ecp_task);
+	~begin_behaviour(){};
+	int counter;
 	/**
 	 * @brief generates first step of transition function
 	 * @return 
