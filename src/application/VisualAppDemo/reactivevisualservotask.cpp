@@ -41,6 +41,8 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 
 	 //	vs = shared_ptr <visual_servo> (new ib_eih_visual_servo(reg, ds, config_section_name, configurator));
 	 //	log_dbg("reactive_servo_task: 4\n");
+	 	///TODO
+	 	// to wykonac w first_step w zachowaniu
 	 	wrist_vs = shared_ptr <visual_servo> (new ib_eih_wrist_move(reg, ds, config_section_name, configurator));
 	 	log_dbg("reactive_servo_task: 4.5\n");
 	 	//v_bhr= new visual_behaviour(*this, config_section_name, vs);
@@ -60,11 +62,8 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 
 		v_bhr2->add_begin_condition(bgVisCond);
 		v_bhr2->add_terminate_condition(term_in_left);
-		v_bhr2->configure();
-
-
+		// removed configure method!!!
 		log_dbg("reactive_servo_task: 7\n");
-
 		add_behaviour(1, v_bhr2);
 	}
 	catch(std::exception& ex)

@@ -22,7 +22,7 @@ bool terminate_in_left_condition::check(mrrocpp::ecp::common::generator::behavio
  			  current_position[3]<<"\t"<<
  			  current_position[4]<<"\t"<<
  			  current_position[5]<<"\n";
- 	if(current_position[1]<=2.00)
+ 	if(current_position[1]<=1.8)
  	{
 		std::cout<<"Terminate Condition in left!!!\n";
  		return true;

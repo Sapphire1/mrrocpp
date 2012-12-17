@@ -36,7 +36,7 @@ max_angular_speed(0), max_acceleration(0), max_angular_acceleration(0)
   new_motion_steps = motion_steps = motion_steps_base = ecp_task.config.exists("motion_steps", section_name) ? ecp_task.config.value <unsigned int> ("motion_steps", section_name) : motion_steps_default;
 
   dt = motion_steps * step_time;
- 
+
   max_speed = ecp_task.config.value <double> ("v_max", section_name);
   max_angular_speed = ecp_task.config.value <double> ("omega_max", section_name);
   max_acceleration = ecp_task.config.value <double> ("a_max", section_name);
@@ -68,6 +68,7 @@ visual_behaviour::~visual_behaviour()
 
 bool visual_behaviour::first_step()
 {
+  configure();
   new_motion_steps = motion_steps = motion_steps_base;
   value_in_step_no = motion_steps_base - 4;
  
@@ -105,9 +106,7 @@ return true;
 
 bool visual_behaviour::next_step()
 {
-	std::cout<<"visual_behaviour::next_step\n";
-
-
+  std::cout<<"visual_behaviour::next_step\n";
 
   if (!current_position_saved) { // save first position
   current_position = the_robot->reply_package.arm.pf_def.arm_frame;
@@ -137,13 +136,9 @@ bool visual_behaviour::next_step()
   current_position = next_position;
   // prepare command to EDP
   motion_steps = new_motion_steps;
- 
- // log_dbg("motion_steps = %d\n", motion_steps);
- 
   the_robot->ecp_command.instruction_type = lib::SET_GET;
   the_robot->ecp_command.arm.pf_def.arm_frame = next_position;
-the_robot->ecp_command.motion_steps = motion_steps;
-  //the_robot->ecp_command.value_in_step_no = motion_steps - motion_steps_value_in_step_no;
+  the_robot->ecp_command.motion_steps = motion_steps;
   the_robot->ecp_command.value_in_step_no = value_in_step_no;
  
   dt = motion_steps * step_time;

@@ -16,6 +16,8 @@
 #include "application/VisualApp/terminate_condition.h"
 #include "base/lib/logger_client/logger_client.h"
 #include "application/VisualApp/behaviour.h"
+#include "application/VisualApp/visual_servo_regulator_p.h"
+#include "application/VisualApp/visual_servo.h"
 #include <csignal>
 #include <ctime>
 #include <sstream>
@@ -45,6 +47,12 @@ namespace generator {
 class visual_behaviour: public behaviour
 {
 public: 
+boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo_regulator> reg;
+boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds;
+boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo>  vs;
+boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo>  wrist_vs;
+
+
 visual_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name, boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo> & vs);
 ~visual_behaviour();
 bool first_step();
@@ -116,8 +124,6 @@ lib::Homog_matrix get_aggregated_position_change();
 /**
 * Called from constructor to initialize all servos. After this call, servos field must be initialized.
 */
-public:
-boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo>  vs;
 protected:
 /** Time for single step () */
 
