@@ -6,6 +6,7 @@ add_executable(ecp_vsdemo_objectfollower_ib_eih2
     terminate_in_left_condition.cc
     beginvisiblecondition.cpp
     reactivevisualservotask.cpp
+    begin_behaviour.cc
 )
 
 target_link_libraries(ecp_vsdemo_objectfollower_ib_eih2

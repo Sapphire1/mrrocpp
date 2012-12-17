@@ -19,6 +19,7 @@
 #include "timeout_terminate_condition.h"
 #include "terminate_in_left_condition.h"
 #include "beginvisiblecondition.h"
+#include "begin_behaviour.h"
 using namespace mrrocpp::ecp::servovision;
 namespace mrrocpp {
 

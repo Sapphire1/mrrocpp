@@ -10,8 +10,10 @@
  * @ingroup generators
  */
 
-#include "behaviour.h"
-
+#include "../VisualApp/behaviour.h"
+#include "../VisualApp/visual_servo_regulator_p.h"
+#include <Eigen/Core>
+using namespace mrrocpp::ecp::servovision;
 namespace mrrocpp {
 namespace ecp {
 namespace common {
@@ -33,6 +35,10 @@ public:
 	 * @param _ecp_task ecp task object referencex.
 	 */
 	bool arm_stop;
+	Eigen::Matrix <double, 6, 1> error;
+	Eigen::Matrix <double, 6, 1> control;
+	Eigen::Matrix <double, 6, 1> actual_position;
+	boost::shared_ptr <visual_servo_regulator> reg;
 	begin_behaviour(common::task::task& _ecp_task);
 	~begin_behaviour(){};
 	int counter;

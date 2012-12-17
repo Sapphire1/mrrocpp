@@ -53,23 +53,6 @@ void behaviour::Move()
 							the_robot->get_reply();
 					}
 				}
-		 ///////////////////////////
-		std::vector<double> current_positionn(6);
-		lib::Homog_matrix actual_position_matrix;
-		actual_position_matrix = the_robot->reply_package.arm.pf_def.arm_frame;
-		lib::Xyz_Angle_Axis_vector angle_axis_vector;
-		actual_position_matrix.get_xyz_angle_axis(angle_axis_vector);
-		angle_axis_vector.to_vector(current_positionn);
-		std::cout << current_positionn[0]<<"\t"<<
-		current_positionn[1]<<"\t"<<
-		current_positionn[2]<<"\n"<<
-		current_positionn[3]<<"\t"<<
-		current_positionn[4]<<"\t"<<
-		current_positionn[5]<<"\n";
-
-		  ////////////////////////////
-
-
 
 			// reading data from all sensors
 		get_sensors_readings();
