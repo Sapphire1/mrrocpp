@@ -42,6 +42,7 @@ bool begin_behaviour::next_step()
 	the_robot->ecp_command.instruction_type = lib::SET_GET;
 	double current_position[6];
 
+	// read actual position
 	for (int i = 0; i < 6; i++)
 	{
 		current_position[i]=the_robot->reply_package.arm.pf_def.joint_coordinates[i];
@@ -53,7 +54,10 @@ bool begin_behaviour::next_step()
 	double sterowanie4;
 	double sterowanie5;
 	double sterowanie6;
+	//! compute in regulator
 
+
+	//set new position
 	if(!arm_stop)
 	{
 		sterowanie= (current_position[0]-0)/25;

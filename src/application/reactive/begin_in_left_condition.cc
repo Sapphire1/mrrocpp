@@ -28,13 +28,11 @@ bool  begin_in_left_condition::check(mrrocpp::ecp::common::generator::behaviour*
 	actual_position_matrix = bhvr->the_robot->reply_package.arm.pf_def.arm_frame;
 	actual_position_matrix.get_xyz_angle_axis(angle_axis_vector);
 	angle_axis_vector.to_vector(current_position);
-	std::cout << "In left\nCurrent position : \n" << current_position[0]<<"\t"<<
-	current_position[1]<<"\t\t"<<
-	current_position[2]<<"\n"<<
-	current_position[3]<<"\t\t"<<
-	current_position[4]<<"\t"<<
-	current_position[5]<<"\n";
-	if(current_position[1]<=1.8)
+	std::cout << "In left\nCurrent position : \n" <<
+	current_position[0]<<"\t"<< 	current_position[1]<<"\t\t"<< 	current_position[2]<<"\n"<<
+	current_position[3]<<"\t\t"<< 	current_position[4]<<"\t"<< 	current_position[5]<<"\n";
+
+	if(current_position[1]<=1.9)
 	{
 		std::cout<<"Begin Condition in left is not met!!!\n";
 		return false;
