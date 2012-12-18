@@ -4,7 +4,9 @@ add_executable(ecp_vsdemo_objectfollower_ib_eih2
     object_reached_termination_condition.cc
     timeout_terminate_condition.cc
     terminate_in_left_condition.cc
+    terminate_in_right_condition.cc
     beginvisiblecondition.cpp
+    begin_condition_right.cpp
     reactivevisualservotask.cpp
     begin_behaviour.cc
 )

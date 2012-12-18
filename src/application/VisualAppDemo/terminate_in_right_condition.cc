@@ -1,4 +1,4 @@
-#include "terminate_in_left_condition.h" 
+#include "terminate_in_right_condition.h"
 #include "base/ecp/ecp_robot.h"
 #include "base/ecp/ecp_generator.h"
 
@@ -7,9 +7,9 @@ namespace ecp {
 namespace common {
 namespace generator {
   
-bool terminate_in_left_condition::check(mrrocpp::ecp::common::generator::behaviour* bh)
+bool terminate_in_right_condition::check(mrrocpp::ecp::common::generator::behaviour* bh)
 {
-	std::cout<<"terminate_position_condition::check()\n";
+	std::cout<<"terminate_position_condition_right::check()\n";
 	lib::Homog_matrix tmp;
  	double current_position[6];
 	lib::Xyz_Angle_Axis_vector tool_vector;
@@ -22,14 +22,14 @@ bool terminate_in_left_condition::check(mrrocpp::ecp::common::generator::behavio
  			  current_position[3]<<"\t"<<
  			  current_position[4]<<"\t"<<
  			  current_position[5]<<"\n";
- 	if(current_position[1]<=1.9)
+ 	if(current_position[1]>=2.1)
  	{
-		std::cout<<"Terminate Condition in left!!!\n";
+		std::cout<<"Terminate Condition in right!!!\n";
  		return true;
  	}
 	return false;
 }
-void terminate_in_left_condition::reset()
+void terminate_in_right_condition::reset()
 {
 }
 } // namespace generator

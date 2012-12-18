@@ -53,17 +53,17 @@ reactive_position_task::reactive_position_task(mrrocpp::lib::configurator & conf
  		move_right->add_terminate_condition(terRightCod);
 		/// add_behaviour
 
- 		behaviour* begin_behav =new begin_behaviour(*this);
- 		begin_behav->add_begin_condition(begLeftCod);
- 	/*	add_behaviour(1,move_left);
+ 		//behaviour* begin_behav =new begin_behaviour(*this);
+ 		//begin_behav->add_begin_condition(begLeftCod);
+ 		add_behaviour(1,move_left);
  		add_behaviour(4,move_right);
 		add_behaviour(2,move_left);
  		add_behaviour(5,move_right);
 		add_behaviour(3,move_left);
  		add_behaviour(6,move_right);
- 	*/
 
- 		add_behaviour(1, begin_behav);
+
+ 		//add_behaviour(1, begin_behav);
 	}
 	catch(std::exception& ex)
 	{
