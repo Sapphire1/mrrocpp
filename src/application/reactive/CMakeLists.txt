@@ -8,7 +8,8 @@ add_executable(reactive
     in_left_behaviour.cc
     in_right_behaviour.cc
     begin_behaviour.cc
-    
+    ../VisualApp/visual_servo_regulator_p.cc
+    ../VisualApp/visual_servo_regulator.cc
 )
 
 target_link_libraries(reactive

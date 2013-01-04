@@ -18,7 +18,8 @@
 
 using namespace mrrocpp::ecp::common::generator;
 using namespace mrrocpp::ecp::common::task;
- 
+using namespace mrrocpp::ecp::servovision;
+
 namespace mrrocpp {
 namespace ecp {
 namespace common {
@@ -35,8 +36,10 @@ reactive_position_task::reactive_position_task(mrrocpp::lib::configurator & conf
 	{
 		throw std::runtime_error("Robot not supported");
 	}
+ 		char config_section_name[] = { "[object_follower_ib]" };
+ 		reg = boost::shared_ptr <visual_servo_regulator> (new regulator_p(configurator, config_section_name));
  		/// create_behaviour	
-		behaviour* move_left=new in_left_behaviour(*this);
+		behaviour* move_left=new in_left_behaviour(*this, reg);
   		behaviour* move_right=new in_right_behaviour(*this);
 		///TODO
 		/// create_begin_cond

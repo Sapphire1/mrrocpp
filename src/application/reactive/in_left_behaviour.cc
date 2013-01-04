@@ -18,9 +18,9 @@ namespace generator {
 
 
 
-in_left_behaviour::in_left_behaviour(common::task::task& _ecp_task) :	common::generator::behaviour(_ecp_task)
+in_left_behaviour::in_left_behaviour(common::task::task& _ecp_task, boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo_regulator> & reg) :	common::generator::behaviour(_ecp_task)
 {
-
+	this->reg=reg;
 }
 
 bool in_left_behaviour::first_step()
@@ -33,16 +33,29 @@ bool in_left_behaviour::first_step()
 	the_robot->ecp_command.interpolation_type = lib::MIM;
  	the_robot->ecp_command.motion_steps = 100;
  	the_robot->ecp_command.value_in_step_no = 97;
-	
+
 	return true;
 }
 bool in_left_behaviour::next_step()
 {	
+	lib::Homog_matrix tmp;
+	double current_position[6];
+	lib::Xyz_Angle_Axis_vector tool_vector;
+	tmp=the_robot->reply_package.arm.pf_def.arm_frame;
+	tmp.get_xyz_angle_axis(tool_vector);
+	tool_vector.to_table(current_position);
+	for(int i=0; i<6; i++)
+		std::cout<<current_position[i]<<"\t";
+	std::cout<<std::endl;
+
+	error[1]=current_position[1]-1.8;
+	control = reg->compute_control(error, 0.02);
+
 	lib::Homog_matrix homog_matrix;
 	double nextChange[6];
 	the_robot->ecp_command.instruction_type = lib::SET_GET;
 	nextChange[0]=0;
-	nextChange[1]=0.02;
+	nextChange[1]=control[1];
 	nextChange[2]=0;
 	nextChange[3]=0;
 	nextChange[4]=0;
@@ -53,7 +66,7 @@ bool in_left_behaviour::next_step()
 	the_robot->ecp_command.instruction_type = lib::SET_GET;
 
 	// Obliczenie zadanej pozycji posredniej w tym kroku ruchu
-	 
+
 	lib::Homog_matrix current_frame_wo_offset(the_robot->reply_package.arm.pf_def.arm_frame);
 	current_frame_wo_offset.remove_translation();
 

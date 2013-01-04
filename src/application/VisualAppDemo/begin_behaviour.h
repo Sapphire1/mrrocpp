@@ -13,6 +13,7 @@
 #include "../VisualApp/behaviour.h"
 #include "../VisualApp/visual_servo_regulator_p.h"
 #include <Eigen/Core>
+#include <math.h>
 using namespace mrrocpp::ecp::servovision;
 namespace mrrocpp {
 namespace ecp {
@@ -42,6 +43,7 @@ public:
 	begin_behaviour(common::task::task& _ecp_task);
 	~begin_behaviour(){};
 	int counter;
+	bool arm_set;
 	/**
 	 * @brief generates first step of transition function
 	 * @return 

@@ -64,10 +64,10 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 		v_bhr2->add_terminate_condition(term_in_left);
 		// removed configure method!!!
 		log_dbg("reactive_servo_task: 7\n");
-	//	begin_behaviour* start_beh = new begin_behaviour(*this);
-	//	start_beh->add_begin_condition(bgVisCond);
-	//	add_behaviour(1,start_beh);
-		add_behaviour(1, v_bhr2);
+		begin_behaviour* start_beh = new begin_behaviour(*this);
+		start_beh->add_begin_condition(bgVisCond);
+		add_behaviour(1,start_beh);
+	//	add_behaviour(1, v_bhr2);
 	}
 	catch(std::exception& ex)
 	{
@@ -81,6 +81,7 @@ reactive_visual_servo_task::~reactive_visual_servo_task()
 	// remove pointer
 //	delete v_bhr;
 	delete v_bhr2;
+//	delete start_beh;
 }
 
 task_base* return_created_ecp_task(lib::configurator &config)

@@ -19,7 +19,8 @@ begin_behaviour::begin_behaviour(common::task::task& _ecp_task) : common::genera
 	char config_section_name[] = { "[object_follower_ib]" };
 	reg = boost::shared_ptr <visual_servo_regulator> (new regulator_p(_ecp_task.config, config_section_name));
 
-	arm_stop=false;
+	arm_set=false;
+
 	counter=0;
 }
 
@@ -49,14 +50,30 @@ bool begin_behaviour::next_step()
 		if(counter%50==0)
 			std::cout<< actual_position[i]<<"\t";
 	}
-	error[0]=(actual_position[0]);
-	error[1]=actual_position[1]+1.7;
-	error[2]=-actual_position[2];
-	error[3]=actual_position[3];
-	error[4]=-4.6+actual_position[4];
-	error[5]=-actual_position[5]-1.47;
+
+	if(!arm_set)
+	{
+		//	std::cout<<"\nSet arm\n";
+			error[0]=(actual_position[0]);
+			error[1]=actual_position[1]+1.7;
+			error[2]=-actual_position[2];
+	}
+	else
+	{
+		//std::cout<<"\nArm is set, setting wrist and keeping position of arm\n";
+		error[0]=(actual_position[0]);
+		error[1]=actual_position[1]+1.7;
+		error[2]=-actual_position[2];
+		error[3]=actual_position[3];
+		error[4]=-4.6+actual_position[4];
+		error[5]=-actual_position[5]-1.47;
+	}
+
 	//! compute in regulator
 	control = reg->compute_control(error,0.02);
+
+	if( !arm_set && fabs(error[0])<0.0001 && fabs(error[1])<0.0001 && fabs(error[2]<0.0001))
+			arm_set = true;
 
 	for (int i = 0; i < 6; i++)
 	{
@@ -66,6 +83,8 @@ bool begin_behaviour::next_step()
 	}
 	counter++;
 
+	if(error[5]<0.0001)
+		return false;
 	return true;
 }
 

@@ -9,6 +9,7 @@
 #define REACTIVE_POSITION_TASK
 
 #include <boost/shared_ptr.hpp>
+#include "../VisualApp/visual_servo_regulator_p.h"
 // #include "position_behaviour.h"
 #include "reactive_task.h"
 #include "robot/irp6p_m/ecp_r_irp6p_m.h"
@@ -17,7 +18,7 @@
 using namespace mrrocpp::ecp::common::generator;
 using namespace mrrocpp::ecp::common::task;
 
-
+using namespace mrrocpp::ecp::servovision;
  using namespace mrrocpp::ecp::common::generator;
  namespace mrrocpp {
  
@@ -33,6 +34,7 @@ class reactive_position_task : public reactive_task
 public: 
       reactive_position_task(mrrocpp::lib::configurator & configurator);
       ~reactive_position_task(){};
+  	  boost::shared_ptr <visual_servo_regulator> reg;
 };
 
  
