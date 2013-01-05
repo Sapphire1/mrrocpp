@@ -45,10 +45,9 @@ public:
 	virtual ~reactive_task(){};
 
 protected:
- 	map<const int, behaviour*> bh_map;
-	map<const int, behaviour*>::iterator it;
- 	void add_behaviour(int, behaviour*);
-
+ 	map<const int, boost::shared_ptr<mrrocpp::ecp::common::generator::behaviour>> bh_map;
+ 	map<const int, boost::shared_ptr<mrrocpp::ecp::common::generator::behaviour>>::iterator it;
+ 	void add_behaviour(int, boost::shared_ptr<mrrocpp::ecp::common::generator::behaviour> &);
 };
 
 reactive_task::reactive_task(mrrocpp::lib::configurator& configurator) : common::task::task(configurator)
@@ -58,9 +57,9 @@ reactive_task::reactive_task(mrrocpp::lib::configurator& configurator) : common:
 	
 }
 
-void reactive_task::add_behaviour(int prior, behaviour * bh)
+void reactive_task::add_behaviour(int prior, boost::shared_ptr<mrrocpp::ecp::common::generator::behaviour> & bh)
 {	
- 	bh_map.insert ( std::pair<char,behaviour*>(prior,bh));
+ 	bh_map.insert ( std::pair<char,boost::shared_ptr<mrrocpp::ecp::common::generator::behaviour>>(prior,bh));
 }
 
 void reactive_task::main_task_algorithm(void)

@@ -22,8 +22,7 @@ class begin_condition_right : public begin_condition
 public:
 	begin_condition_right();
 	virtual ~begin_condition_right();
-	bool check(mrrocpp::ecp::common::generator::behaviour * v_bhr);
-//	bool check(const boost::shared_ptr<mrrocpp::ecp::common::generator::behaviour> &);
+	bool check(const boost::shared_ptr<mrrocpp::ecp::common::generator::behaviour> &);
 	void reset(){;}
 };
 

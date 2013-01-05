@@ -39,11 +39,11 @@ reactive_position_task::reactive_position_task(mrrocpp::lib::configurator & conf
  		char config_section_name[] = { "[object_follower_ib]" };
  		reg = boost::shared_ptr <visual_servo_regulator> (new regulator_p(configurator, config_section_name));
  		/// create_behaviour	
-		behaviour* move_left=new in_left_behaviour(*this, reg);
-  		behaviour* move_right=new in_right_behaviour(*this);
+ 		boost::shared_ptr<behaviour> move_left=boost::shared_ptr<behaviour>(new in_left_behaviour(*this, reg));
+ 		boost::shared_ptr<behaviour> move_right= boost::shared_ptr<behaviour>(new in_right_behaviour(*this));
 		///TODO
 		/// create_begin_cond
- 		boost::shared_ptr<begin_condition> begLeftCod=boost::shared_ptr<begin_condition>(new begin_in_left_condition);
+ 		boost::shared_ptr<begin_condition> begLeftCod=boost::shared_ptr<begin_condition>(new begin_in_left_condition());
  		boost::shared_ptr<begin_condition> begRightCod=boost::shared_ptr<begin_condition>(new begin_in_right_condition);
  		/// create_ter_cond
  		boost::shared_ptr<terminate_condition> terLeftCod=boost::shared_ptr<terminate_condition>(new terminate_in_left_condition);

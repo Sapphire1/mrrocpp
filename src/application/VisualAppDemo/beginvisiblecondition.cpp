@@ -22,7 +22,7 @@ begin_visible_condition::~begin_visible_condition()
 {
 }
 
-bool begin_visible_condition::check(mrrocpp::ecp::common::generator::behaviour * bhvr)
+bool begin_visible_condition::check(const boost::shared_ptr<mrrocpp::ecp::common::generator::behaviour> & bhvr)
 {
 	lib::Homog_matrix actual_position_matrix;
 	lib::Xyz_Angle_Axis_vector tool_vector;

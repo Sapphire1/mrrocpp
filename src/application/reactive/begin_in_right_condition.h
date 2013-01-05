@@ -16,9 +16,9 @@ private:
 	std::vector<double> limitation;
 public:
 	begin_in_right_condition(){};
-	begin_in_right_condition(std::vector<double> &);
+	begin_in_right_condition(std::vector<double>  & );
 	~begin_in_right_condition(){};
-	bool check(mrrocpp::ecp::common::generator::behaviour *);
+	bool check(boost::shared_ptr<mrrocpp::ecp::common::generator::behaviour> &);
 };
 
 } // namespace generator

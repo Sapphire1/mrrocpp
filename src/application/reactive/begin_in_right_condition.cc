@@ -5,14 +5,13 @@ namespace ecp {
 namespace common {
 namespace generator {
 
-
-begin_in_right_condition::begin_in_right_condition(std::vector<double>  & a)
+begin_in_right_condition:: begin_in_right_condition(std::vector<double>  & a)
 {
-  limitation=a;
+	limitation=a;
 }
 
 
-bool  begin_in_right_condition::check(mrrocpp::ecp::common::generator::behaviour* bhvr)
+bool begin_in_right_condition::check(boost::shared_ptr<mrrocpp::ecp::common::generator::behaviour> & bhvr)
 {
 	lib::Homog_matrix actual_position_matrix;
 	lib::Xyz_Angle_Axis_vector tool_vector;

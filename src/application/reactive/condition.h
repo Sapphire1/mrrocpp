@@ -33,10 +33,6 @@ public:
 	*/
 	virtual ~condition(){};
 	
-	/*!
-	* @brief Check if condition can to be activated
-	*/
-	virtual bool check(mrrocpp::ecp::common::generator::behaviour *)=0;
 };
 
 } // namespace generator

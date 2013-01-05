@@ -16,7 +16,7 @@ namespace generator {
 
 begin_behaviour::begin_behaviour(common::task::task& _ecp_task) : common::generator::behaviour(_ecp_task)
 {
-	char config_section_name[] = { "[object_follower_ib]" };
+	char config_section_name[] = { "[set_robot]" };
 	reg = boost::shared_ptr <visual_servo_regulator> (new regulator_p(_ecp_task.config, config_section_name));
 
 	arm_set=false;
@@ -55,14 +55,14 @@ bool begin_behaviour::next_step()
 	{
 		//	std::cout<<"\nSet arm\n";
 			error[0]=(actual_position[0]);
-			error[1]=actual_position[1]+1.7;
+			error[1]=actual_position[1]+1.571;
 			error[2]=-actual_position[2];
 	}
 	else
 	{
 		//std::cout<<"\nArm is set, setting wrist and keeping position of arm\n";
 		error[0]=(actual_position[0]);
-		error[1]=actual_position[1]+1.7;
+		error[1]=actual_position[1]+1.571;
 		error[2]=-actual_position[2];
 		error[3]=actual_position[3];
 		error[4]=-4.6+actual_position[4];
