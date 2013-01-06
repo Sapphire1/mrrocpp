@@ -9,8 +9,7 @@
 #include "application/VisualApp/behaviour.h"
 namespace mrrocpp {
 namespace ecp {
-namespace common {
-namespace generator {
+namespace condition {
 
 begin_visible_condition::begin_visible_condition()
 {
@@ -50,7 +49,6 @@ bool begin_visible_condition::check(const boost::shared_ptr<mrrocpp::ecp::common
 	return true;
 };
 
-} /* namespace generator */
-} /* namespace common */
+} /* namespace condition */
 } /* namespace ecp */
 } /* namespace mrrocpp */

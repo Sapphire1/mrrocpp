@@ -2,13 +2,10 @@
 #define TERMINATE_CONDITION_H_
 #include "condition.h"
 
-using namespace mrrocpp::ecp::common::generator;
+
 namespace mrrocpp {
 namespace ecp {
-namespace common {
-namespace generator {
-
-  
+namespace condition {
 class terminate_condition : public condition
 {
 public:
@@ -23,11 +20,10 @@ public:
 };
 
 
-} // namespace generator
-
-} // namespace common
+} // namespace condition
 
 } // namespace ecp
 
 } // namespace mrrocpp
+
 #endif

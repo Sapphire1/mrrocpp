@@ -14,8 +14,7 @@ using namespace logger;
 
 namespace mrrocpp {
 namespace ecp {
-namespace common {
-namespace generator {
+namespace condition {
 
 timeout_terminate_condition::timeout_terminate_condition(double timeout) :
 	timeout(timeout)
@@ -52,7 +51,6 @@ double timeout_terminate_condition::get_time_s()const
 
 }
 
-}//namespace generator
-}
+}	//namespace condition
 }
 }

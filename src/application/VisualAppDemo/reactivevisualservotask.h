@@ -21,8 +21,16 @@
 #include "beginvisiblecondition.h"
 #include "begin_behaviour.h"
 using namespace mrrocpp::ecp::servovision;
+//using namespace mrrocpp::ecp::condition;
 namespace mrrocpp {
+namespace ecp {
+namespace condition {
 
+boost::shared_ptr<terminate_condition> obj_reach_ter_cond;
+}
+}
+}
+namespace mrrocpp {
 namespace ecp {
 
 namespace common {
@@ -40,10 +48,12 @@ private:
 	boost::shared_ptr<mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds;
 	boost::shared_ptr<visual_servo> arm_vs;
 	boost::shared_ptr<visual_servo> wrist_vs;
+
 	boost::shared_ptr<terminate_condition> obj_reach_ter_cond;
 	boost::shared_ptr<terminate_condition> time_ter_cond;
 	boost::shared_ptr<terminate_condition> term_in_left;
 	boost::shared_ptr<begin_condition> bgVisCond;
+
 public:
 	reactive_visual_servo_task(mrrocpp::lib::configurator & configurator);
 	virtual ~reactive_visual_servo_task();

@@ -7,14 +7,14 @@
 
 #include "begin_condition_right.h"
 #include "application/VisualApp/behaviour.h"
+
+
 namespace mrrocpp {
 namespace ecp {
-namespace common {
-namespace generator {
+namespace condition {
 
 begin_condition_right::begin_condition_right()
 {
-	// TODO Auto-generated constructor stub
 
 }
 
@@ -50,7 +50,6 @@ bool begin_condition_right::check(const boost::shared_ptr<mrrocpp::ecp::common::
 	return true;
 };
 
-} /* namespace generator */
-} /* namespace common */
+} /* namespace condition */
 } /* namespace ecp */
 } /* namespace mrrocpp */

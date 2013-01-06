@@ -8,8 +8,7 @@
 #include "base/ecp/ecp_robot.h"
 #include "behaviour.h"
 using namespace std;
-
-
+using namespace mrrocpp::ecp::condition;
 namespace mrrocpp {
 namespace ecp {
 namespace common {
@@ -81,10 +80,10 @@ void behaviour::Move()
   // constructor
   behaviour::behaviour(common::task::task& _ecp_task) :	common::generator::generator(_ecp_task){}
 
-  void behaviour::add_begin_condition(boost::shared_ptr <begin_condition> & begptr)
+  void behaviour::add_begin_condition(boost::shared_ptr <begin_condition> &begptr)
   {
-      begin_conditions.push_back(begptr);
-  } 
+	  begin_conditions.push_back(begptr);
+  }
   void behaviour::add_terminate_condition(boost::shared_ptr <terminate_condition> & terptr)
   {
       terminate_conditions.push_back(terptr);

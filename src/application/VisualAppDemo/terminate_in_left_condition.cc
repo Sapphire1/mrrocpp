@@ -4,8 +4,7 @@
 
 namespace mrrocpp {
 namespace ecp {
-namespace common {
-namespace generator {
+namespace condition {
   
 bool terminate_in_left_condition::check(mrrocpp::ecp::common::generator::behaviour* bh)
 {
@@ -32,7 +31,7 @@ bool terminate_in_left_condition::check(mrrocpp::ecp::common::generator::behavio
 void terminate_in_left_condition::reset()
 {
 }
-} // namespace generator
-} // namespace common
+
+} // namespace condition
 } // namespace ecp
 } // namespace mrrocpp

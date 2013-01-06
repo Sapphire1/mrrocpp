@@ -14,15 +14,20 @@
 #include "terminate_condition.h"
 #include <vector>
 
-namespace mrrocpp {
-namespace ecp {
-namespace common {
-namespace generator {
-
 using logger::logger_client;
 using logger::log_message;
 using std::vector;
 
+namespace mrrocpp {
+namespace ecp {
+namespace condition {
+class begin_condition;
+}
+
+namespace common {
+namespace generator {
+
+using namespace mrrocpp::ecp::condition;
 class behaviour : public common::generator::generator
 {
 public:
@@ -47,7 +52,8 @@ public:
 		*
 		* @param begin_condition
 		*/
-		void add_begin_condition(boost::shared_ptr <begin_condition> &);
+
+		void add_begin_condition(boost::shared_ptr <mrrocpp::ecp::condition::begin_condition> &);
 		/*!
 		* @brief Adding terminate conditions to the behaviour object.
 		*
@@ -55,7 +61,7 @@ public:
 		*/
 		void add_terminate_condition(boost::shared_ptr <terminate_condition> &);
 		//!vector containing shared pointers to object begin_condition
-		std::vector<boost::shared_ptr <begin_condition>> begin_conditions;
+		std::vector<boost::shared_ptr <mrrocpp::ecp::condition::begin_condition>> begin_conditions;
 		//!vector containing shared pointers to object terminate_condition
 		std::vector<boost::shared_ptr <terminate_condition>> terminate_conditions;
 };

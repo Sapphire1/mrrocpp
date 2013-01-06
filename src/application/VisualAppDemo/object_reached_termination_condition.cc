@@ -9,14 +9,13 @@
 #include "base/lib/logger.h"
 
 using namespace logger;
+using namespace mrrocpp::ecp::common::generator;
 
 namespace mrrocpp {
 
 namespace ecp {
 
-namespace common {
-
-namespace generator {
+namespace condition {
 
 object_reached_termination_condition::object_reached_termination_condition(const lib::configurator& config, const std::string &section_name)
 {
@@ -81,10 +80,7 @@ lib::Homog_matrix object_reached_termination_condition::get_position() const
 }
 
 
-
-}//namespace generator
-
-}
+} // namespace condition
 
 }
 

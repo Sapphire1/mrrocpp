@@ -16,9 +16,7 @@ namespace mrrocpp {
 
 namespace ecp {
 
-namespace common {
-
-namespace generator {
+namespace condition {
 // class behaviour;
 /** @addtogroup servovision
  *  @{
@@ -52,9 +50,9 @@ protected:
 
 /** @} */
 
-}//namespace generator
 
-}
+
+}	//namaspace condition
 
 }
 

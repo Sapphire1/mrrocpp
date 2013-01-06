@@ -12,8 +12,7 @@ using namespace mrrocpp::ecp::common::generator;
 
 namespace mrrocpp {
 namespace ecp {
-namespace common {
-namespace generator {
+namespace condition {
 
 
 class terminate_in_left_condition: public terminate_condition
@@ -28,10 +27,7 @@ public:
  	void reset();
 };
 
-
-} // namespace generator
-
-} // namespace common
+} // namespace condition
 
 } // namespace ecp
 

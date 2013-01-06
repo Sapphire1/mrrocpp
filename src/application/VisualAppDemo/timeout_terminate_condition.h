@@ -13,8 +13,7 @@
 
 namespace mrrocpp {
 namespace ecp {
-namespace common {
-namespace generator {
+namespace condition {
 
 /** @addtogroup servovision
  *  @{
@@ -40,8 +39,7 @@ protected:
 
 /** @} */
 
-}//namespace generator
-}
+} // namespace condition
 }
 }
 

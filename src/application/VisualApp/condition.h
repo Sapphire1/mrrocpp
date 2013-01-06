@@ -8,21 +8,23 @@
 #ifndef CONDITION_H_
 #define CONDITION_H_
 #include "base/ecp/ecp_generator.h"
-using namespace mrrocpp::ecp::common::generator;
 
 namespace mrrocpp {
 namespace ecp {
 namespace common {
-namespace generator {
+namespace generator{
 
 class behaviour;
+}
+}
+namespace condition {
 
 /*!
  * @brief virtual class from which inheriting classes: begin_condition and terminate_condition
  */
 
 class condition
-{	
+{
 public:
 	/*!
 	* @brief Constructor
@@ -32,15 +34,12 @@ public:
 	* @brief Destructor
 	*/
 	virtual ~condition(){};
-	
+
 };
 
-} // namespace generator
+}
+}
+}
 
-} // namespace common
-
-} // namespace ecp
-
-} // namespace mrrocpp
 
 #endif

@@ -14,8 +14,7 @@
 
 namespace mrrocpp {
 namespace ecp {
-namespace common {
-namespace generator {
+namespace condition {
 
 class begin_visible_condition : public begin_condition
 {
@@ -26,8 +25,7 @@ public:
 	void reset(){;}
 };
 
-} /* namespace generator */
-} /* namespace common */
+} /* namespace condition */
 } /* namespace ecp */
 } /* namespace mrrocpp */
 

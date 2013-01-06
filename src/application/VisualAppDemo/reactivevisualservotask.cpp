@@ -8,6 +8,7 @@
 #include "reactivevisualservotask.h"
 using namespace logger;
 using namespace mrrocpp::ecp::servovision;
+using namespace mrrocpp::ecp::condition;
 
 namespace mrrocpp {
 
