@@ -46,6 +46,7 @@ private:
 	boost::shared_ptr<visual_servo_regulator> reg_wrist;
 	boost::shared_ptr<visual_servo_regulator> reg_arm;
 	boost::shared_ptr<mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds;
+	boost::shared_ptr<mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds_2;
 	boost::shared_ptr<visual_servo> arm_vs;
 	boost::shared_ptr<visual_servo> wrist_vs;
 

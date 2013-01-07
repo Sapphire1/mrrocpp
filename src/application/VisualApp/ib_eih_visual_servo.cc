@@ -41,6 +41,7 @@ ib_eih_visual_servo::~ib_eih_visual_servo()
 
 lib::Homog_matrix ib_eih_visual_servo::compute_position_change(const lib::Homog_matrix& current_position, double dt)
 {
+
 	log_dbg("ib_eih_visual_servo::compute_position_change() begin\n");
 
 	lib::K_vector u_translation(0, 0, 0);
@@ -52,7 +53,7 @@ lib::Homog_matrix ib_eih_visual_servo::compute_position_change(const lib::Homog_
 
 	Eigen::Matrix <double, Types::ImagePosition::elementsSize, 1> imagePosition(reading.imagePosition.elements);
 	e.block(0, 0, 4, 1) = imagePosition - desired_position;
-
+	std::cout<<"Wspolczynnik elipsy " << reading.imagePosition.elements[2]<<std::endl;
 	log_dbg("reading.imagePosition.elements = [%g; %g; %g; %g]\n", reading.imagePosition.elements[0], reading.imagePosition.elements[1], reading.imagePosition.elements[2], reading.imagePosition.elements[3]);
 
 	error = e;
