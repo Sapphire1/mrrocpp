@@ -40,8 +40,8 @@ namespace task {
 class reactive_visual_servo_task : public reactive_task
 {
 private:
-	boost::shared_ptr<behaviour> v_bhr;
 	boost::shared_ptr<behaviour> start_beh;
+	boost::shared_ptr<behaviour> v_bhr_1;
 	boost::shared_ptr<behaviour> v_bhr2;
 	boost::shared_ptr<visual_servo_regulator> reg_wrist;
 	boost::shared_ptr<visual_servo_regulator> reg_arm;

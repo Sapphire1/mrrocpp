@@ -61,7 +61,7 @@ lib::Homog_matrix ib_eih_wrist_move::compute_position_change(const lib::Homog_ma
 
         Eigen::Matrix <double, 6, 1> control;
         // poruszanie manipulatorem w bok
-        e(2,0)=tool_vector[1]-1.8;
+        e(2,0)=tool_vector[1]-1.9;
         control = regulator->compute_control(e, dt);
         log_dbg("ib_eih_visual_servo::get_position_change() control: [%+07.3lg; %+07.3lg; %+07.3lg; %+07.3lg]\n", control(0, 0), control(1, 0), control(2, 0), control(3, 0));
 
@@ -69,7 +69,7 @@ lib::Homog_matrix ib_eih_wrist_move::compute_position_change(const lib::Homog_ma
 
 
         Eigen::Matrix <double, 3, 1> camera_to_object_translation;
-        camera_to_object_translation(0, 0) = control(2, 0);
+        camera_to_object_translation(0, 0) = -control(2, 0);
         camera_to_object_translation(1, 0) = 0;//control(1, 0);
         camera_to_object_translation(2, 0) = 0;//control(2, 0);
 

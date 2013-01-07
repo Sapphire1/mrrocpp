@@ -16,12 +16,15 @@ namespace generator {
 
 void behaviour::Move()
 {
+	std::cout<<"Move method\n";
 	bool ex=true;
 	// Function of motion
 	move_init();
+	std::cout<<"First step\n";
 	if (!first_step()) {
 		return; // termination condtion is met
 	}
+	std::cout<<"After First step\n";
 		// implementation of motion
 	do {
 		if (ecp_t.peek_mp_message()) 
@@ -30,6 +33,7 @@ void behaviour::Move()
 			break;
 		}
 		// order to prepare data for sensors
+		std::cout<<"initiate sensor readings\n";
 		initiate_sensors_readings();
 		if (the_robot)
 					{
@@ -60,7 +64,7 @@ void behaviour::Move()
 		{
 			set_trigger();
 		}
-
+		std::cout<<"Check termination conditions\n";
 		// for every termination condition
 		for(int i=0; i<terminate_conditions.size(); i++)
 		{  	// if condition is met then end Move method

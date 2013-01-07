@@ -39,35 +39,40 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 	 	log_dbg("reactive_servo_task: 1\n");
 
 	 	reg_wrist = boost::shared_ptr <visual_servo_regulator> (new regulator_p(configurator, config_section_name_wrist));
-	// 	reg_arm = boost::shared_ptr <visual_servo_regulator> (new regulator_p(configurator, config_section_name_arm));
+	 	reg_arm = boost::shared_ptr <visual_servo_regulator> (new regulator_p(configurator, config_section_name_arm));
 
 	 	log_dbg("reactive_servo_task: 2\n");
 
 	 	ds = boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor>(new mrrocpp::ecp_mp::sensor::discode::discode_sensor(configurator, config_section_name));
 	 	log_dbg("reactive_servo_task: 3\n");
 
-//	 	arm_vs = shared_ptr <visual_servo> (new ib_eih_visual_servo(reg_arm, ds, config_section_name, configurator));
+	 	arm_vs = shared_ptr <visual_servo> (new ib_eih_visual_servo(reg_arm, ds, config_section_name, configurator));
 
 	 	wrist_vs = shared_ptr <visual_servo> (new ib_eih_wrist_move(reg_wrist, ds, config_section_name, configurator));
 	 	log_dbg("reactive_servo_task: 4.5\n");
-//	 	v_bhr= boost::shared_ptr<behaviour>(new visual_behaviour(*this, config_section_name, arm_vs));
+	 	v_bhr_1= boost::shared_ptr<behaviour>(new visual_behaviour(*this, config_section_name, arm_vs));
 	 	v_bhr2= boost::shared_ptr<behaviour>(new visual_behaviour(*this, config_section_name, wrist_vs));
-	 	obj_reach_ter_cond = boost::shared_ptr <terminate_condition>(new object_reached_termination_condition(configurator, config_section_name));
+	 	obj_reach_ter_cond = boost::shared_ptr <terminate_condition>(new object_reached_termination_condition(configurator, config_section_name_arm));
 	 	log_dbg("reactive_servo_task: 5\n");
 
 	 	time_ter_cond = boost::shared_ptr <terminate_condition>(new timeout_terminate_condition(500));
 	 	log_dbg("reactive_servo_task: 6\n");
 	 	term_in_left=boost::shared_ptr <terminate_condition>(new terminate_in_left_condition(1.98));
 	 	bgVisCond = boost::shared_ptr<begin_condition>(new begin_visible_condition());
-		v_bhr2->add_begin_condition(bgVisCond);
+
+	 	v_bhr_1->add_begin_condition(bgVisCond);
+	 	v_bhr_1->add_terminate_condition(time_ter_cond);
+	 	v_bhr_1->add_terminate_condition(obj_reach_ter_cond);
+
+	 	v_bhr2->add_begin_condition(bgVisCond);
 		v_bhr2->add_terminate_condition(term_in_left);
 		log_dbg("reactive_servo_task: 7\n");
-		start_beh = boost::shared_ptr<behaviour>(new begin_behaviour(*this));
-		start_beh->add_begin_condition(bgVisCond);
+	//	start_beh = boost::shared_ptr<behaviour>(new begin_behaviour(*this));
+	//	start_beh->add_begin_condition(bgVisCond);
 
-		add_behaviour(1, start_beh);
-	//	add_behaviour(2, v_bhr);
-	//	add_behaviour(3, v_bhr2);
+	//	add_behaviour(1, start_beh);
+		add_behaviour(2, v_bhr_1);
+		add_behaviour(3, v_bhr2);
 
 	}
 	catch(std::exception& ex)
