@@ -43,7 +43,7 @@ ib_eih_wrist_move::~ib_eih_wrist_move()
 
 lib::Homog_matrix ib_eih_wrist_move::compute_position_change(const lib::Homog_matrix& current_position, double dt)
 {
-        log_dbg("ib_eih_visual_servo::compute_position_change() begin\n");
+        log_dbg("ib_eih_visual_servo::wrist::compute_position_change() begin\n");
         lib::Xyz_Angle_Axis_vector tool_vector;
         current_position.get_xyz_angle_axis(tool_vector);
         lib::K_vector u_translation(0, 0, 0);
@@ -55,7 +55,7 @@ lib::Homog_matrix ib_eih_wrist_move::compute_position_change(const lib::Homog_ma
         Eigen::Matrix <double, Types::ImagePosition::elementsSize, 1> imagePosition(reading.imagePosition.elements);
         e.block(0, 0, 4, 1) = imagePosition - desired_position;
 
-        log_dbg("reading.imagePosition.elements = [%g; %g; %g; %g]\n", reading.imagePosition.elements[0], reading.imagePosition.elements[1], reading.imagePosition.elements[2], reading.imagePosition.elements[3]);
+        log_dbg("wrist::reading.imagePosition.elements = [%g; %g; %g; %g]\n", reading.imagePosition.elements[0], reading.imagePosition.elements[1], reading.imagePosition.elements[2], reading.imagePosition.elements[3]);
 
         error = e;
 
@@ -75,7 +75,7 @@ lib::Homog_matrix ib_eih_wrist_move::compute_position_change(const lib::Homog_ma
 
         u_translation = e_T_c_position * camera_to_object_translation;
 
-        log_dbg("ib_eih_visual_servo::get_position_change() u_translation: %+07.3lg, %+07.3lg, %+07.3lg\n", u_translation(0, 0), u_translation(1, 0), u_translation(2, 0));
+        log_dbg("ib_eih_visual_servo::wrist::get_position_change() u_translation: %+07.3lg, %+07.3lg, %+07.3lg\n", u_translation(0, 0), u_translation(1, 0), u_translation(2, 0));
 
         // jak mam uchyb w x to sterowanie mam miec dla az
 
@@ -85,14 +85,8 @@ lib::Homog_matrix ib_eih_wrist_move::compute_position_change(const lib::Homog_ma
         delta_position.set_rotation_matrix(u_rotation);
         delta_position.set_translation_vector(u_translation);
 
-        log_dbg("ib_eih_visual_servo::compute_position_change() end\n");
+        log_dbg("wrist::ib_eih_visual_servo::compute_position_change() end\n");
         return delta_position;
-}
-
-bool ib_eih_wrist_move::is_object_visible_in_latest_reading()
-{
-        log_dbg("ib_eih_visual_servo::is_object_visible_in_latest_reading()\n");
-        return reading.objectVisible;
 }
 
 void ib_eih_wrist_move::retrieve_reading()
@@ -111,6 +105,11 @@ void ib_eih_wrist_move::retrieve_reading()
 void ib_eih_wrist_move::predict_reading()
 {
 
+}
+bool ib_eih_wrist_move::is_object_visible_in_latest_reading()
+{
+	log_dbg("ib_eih_visual_servo::is_object_visible_in_latest_reading()\n");
+	return true;//reading.objectVisible;
 }
 
 Types::Mrrocpp_Proxy::IBReading* ib_eih_wrist_move::get_reading()

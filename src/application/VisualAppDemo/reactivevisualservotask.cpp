@@ -43,11 +43,11 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 
 	 	log_dbg("reactive_servo_task: 2\n");
 	 	ds = boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor>(new mrrocpp::ecp_mp::sensor::discode::discode_sensor(configurator, config_section_name));
-	 	ds_2 = boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor>(new mrrocpp::ecp_mp::sensor::discode::discode_sensor(configurator, config_section_name));
+	 	//ds_2 = boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor>(new mrrocpp::ecp_mp::sensor::discode::discode_sensor(configurator, config_section_name));
 	 	log_dbg("reactive_servo_task: 3\n");
 
 	 	arm_vs = shared_ptr <visual_servo> (new ib_eih_visual_servo(reg_arm, ds, config_section_name, configurator));
-	 	wrist_vs = shared_ptr <visual_servo> (new ib_eih_wrist_move(reg_wrist, ds_2, config_section_name, configurator));
+	 	wrist_vs = shared_ptr <visual_servo> (new ib_eih_wrist_move(reg_wrist, ds, config_section_name, configurator));
 	 	log_dbg("reactive_servo_task: 4.5\n");
 
 	 	v_bhr_1= boost::shared_ptr<behaviour>(new visual_behaviour(*this, config_section_name, arm_vs));
@@ -61,7 +61,7 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 	 	bgVisCond = boost::shared_ptr<begin_condition>(new begin_visible_condition());
 
 	 	v_bhr_1->add_begin_condition(bgVisCond);
-//	 	v_bhr_1->add_terminate_condition(time_ter_cond);
+	// 	v_bhr_1->add_terminate_condition(time_ter_cond);
 	 	v_bhr_1->add_terminate_condition(obj_reach_ter_cond);
 
 	 	v_bhr2->add_begin_condition(bgVisCond);
@@ -71,8 +71,10 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 	//	start_beh->add_begin_condition(bgVisCond);
 
 	//	add_behaviour(1, start_beh);
-	//	add_behaviour(2, v_bhr_1);
-		add_behaviour(3, v_bhr2);
+		add_behaviour(1, v_bhr_1);	//dla tego nie chce dzialac!!!
+		add_behaviour(2, v_bhr2);	//dla tego powinno dzialac wszystko
+		//dla obydwu nie chce dzialac!!! nie czyta z kamery dla drugiej serwowizji
+
 	}
 	catch(std::exception& ex)
 	{

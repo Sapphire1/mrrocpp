@@ -23,7 +23,7 @@ using namespace std;
 
 visual_servo::visual_servo(boost::shared_ptr <visual_servo_regulator> regulator, boost::shared_ptr <
 		mrrocpp::ecp_mp::sensor::discode::discode_sensor> sensor, const std::string& section_name, mrrocpp::lib::configurator& configurator) :
-	regulator(regulator), sensor(sensor), object_visible(false), max_steps_without_reading(5), steps_without_reading(0)
+	regulator(regulator), sensor(sensor), object_visible(false), max_steps_without_reading(10000), steps_without_reading(0)
 {
 	log_dbg("visual_servo::visual_servo() begin\n");
 
@@ -56,7 +56,7 @@ lib::Homog_matrix visual_servo::get_position_change(const lib::Homog_matrix& cur
 	requestSentTime.tv_sec = requestSentTime.tv_nsec = 0;
 	processingStart.tv_sec = processingStart.tv_nsec = 0;
 	processingEnd.tv_sec = processingEnd.tv_nsec = 0;
-
+	std::cout<<"State "<< sensor->get_state()<<std::endl;
 	switch (sensor->get_state())
 	{
 		case discode_sensor::DSS_READING_RECEIVED: {

@@ -42,6 +42,7 @@ void object_reached_termination_condition::reset()
 
 bool object_reached_termination_condition::check(mrrocpp::ecp::common::generator::behaviour * bh1)
 {
+	std::cout<<"Object reached termination condition::check\n";
 	visual_behaviour *v_bhr = dynamic_cast<visual_behaviour *>(bh1);
  	bool object_visible_and_error_small = false;
 
@@ -54,6 +55,12 @@ bool object_reached_termination_condition::check(mrrocpp::ecp::common::generator
  			std::cout<<"Set object_visible_and_error_small \n";
  			object_visible_and_error_small = true;
  		}
+ 		/*if(linear_error.norm() <= max_linear_error)
+ 		{
+ 			std::cout<<"Maly blad, konczymy!\n";
+ 			return true;
+ 		}
+ 		*/
 ///Sprawdzic czemu dopiero za 4-ta iteracja tu wchodzi
  		// odp. v_bhr->get_linear_acceleration() <= max_linear_accel
  	if (object_visible_and_error_small && v_bhr->get_linear_speed() <= max_linear_speed && v_bhr->get_angular_speed()

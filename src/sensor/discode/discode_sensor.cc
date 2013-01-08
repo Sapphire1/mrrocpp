@@ -85,6 +85,7 @@ discode_sensor::~discode_sensor()
 
 void discode_sensor::configure_sensor()
 {
+	std::cout<<"discode_sensor::configure_sensor()\n";
 	if (state != DSS_NOT_CONNECTED) {
 		state = DSS_ERROR;
 		throw ds_wrong_state_exception("state != DSS_NOT_CONNECTED");
@@ -163,6 +164,7 @@ void discode_sensor::get_reading()
 			receive_buffers_from_discode();
 			save_reading_received_time();
 			state = rmh.data_size > 0 ? DSS_READING_RECEIVED : DSS_CONNECTED;
+			std::cout<<"rmh.data_size > 0 ? State "<<state<<std::endl;
 		} else {
 			// timeout, try receiving in next call to get_reading()
 			log_dbg("discode_sensor::get_reading(): timeout, state = DSS_REQUEST_SENT\n");
