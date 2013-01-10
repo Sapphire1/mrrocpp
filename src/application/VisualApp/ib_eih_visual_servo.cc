@@ -85,7 +85,7 @@ lib::Homog_matrix ib_eih_visual_servo::compute_position_change(const lib::Homog_
 bool ib_eih_visual_servo::is_object_visible_in_latest_reading()
 {
 	log_dbg("ib_eih_visual_servo::is_object_visible_in_latest_reading()\n");
-	return true;//reading.objectVisible;
+	return reading.objectVisible;
 }
 
 void ib_eih_visual_servo::retrieve_reading()
