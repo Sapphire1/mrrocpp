@@ -17,7 +17,9 @@ namespace ecp {
 namespace common {
 
 namespace task {
-
+///TODO
+/// na podstawie visual behaviour stworzyc 2 klasy arm_behaviour i wrist_behaviour
+/// tak żeby w nich tworzyc obiekt klasy visual_servo
 reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurator & configurator) : common::task::reactive_task(configurator)
 {
 	log_dbg_enabled = true;

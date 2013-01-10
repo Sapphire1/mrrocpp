@@ -41,9 +41,9 @@ boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo> & vs)
 max_angular_speed(0), max_acceleration(0), max_angular_acceleration(0)
 {
   this->vs=vs;
-	char config_section_name[] = { "[object_follower_ib]" };
-	boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds = boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor>(new mrrocpp::ecp_mp::sensor::discode::discode_sensor(ecp_task.config, config_section_name));
-	new_motion_steps = motion_steps = motion_steps_base = ecp_task.config.exists("motion_steps", section_name) ? ecp_task.config.value <unsigned int> ("motion_steps", section_name) : motion_steps_default;
+  char config_section_name[] = { "[object_follower_ib]" };
+  boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds = boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor>(new mrrocpp::ecp_mp::sensor::discode::discode_sensor(ecp_task.config, config_section_name));
+  new_motion_steps = motion_steps = motion_steps_base = ecp_task.config.exists("motion_steps", section_name) ? ecp_task.config.value <unsigned int> ("motion_steps", section_name) : motion_steps_default;
 
   dt = motion_steps * step_time;
 
@@ -80,17 +80,9 @@ visual_behaviour::~visual_behaviour()
 bool visual_behaviour::first_step()
 {
   //! configuration of sensor if state is equal DSS_NOT_CONNECTED (0)
-  if(vs->get_sensor()->get_state()==0)
-  {
-	  std::cout<<"Discode sensor configuration\n";
-	  configure();
-  }
-  else
-  {
-	//  std::cout<<"terminate\n";
-	//  vs->get_sensor()->terminate();
-	//  configure();
-  }
+
+  configure();
+
   new_motion_steps = motion_steps = motion_steps_base;
   value_in_step_no = motion_steps_base - 4;
  
