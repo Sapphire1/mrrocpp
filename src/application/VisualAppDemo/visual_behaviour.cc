@@ -37,8 +37,7 @@ const int visual_behaviour::motion_steps_min = 10;
 const int visual_behaviour::motion_steps_max = 60;
 const double visual_behaviour::step_time = 0.002;
 
-visual_behaviour::visual_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name,
-boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo> & vs)
+visual_behaviour::visual_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name)
 : common::generator::behaviour(ecp_task), current_position_saved(false), max_speed(0),
 max_angular_speed(0), max_acceleration(0), max_angular_acceleration(0)
 {

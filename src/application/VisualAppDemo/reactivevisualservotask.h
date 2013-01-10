@@ -11,7 +11,6 @@
 #include "robot/irp6p_m/ecp_r_irp6p_m.h"
 #include "robot/irp6ot_m/ecp_r_irp6ot_m.h"
 #include "../VisualApp/reactive_task.h"
-#include "visual_behaviour.h"
 #include "visual_arm_behaviour.h"
 #include "visual_wrist_behaviour.h"
 #include "../VisualApp/ib_eih_visual_servo.h"
@@ -43,8 +42,6 @@ class reactive_visual_servo_task : public reactive_task
 {
 private:
 	boost::shared_ptr<behaviour> start_beh;
-	boost::shared_ptr<behaviour> v_bhr_1;
-	boost::shared_ptr<behaviour> v_bhr2;
 	boost::shared_ptr<behaviour> arm_bh;
 	boost::shared_ptr<behaviour> wrist_bh;
 	boost::shared_ptr<visual_servo_regulator> reg_wrist;

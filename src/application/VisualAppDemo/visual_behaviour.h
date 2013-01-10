@@ -48,14 +48,13 @@ namespace generator {
 */
 class visual_behaviour: public behaviour
 {
-public: 
+public:
 boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo_regulator> reg;
 boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds;
 boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo>  vs;
-boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo>  wrist_vs;
 
 
-visual_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name, boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo> & vs);
+visual_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name);
 ~visual_behaviour();
 bool first_step();
 bool next_step();
