@@ -12,6 +12,8 @@
 #include "robot/irp6ot_m/ecp_r_irp6ot_m.h"
 #include "../VisualApp/reactive_task.h"
 #include "visual_behaviour.h"
+#include "visual_arm_behaviour.h"
+#include "visual_wrist_behaviour.h"
 #include "../VisualApp/ib_eih_visual_servo.h"
 #include "../VisualApp/ib_eih_wrist_move.h"
 #include "../VisualApp/visual_servo_regulator_p.h"
@@ -43,6 +45,8 @@ private:
 	boost::shared_ptr<behaviour> start_beh;
 	boost::shared_ptr<behaviour> v_bhr_1;
 	boost::shared_ptr<behaviour> v_bhr2;
+	boost::shared_ptr<behaviour> arm_bh;
+	boost::shared_ptr<behaviour> wrist_bh;
 	boost::shared_ptr<visual_servo_regulator> reg_wrist;
 	boost::shared_ptr<visual_servo_regulator> reg_arm;
 	boost::shared_ptr<mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds;

@@ -1,14 +1,16 @@
 /**
-* Created on: Dec 3, 2012
-* Author: lzmuda
-*/
+ *  @file visual_arm_behaviour.cc
+ *  @date 2013
+ *  @author lzmuda
+ */
+
 
 #include <algorithm>
 
 #include "base/ecp/ecp_task.h"
 #include "base/ecp/ecp_robot.h"
 
-#include "visual_behaviour.h"
+#include "visual_arm_behaviour.h"
 
 
 
@@ -30,19 +32,23 @@ namespace common {
 
 namespace generator {
 
-const int visual_behaviour::motion_steps_default = 30;
-const int visual_behaviour::motion_steps_min = 10;
-const int visual_behaviour::motion_steps_max = 60;
-const double visual_behaviour::step_time = 0.002;
+const int visual_arm_behaviour::motion_steps_default = 30;
+const int visual_arm_behaviour::motion_steps_min = 10;
+const int visual_arm_behaviour::motion_steps_max = 60;
+const double visual_arm_behaviour::step_time = 0.002;
 
-visual_behaviour::visual_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name,
-boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo> & vs)
+visual_arm_behaviour::visual_arm_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name)
 : common::generator::behaviour(ecp_task), current_position_saved(false), max_speed(0),
 max_angular_speed(0), max_acceleration(0), max_angular_acceleration(0)
 {
-  this->vs=vs;
   char config_section_name[] = { "[object_follower_ib]" };
+  char config_section_name_arm[] = { "[servovision_arm]" };
+
+  boost::shared_ptr <visual_servo_regulator>  reg_arm = boost::shared_ptr <visual_servo_regulator> (new regulator_p(ecp_task.config, config_section_name_arm));
   boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds = boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor>(new mrrocpp::ecp_mp::sensor::discode::discode_sensor(ecp_task.config, config_section_name));
+  boost::shared_ptr <visual_servo> arm_vs = boost::shared_ptr <visual_servo> (new ib_eih_visual_servo(reg_arm, ds, config_section_name, ecp_task.config));
+  //this->arm_vs=arm_vs;
+
   new_motion_steps = motion_steps = motion_steps_base = ecp_task.config.exists("motion_steps", section_name) ? ecp_task.config.value <unsigned int> ("motion_steps", section_name) : motion_steps_default;
 
   dt = motion_steps * step_time;
@@ -52,12 +58,12 @@ max_angular_speed(0), max_acceleration(0), max_angular_acceleration(0)
   max_acceleration = ecp_task.config.value <double> ("a_max", section_name);
   max_angular_acceleration = ecp_task.config.value <double> ("epsilon_max", section_name);
  
-  string log_enabled_name = "vs_log_enabled";
+  string log_enabled_name = "arm_vs_log_enabled";
   if (ecp_task.config.exists(log_enabled_name, section_name)
   && ecp_task.config.value <bool> (log_enabled_name, section_name)) {
-  unsigned int capacity = ecp_task.config.value <unsigned int> ("vs_log_capacity", section_name);
-  std::string server_addr = ecp_task.config.value <std::string> ("vs_log_server_addr", section_name);
-  int server_port = ecp_task.config.value <int> ("vs_log_server_port", section_name);
+  unsigned int capacity = ecp_task.config.value <unsigned int> ("arm_vs_log_capacity", section_name);
+  std::string server_addr = ecp_task.config.value <std::string> ("arm_vs_log_server_addr", section_name);
+  int server_port = ecp_task.config.value <int> ("arm_vs_log_server_port", section_name);
  
   log_client = boost::shared_ptr <logger_client>(new logger_client(capacity, server_addr, server_port, "motion_steps;is_linear_speed_constrained;is_linear_accel_constrained;is_angular_speed_constrained;is_angular_accel_constrained;is_position_constrained;prev_real_position_0_0;prev_real_position_0_1;prev_real_position_0_2;prev_real_position_0_3;prev_real_position_1_0;prev_real_position_1_1;prev_real_position_1_2;prev_real_position_1_3;prev_real_position_2_0;prev_real_position_2_1;prev_real_position_2_2;prev_real_position_2_3;np_0_0;np_0_1;np_0_2;np_0_3;np_1_0;np_1_1;np_1_2;np_1_3;np_2_0;np_2_1;np_2_2;np_2_3;velocity_0;velocity_1;velocity_2;acceleration_0;acceleration_1;acceleration_2;angular_velocity_0;angular_velocity_1;angular_velocity_2;angular_acceleration_0;angular_acceleration_1;angular_acceleration_2;"));
   }
@@ -72,12 +78,12 @@ max_angular_speed(0), max_acceleration(0), max_angular_acceleration(0)
   sr_ecp_msg.message("Macrostep length control disabled");
   }
 }
-visual_behaviour::~visual_behaviour()
+visual_arm_behaviour::~visual_arm_behaviour()
 {
 
 }
 
-bool visual_behaviour::first_step()
+bool visual_arm_behaviour::first_step()
 {
   //! configuration of sensor if state is equal DSS_NOT_CONNECTED (0)
 
@@ -110,7 +116,7 @@ bool visual_behaviour::first_step()
   angular_velocity.setZero();
   acceleration.setZero();
   angular_acceleration.setZero();
-  vs->reset();
+  arm_vs->reset();
 
 
 
@@ -118,7 +124,7 @@ log_dbg("visual_behaviour::first_step() end\n");
 return true;
 }
 
-bool visual_behaviour::next_step()
+bool visual_arm_behaviour::next_step()
 {
   std::cout<<"visual_behaviour::next_step\n";
 
@@ -177,7 +183,7 @@ bool visual_behaviour::next_step()
 return /*!any_condition_met;*/true;
 }
  // next_step()
- void visual_behaviour::constrain_position(lib::Homog_matrix & new_position)
+ void visual_arm_behaviour::constrain_position(lib::Homog_matrix & new_position)
  {
   double nearest_allowed_area_distance = INFINITY;
   lib::Homog_matrix constrained_position = new_position;
@@ -201,7 +207,7 @@ return /*!any_condition_met;*/true;
   new_position = constrained_position;
  }
  
- void visual_behaviour::constrain_vector(Eigen::Matrix <double, 3, 1> &ds, Eigen::Matrix <double, 3, 1> &prev_v, Eigen::Matrix <
+ void visual_arm_behaviour::constrain_vector(Eigen::Matrix <double, 3, 1> &ds, Eigen::Matrix <double, 3, 1> &prev_v, Eigen::Matrix <
   double, 3, 1> &v, Eigen::Matrix <double, 3, 1> &a, double max_v, double max_a)
  {
   speed_constrained = false;
@@ -231,7 +237,7 @@ Eigen::Matrix <double, 3, 1> dv = v - prev_v;
   prev_v = v;
  }
  
- void visual_behaviour::constrain_speed_accel(lib::Homog_matrix & position_change)
+ void visual_arm_behaviour::constrain_speed_accel(lib::Homog_matrix & position_change)
  {
   lib::Xyz_Angle_Axis_vector aa_vector;
   position_change.get_xyz_angle_axis(aa_vector);
@@ -247,66 +253,66 @@ constrain_vector(dalpha, prev_angular_velocity, angular_velocity, angular_accele
   is_angular_accel_constrained = accel_constrained;
 
   aa_vector.block(0, 0, 3, 1) = ds;
-aa_vector.block(3, 0, 3, 1) = dalpha;
+  aa_vector.block(3, 0, 3, 1) = dalpha;
   // get back to homogeneous matrix representation
   position_change.set_from_xyz_angle_axis(aa_vector);
  }
  
- const lib::Homog_matrix& visual_behaviour::get_current_position() const
+ const lib::Homog_matrix& visual_arm_behaviour::get_current_position() const
  {
   return current_position;
  }
  
- void visual_behaviour::configure(const std::string & sensor_prefix)
+ void visual_arm_behaviour::configure(const std::string & sensor_prefix)
  {
  // log_dbg("void visual_servo_manager::configure() 1\n");
   log_dbg("void visual_servo_manager::configure() 2\n");
   int i = 0;
-  vs->get_sensor()->configure_sensor();
+  arm_vs->get_sensor()->configure_sensor();
   char sensor_suffix[64];
   sprintf(sensor_suffix, "%02d", i);
   lib::sensor::SENSOR_t sensor_id = sensor_prefix + sensor_suffix;
-  sensor_m[sensor_id] = vs->get_sensor().get();
+  sensor_m[sensor_id] = arm_vs->get_sensor().get();
 
   log_dbg("void visual_behaviour::configure() 3\n");
  }
  
-void visual_behaviour::add_position_constraint(boost::shared_ptr <position_constraint> new_constraint)
+void visual_arm_behaviour::add_position_constraint(boost::shared_ptr <position_constraint> new_constraint)
  {
   position_constraints.push_back(new_constraint);
 }
  
- double visual_behaviour::get_linear_speed() const
+ double visual_arm_behaviour::get_linear_speed() const
  {
   return velocity.norm();
  }
  
- double visual_behaviour::get_angular_speed() const
+ double visual_arm_behaviour::get_angular_speed() const
  {
   return angular_velocity.norm();
  }
  
- double visual_behaviour::get_linear_acceleration() const
+ double visual_arm_behaviour::get_linear_acceleration() const
  {
   return acceleration.norm();
  }
  
- double visual_behaviour::get_angular_acceleration() const
+ double visual_arm_behaviour::get_angular_acceleration() const
  {
   return angular_acceleration.norm();
  }
  
- const boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo> & visual_behaviour::get_servo() const
+ const boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo> & visual_arm_behaviour::get_servo() const
  {
-  return vs;
+  return arm_vs;
  }
  
-double visual_behaviour::get_dt() const
+double visual_arm_behaviour::get_dt() const
  {
   return dt;
  }
  
- void visual_behaviour::set_new_motion_steps(int new_motion_steps)
+ void visual_arm_behaviour::set_new_motion_steps(int new_motion_steps)
  {
  // ss<<"new_motion_steps = "<<new_motion_steps<<"\n";
   this->new_motion_steps = min(new_motion_steps, motion_steps_max);
@@ -314,23 +320,23 @@ double visual_behaviour::get_dt() const
   //log_dbg("visual_behaviour:set_new_motion_steps(): this->new_motion_steps = %d\n", this->new_motion_steps);
  }
  
- int visual_behaviour::get_new_motion_steps() const
+ int visual_arm_behaviour::get_new_motion_steps() const
  {
   return new_motion_steps;
  }
  
- int visual_behaviour::get_motion_steps() const
+ int visual_arm_behaviour::get_motion_steps() const
  {
   return motion_steps;
  }
  
- int visual_behaviour::get_motion_steps_base() const{
+ int visual_arm_behaviour::get_motion_steps_base() const{
   return motion_steps_base;
  }
  
- void visual_behaviour::update_motion_steps(ecp_mp::sensor::discode::reading_message_header rmh)
+ void visual_arm_behaviour::update_motion_steps(ecp_mp::sensor::discode::reading_message_header rmh)
  {
-  Types::Mrrocpp_Proxy::Reading* reading = vs->get_reading();
+  Types::Mrrocpp_Proxy::Reading* reading = arm_vs->get_reading();
  
   struct timespec ts;
   clock_gettime(CLOCK_REALTIME, &ts);
@@ -338,7 +344,7 @@ double visual_behaviour::get_dt() const
   int seconds = ts.tv_sec - reading->processingStartSeconds;
   int nanoseconds = ts.tv_nsec - reading->processingStartNanoseconds;
   double image_mrroc_delay = seconds + 1e-9 * nanoseconds;
-  image_mrroc_delay -= vs->get_sensor()->get_mrroc_discode_time_offset();
+  image_mrroc_delay -= arm_vs->get_sensor()->get_mrroc_discode_time_offset();
  
   double offset = fmod(image_mrroc_delay, image_sampling_period);
  
@@ -361,17 +367,17 @@ double visual_behaviour::get_dt() const
   set_new_motion_steps(ms);
  }
  
- lib::Homog_matrix visual_behaviour::get_aggregated_position_change()
+ lib::Homog_matrix visual_arm_behaviour::get_aggregated_position_change()
  {
   bool reading_received = false;
   ecp_mp::sensor::discode::reading_message_header rmh;
-  if (macrostep_length_control && vs->get_sensor()->get_state()
+  if (macrostep_length_control && arm_vs->get_sensor()->get_state()
   == ecp_mp::sensor::discode::discode_sensor::DSS_READING_RECEIVED) {
-  rmh = vs->get_sensor()->get_rmh();
+  rmh = arm_vs->get_sensor()->get_rmh();
   reading_received = true;
   }
  
-  lib::Homog_matrix pc = vs->get_position_change(get_current_position(), get_dt());
+  lib::Homog_matrix pc = arm_vs->get_position_change(get_current_position(), get_dt());
  
   if (macrostep_length_control && reading_received) {
   update_motion_steps(rmh);

@@ -1,7 +1,9 @@
 /**
-* Created on: Dec 3, 2012
-* Author: lzmuda
-*/
+ *  @file visual_behaviour.cc
+ *  @date 2013
+ *  @author lzmuda
+ */
+
 
 #include <algorithm>
 

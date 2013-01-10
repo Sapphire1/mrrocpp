@@ -1,10 +1,12 @@
 /**
-* Created on: Dec 3 2012
-* Author: lzmuda
-*/
+ *  @file visual_wrist_behaviour.h
+ *  @date 2013
+ *  @author lzmuda
+ */
 
-#ifndef VISUAL_BEHAVIOUR_H_
-#define VISUAL_BEHAVIOUR_H_
+
+#ifndef VISUAL_WRIST_BEHAVIOUR_H_
+#define VISUAL_WRIST_BEHAVIOUR_H_
 
 #include <vector>
 #include <boost/shared_ptr.hpp>
@@ -44,17 +46,16 @@ namespace generator {
 * Servo manager is a generator that takes control calculated in multiple visual_servo objects and aggregates them.
 * It also applies constraints for end effector speed, acceleration and position.
 */
-class visual_behaviour: public behaviour
+class visual_wrist_behaviour: public behaviour
 {
 public: 
 boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo_regulator> reg;
 boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds;
-boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo>  vs;
 boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo>  wrist_vs;
 
 
-visual_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name, boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo> & vs);
-~visual_behaviour();
+visual_wrist_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name);
+~visual_wrist_behaviour();
 bool first_step();
 bool next_step();
 /** Configures all servos.

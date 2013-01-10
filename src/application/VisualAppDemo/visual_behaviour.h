@@ -1,7 +1,9 @@
 /**
-* Created on: Dec 3 2012
-* Author: lzmuda
-*/
+ *  @file visual_behaviour.h
+ *  @date 2013
+ *  @author lzmuda
+ */
+
 
 #ifndef VISUAL_BEHAVIOUR_H_
 #define VISUAL_BEHAVIOUR_H_

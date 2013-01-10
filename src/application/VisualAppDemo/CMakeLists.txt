@@ -9,6 +9,8 @@ add_executable(ecp_vsdemo_objectfollower_ib_eih2
     begin_condition_right.cpp
     reactivevisualservotask.cpp
     begin_behaviour.cc
+    visual_arm_behaviour.cc
+    visual_wrist_behaviour.cc
 )
 
 target_link_libraries(ecp_vsdemo_objectfollower_ib_eih2
