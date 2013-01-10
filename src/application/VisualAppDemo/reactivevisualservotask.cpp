@@ -54,8 +54,6 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 	 	wrist_bh->add_begin_condition(bgVisCond);
 	 	wrist_bh->add_terminate_condition(term_in_left);
 
-	// 	v_bhr2->add_begin_condition(bgVisCond);
-	//	v_bhr2->add_terminate_condition(term_in_left);
 
 	//	start_beh = boost::shared_ptr<behaviour>(new begin_behaviour(*this));
 	//	start_beh->add_begin_condition(bgVisCond);
