@@ -60,7 +60,7 @@ max_angular_speed(0), max_acceleration(0), max_angular_acceleration(0)
   std::string server_addr = ecp_task.config.value <std::string> ("vs_log_server_addr", section_name);
   int server_port = ecp_task.config.value <int> ("vs_log_server_port", section_name);
  
-  log_client = boost::shared_ptr <logger_client>(new logger_client(500, "127.0.0.1", 7000, "motion_steps;is_linear_speed_constrained;is_linear_accel_constrained;is_angular_speed_constrained;is_angular_accel_constrained;is_position_constrained;prev_real_position_0_0;prev_real_position_0_1;prev_real_position_0_2;prev_real_position_0_3;prev_real_position_1_0;prev_real_position_1_1;prev_real_position_1_2;prev_real_position_1_3;prev_real_position_2_0;prev_real_position_2_1;prev_real_position_2_2;prev_real_position_2_3;np_0_0;np_0_1;np_0_2;np_0_3;np_1_0;np_1_1;np_1_2;np_1_3;np_2_0;np_2_1;np_2_2;np_2_3;velocity_0;velocity_1;velocity_2;acceleration_0;acceleration_1;acceleration_2;angular_velocity_0;angular_velocity_1;angular_velocity_2;angular_acceleration_0;angular_acceleration_1;angular_acceleration_2;"));
+
   }
  
   image_sampling_period=0;
@@ -81,6 +81,8 @@ visual_behaviour::~visual_behaviour()
 bool visual_behaviour::first_step()
 {
   //! configuration of sensor if state is equal DSS_NOT_CONNECTED (0)
+  std::cout << "Logger initialized\n";
+  log_client = boost::shared_ptr <logger_client>(new logger_client(500, "127.0.0.1", 7000, "motion_steps;"/*is_linear_speed_constrained;is_linear_accel_constrained;is_angular_speed_constrained;is_angular_accel_constrained;is_position_constrained;prev_real_position_0_0;prev_real_position_0_1;prev_real_position_0_2;prev_real_position_0_3;prev_real_position_1_0;prev_real_position_1_1;prev_real_position_1_2;prev_real_position_1_3;prev_real_position_2_0;prev_real_position_2_1;prev_real_position_2_2;prev_real_position_2_3;np_0_0;np_0_1;np_0_2;np_0_3;np_1_0;np_1_1;np_1_2;np_1_3;np_2_0;np_2_1;np_2_2;np_2_3;velocity_0;velocity_1;velocity_2;acceleration_0;acceleration_1;acceleration_2;angular_velocity_0;angular_velocity_1;angular_velocity_2;angular_acceleration_0;angular_acceleration_1;angular_acceleration_2;*/));
 
   configure();
 
@@ -164,15 +166,18 @@ bool visual_behaviour::next_step()
   (int)is_angular_speed_constrained, (int)is_angular_accel_constrained,
   (int)is_position_constrained
   );
-  msg.append_Homog_matrix(the_robot->reply_package.arm.pf_def.arm_frame);
-  msg.append_Homog_matrix(next_position);
-  msg.append_matrix(velocity);
-  msg.append_matrix(acceleration);
-  msg.append_matrix(angular_velocity);
-  msg.append_matrix(angular_acceleration);
- 
+//  msg.append_Homog_matrix(the_robot->reply_package.arm.pf_def.arm_frame);
+ // msg.append_Homog_matrix(next_position);
+ // msg.append_matrix(velocity);
+ // msg.append_matrix(acceleration);
+ // msg.append_matrix(angular_velocity);
+  //msg.append_matrix(angular_acceleration);
+  msg.number=23;
+  std::cout<<"logowanie?\n";
+
   if (log_client.get() != NULL) {
-  log_client->log(msg);
+	  std::cout<<"logowanie\n";
+	  log_client->log(msg);
 }
   log_dbg("visual_behaviour::next_step() end\n");
 return /*!any_condition_met;*/true;

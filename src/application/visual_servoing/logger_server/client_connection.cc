@@ -22,7 +22,7 @@ client_connection::client_connection(logger_server* server, int connection_fd, c
 	header_size = oa.getArchiveSize();
 
 	config_message cm = receive_message<config_message>();
-
+	std::cout<<"Client connection\n";
 	time_t timep = time(NULL);
 	struct tm* time_split = localtime(&timep);
 	sprintf(time_log_filename, "../../msr/%s_%04d-%02d-%02d_%02d-%02d-%02d_%s.csv", cm.filename_prefix, time_split->tm_year + 1900, time_split->tm_mon

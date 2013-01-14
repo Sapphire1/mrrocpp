@@ -33,6 +33,10 @@ bool in_left_behaviour::first_step()
 	the_robot->ecp_command.interpolation_type = lib::MIM;
  	the_robot->ecp_command.motion_steps = 100;
  	the_robot->ecp_command.value_in_step_no = 97;
+ 	int capacity=500;
+ 	std::string server_addr="127.0.0.1";
+ 	int server_port=7000;
+	//log_client = boost::shared_ptr <logger_client>(new logger_client(capacity, server_addr, server_port, "requestSentTime;sendTime;receiveTime;processingStart;processingEnd;object_visible;np_0_0;np_0_1;np_0_2;np_0_3;np_1_0;np_1_1;np_1_2;np_1_3;np_2_0;np_2_1;np_2_2;np_2_3;error_x;error_y;error_z;error_alpha;error_betha;error_gamma;"));
 
 	return true;
 }

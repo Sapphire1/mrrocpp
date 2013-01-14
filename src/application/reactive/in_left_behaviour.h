@@ -12,6 +12,7 @@
 
 #include "behaviour.h"
 #include "../VisualApp/visual_servo_regulator_p.h"
+#include "base/lib/logger_client/logger_client.h"
 
 using namespace mrrocpp::ecp::servovision;
 
@@ -20,6 +21,8 @@ namespace ecp {
 namespace common {
 namespace generator {
 
+using logger::logger_client;
+using logger::log_message;
 
 /*!
  * @brief 
@@ -46,6 +49,7 @@ public:
 	 * @brief generates first step of transition function
 	 * @return 
 	 */
+	boost::shared_ptr<logger_client> log_client;
 	bool first_step();
 	bool next_step();
 };
