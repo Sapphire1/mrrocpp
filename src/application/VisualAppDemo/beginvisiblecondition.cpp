@@ -40,7 +40,7 @@ bool begin_visible_condition::check(const boost::shared_ptr<mrrocpp::ecp::common
 	std::cout << "Begin_visible_condition : \n" << current_position[0]<<"\t"<<
 	current_position[1]<<"\t\t"<< current_position[2]<<"\n"<< 	current_position[3]<<"\t\t"<<
 	current_position[4]<<"\t"<< current_position[5]<<"\n";
-	if(current_position[1]<=1.95)
+	if(current_position[1]<=1.8)
 	{
 		std::cout<<"Begin Condition in left is not met!!!\n";
 		return false;

@@ -26,7 +26,7 @@ begin_behaviour::begin_behaviour(common::task::task& _ecp_task) : common::genera
 
 bool begin_behaviour::first_step()
 {	
-
+	std::cout<<"Begin behaviour :: firstStep\n";
 	the_robot->ecp_command.instruction_type = lib::SET_GET;
 	the_robot->ecp_command.get_type = ARM_DEFINITION; // arm - ORYGINAL
 	the_robot->ecp_command.set_type = ARM_DEFINITION | ROBOT_MODEL_DEFINITION;
@@ -77,7 +77,7 @@ bool begin_behaviour::next_step()
 
 	for (int i = 0; i < 6; i++)
 	{
-		if(counter%50==0)
+//		if(counter%50==0)
 			std::cout<<std::endl<<"Control " << i <<"= "<<control[i]<<"\n";
 		the_robot->ecp_command.arm.pf_def.arm_coordinates[i] = control[i];
 	}
