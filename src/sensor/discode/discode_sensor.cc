@@ -182,10 +182,24 @@ void discode_sensor::get_reading()
 
 void discode_sensor::terminate()
 {
+	std::cout<<"State of sensor discode " <<state<<std::endl;
 	if (!(state == DSS_CONNECTED || state == DSS_ERROR)) {
 		throw ds_wrong_state_exception(
 				"discode_sensor::terminate(): !(state == DSS_CONNECTED || state == DSS_ERROR)");
 	}
+
+	close(sockfd);
+	state = DSS_NOT_CONNECTED;
+}
+
+void discode_sensor::terminate2()
+{
+	std::cout<<"State of sensor discode " <<state<<std::endl;
+	/*if (!(state == DSS_CONNECTED || state == DSS_ERROR)) {
+		throw ds_wrong_state_exception(
+				"discode_sensor::terminate(): !(state == DSS_CONNECTED || state == DSS_ERROR)");
+	}
+	*/
 	close(sockfd);
 	state = DSS_NOT_CONNECTED;
 }

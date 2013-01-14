@@ -33,32 +33,35 @@ void behaviour::Move()
 			break;
 		}
 		// order to prepare data for sensors
-		std::cout<<"initiate sensor readings\n";
+		std::cout<<"Behaviour::MOVE::initiate sensor readings\n";
 		initiate_sensors_readings();
+		std::cout<<"Behaviour::MOVE::after initiate sensor readings\n";
 		if (the_robot)
-					{
+		{
 						// set motion order and read the state of a robot-get order
-					if (!(ecp_t.continuous_coordination))
-					{
-						// for data ports purpose
-						the_robot->is_new_data = false;
-						the_robot->is_new_request = false;
-						the_robot->create_command();
-						if (the_robot->data_ports_used)
-						{
-							the_robot->finalize_data_port_command();
-						}
-					}
-						// execution of step motion
-					if (the_robot->communicate_with_edp)
-					{
-							execute_motion();
-							the_robot->get_reply();
-					}
+			if (!(ecp_t.continuous_coordination))
+			{
+				// for data ports purpose
+				the_robot->is_new_data = false;
+				the_robot->is_new_request = false;
+				the_robot->create_command();
+				if (the_robot->data_ports_used)
+				{
+					the_robot->finalize_data_port_command();
 				}
+			}
+					// execution of step motion
+			if (the_robot->communicate_with_edp)
+			{
+				execute_motion();
+				the_robot->get_reply();
+			}
+		 }
 
 			// reading data from all sensors
+		std::cout<<"Behaviour::MOVE::Get sensors readings\n";
 		get_sensors_readings();
+		std::cout<<"Behaviour::MOVE::After Get sensors readings\n";
 		node_counter++;
 		if (ecp_t.pulse_check()) 
 		{

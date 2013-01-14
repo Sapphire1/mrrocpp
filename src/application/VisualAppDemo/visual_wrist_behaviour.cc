@@ -41,7 +41,7 @@ visual_wrist_behaviour::visual_wrist_behaviour(mrrocpp::ecp::common::task::task 
 
    reg = boost::shared_ptr <visual_servo_regulator> (new regulator_p(ecp_task.config, config_section_name_wrist));
    ds = boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor>(new mrrocpp::ecp_mp::sensor::discode::discode_sensor(ecp_task.config, config_section_name));
-   vs = boost::shared_ptr <visual_servo> (new ib_eih_visual_servo(reg, ds, config_section_name, ecp_task.config));
+   vs = boost::shared_ptr <visual_servo> (new ib_eih_wrist_move(reg, ds, config_section_name, ecp_task.config));
 }
 visual_wrist_behaviour::~visual_wrist_behaviour()
 {

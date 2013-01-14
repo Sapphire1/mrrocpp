@@ -60,7 +60,7 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 
 	//	add_behaviour(1, start_beh);
 		add_behaviour(1, arm_bh);
-	//	add_behaviour(1, wrist_bh);
+		add_behaviour(2, wrist_bh);
 
 		log_dbg("reactive_servo_task: end\n");
 	}

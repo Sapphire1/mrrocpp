@@ -84,6 +84,7 @@ public:
 	 * @brief Disconnect from discode.
 	 */
 	virtual void terminate();
+	virtual void terminate2();
 
 	/**
 	 * Get current state of discode_sensor.
