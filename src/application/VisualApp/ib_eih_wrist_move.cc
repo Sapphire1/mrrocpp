@@ -89,6 +89,11 @@ lib::Homog_matrix ib_eih_wrist_move::compute_position_change(const lib::Homog_ma
         return delta_position;
 }
 
+float ib_eih_wrist_move::get_ellipse_factor(){
+	Eigen::Matrix <double, Types::ImagePosition::elementsSize, 1> imagePosition(reading.imagePosition.elements);
+	return reading.imagePosition.elements[2];
+}
+
 void ib_eih_wrist_move::retrieve_reading()
 {
         try {

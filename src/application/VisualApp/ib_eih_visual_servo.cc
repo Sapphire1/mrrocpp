@@ -34,7 +34,7 @@ ib_eih_visual_servo::ib_eih_visual_servo(boost::shared_ptr <visual_servo_regulat
 
 	reading.objectVisible = false;
 }
-
+float ib_eih_visual_servo::get_ellipse_factor(){return 0;}
 ib_eih_visual_servo::~ib_eih_visual_servo()
 {
 }

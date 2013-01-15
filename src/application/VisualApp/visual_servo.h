@@ -51,7 +51,7 @@ public:
 	 * @return
 	 */
 	boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> get_sensor();
-
+	virtual float get_ellipse_factor() = 0;
 	virtual Types::Mrrocpp_Proxy::Reading* get_reading() = 0;
 
 	/**

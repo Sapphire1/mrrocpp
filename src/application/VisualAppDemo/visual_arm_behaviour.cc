@@ -49,7 +49,7 @@ visual_arm_behaviour::~visual_arm_behaviour()
 {
 
 }
- 
+
 } // namespace generator
 
 } // namespace common

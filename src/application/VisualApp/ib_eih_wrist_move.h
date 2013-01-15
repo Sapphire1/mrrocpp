@@ -25,7 +25,7 @@ public:
 	virtual ~ib_eih_wrist_move();
 
 	virtual Types::Mrrocpp_Proxy::IBReading* get_reading();
-
+	virtual float get_ellipse_factor();
 	virtual void reset();
 protected:
 	virtual lib::Homog_matrix compute_position_change(const lib::Homog_matrix& current_position, double dt);
