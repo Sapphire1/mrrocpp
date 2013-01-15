@@ -7,6 +7,7 @@ add_executable(ecp_vsdemo_objectfollower_ib_eih2
     terminate_in_right_condition.cc
     beginvisiblecondition.cpp
     begin_condition_right.cpp
+    begin_start_pos_condition.cc
     reactivevisualservotask.cpp
     begin_behaviour.cc
     visual_arm_behaviour.cc

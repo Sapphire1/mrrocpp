@@ -45,7 +45,10 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 	 	time_ter_cond = boost::shared_ptr <terminate_condition>(new timeout_terminate_condition(500));
 	 	log_dbg("reactive_servo_task: 3\n");
 	 	term_in_left=boost::shared_ptr <terminate_condition>(new terminate_in_left_condition(1.98));
+	 	term_beg_move=boost::shared_ptr <terminate_condition>(new terminate_in_right_condition(1.98));
+
 	 	bgVisCond = boost::shared_ptr<begin_condition>(new begin_visible_condition());
+	 	bgStartPosCond=boost::shared_ptr<begin_condition>(new begin_start_pos_condition());
 
 	 	arm_bh->add_begin_condition(bgVisCond);
 	 	arm_bh->add_terminate_condition(time_ter_cond);
@@ -56,11 +59,12 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 
 
 		start_beh = boost::shared_ptr<behaviour>(new begin_behaviour(*this));
-		start_beh->add_begin_condition(bgVisCond);
-	//	start_beh->add_terminate_condition(term_in_left);
-	//	add_behaviour(1, start_beh);
-		add_behaviour(1, arm_bh);
-		add_behaviour(2, wrist_bh);
+		start_beh->add_begin_condition(bgStartPosCond);
+		start_beh->add_terminate_condition(term_beg_move);
+
+		add_behaviour(1, start_beh);
+		add_behaviour(2, arm_bh);
+		add_behaviour(3, wrist_bh);
 
 		log_dbg("reactive_servo_task: end\n");
 	}

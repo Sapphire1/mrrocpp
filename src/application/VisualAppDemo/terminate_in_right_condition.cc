@@ -9,22 +9,28 @@ namespace generator {
   
 bool terminate_in_right_condition::check(mrrocpp::ecp::common::generator::behaviour* bh)
 {
-	std::cout<<"terminate_position_condition_right::check()\n";
-	lib::Homog_matrix tmp;
- 	double current_position[6];
-	lib::Xyz_Angle_Axis_vector tool_vector;
-  	tmp=bh->the_robot->reply_package.arm.pf_def.arm_frame;
- 	tmp.get_xyz_angle_axis(tool_vector);
- 	tool_vector.to_table(current_position);
- 			  std::cout << current_position[0]<<"\t"<<
- 			  current_position[1]<<"\t"<<
- 			  current_position[2]<<"\n"<<
- 			  current_position[3]<<"\t"<<
- 			  current_position[4]<<"\t"<<
- 			  current_position[5]<<"\n";
- 	if(current_position[1]>=2.1)
+	bh->the_robot->ecp_command.instruction_type = lib::SET_GET;
+	bh->the_robot->ecp_command.get_type = ARM_DEFINITION; // arm - ORYGINAL
+	bh->the_robot->ecp_command.set_type = ARM_DEFINITION | ROBOT_MODEL_DEFINITION;
+	bh->the_robot->ecp_command.robot_model.type = lib::TOOL_FRAME;
+	bh->the_robot->ecp_command.get_robot_model_type = lib::TOOL_FRAME;
+	bh->the_robot->ecp_command.set_arm_type = lib::PF_VELOCITY;
+	bh->the_robot->ecp_command.motion_type = lib::ABSOLUTE;
+	bh->the_robot->ecp_command.interpolation_type = lib::TCIM;
+	bh->the_robot->ecp_command.motion_steps = 30;
+	bh->the_robot->ecp_command.value_in_step_no = 30 - 2;
+
+
+	bh->the_robot->ecp_command.instruction_type = lib::SET_GET;
+		// read actual position
+		for (int i = 0; i < 6; i++)
+		{
+			actual_position[i]=bh->the_robot->reply_package.arm.pf_def.joint_coordinates[i];
+		}
+
+ 	if(actual_position[5]>=-0.023)
  	{
-		std::cout<<"Terminate Condition in right!!!\n";
+		std::cout<<"Terminate Condition of begin move!!!\n";
  		return true;
  	}
 	return false;

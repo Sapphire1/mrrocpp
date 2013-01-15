@@ -19,7 +19,9 @@
 #include "object_reached_termination_condition.h"
 #include "timeout_terminate_condition.h"
 #include "terminate_in_left_condition.h"
+#include "terminate_in_right_condition.h"
 #include "beginvisiblecondition.h"
+#include "begin_start_pos_condition.h"
 #include "begin_behaviour.h"
 using namespace mrrocpp::ecp::servovision;
 //using namespace mrrocpp::ecp::condition;
@@ -54,7 +56,9 @@ private:
 	boost::shared_ptr<terminate_condition> obj_reach_ter_cond;
 	boost::shared_ptr<terminate_condition> time_ter_cond;
 	boost::shared_ptr<terminate_condition> term_in_left;
+	boost::shared_ptr<terminate_condition> term_beg_move;
 	boost::shared_ptr<begin_condition> bgVisCond;
+	boost::shared_ptr<begin_condition> bgStartPosCond;
 
 public:
 	reactive_visual_servo_task(mrrocpp::lib::configurator & configurator);

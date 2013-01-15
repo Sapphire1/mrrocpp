@@ -49,7 +49,6 @@ regulator_pid::regulator_pid(const lib::configurator & config, const std::string
 regulator_pid::~regulator_pid()
 {
 }
-
 const Eigen::Matrix <double, 6, 1> & regulator_pid::compute_control(const Eigen::Matrix <double, 6, 1> & error, double dt)
 {
 	error_integral += error * dt;

@@ -44,6 +44,7 @@ public:
 	~begin_behaviour(){};
 	int counter;
 	bool arm_set;
+	bool wrist_set;
 	/**
 	 * @brief generates first step of transition function
 	 * @return 

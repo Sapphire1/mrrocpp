@@ -8,6 +8,7 @@
 #define TERMINATE_IN_RIGHT_CONDITION_H_
 #include "application/VisualApp/terminate_condition.h"
 #include "application/VisualApp/behaviour.h"
+#include <Eigen/Core>
 using namespace mrrocpp::ecp::common::generator;
 
 namespace mrrocpp {
@@ -26,6 +27,7 @@ public:
 	~terminate_in_right_condition(){};
  	bool check(mrrocpp::ecp::common::generator::behaviour *);
  	void reset();
+ 	Eigen::Matrix <double, 6, 1> actual_position;
 };
 
 
