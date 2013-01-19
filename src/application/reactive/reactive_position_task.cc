@@ -36,7 +36,7 @@ reactive_position_task::reactive_position_task(mrrocpp::lib::configurator & conf
 	{
 		throw std::runtime_error("Robot not supported");
 	}
- 		char config_section_name[] = { "[object_follower_ib]" };
+ 		char config_section_name[] = { "[regulator_p]" };
  		reg = boost::shared_ptr <visual_servo_regulator> (new regulator_p(configurator, config_section_name));
  		/// create_behaviour	
  		boost::shared_ptr<behaviour> move_left=boost::shared_ptr<behaviour>(new in_left_behaviour(*this, reg));
