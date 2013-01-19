@@ -18,9 +18,10 @@ namespace generator {
 
 
 
-in_right_behaviour::in_right_behaviour(common::task::task& _ecp_task) : common::generator::behaviour(_ecp_task)
+in_right_behaviour::in_right_behaviour(common::task::task& _ecp_task,  boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo_regulator> & reg, boost::shared_ptr <logger_client> & log_client) : common::generator::behaviour(_ecp_task)
 {
-
+	this->log_client=log_client;
+	this->reg=reg;
 }
 
 bool in_right_behaviour::first_step()
@@ -38,25 +39,41 @@ bool in_right_behaviour::first_step()
 }
 bool in_right_behaviour::next_step()
 {	
+	lib::Homog_matrix tmp;
+	double current_position[6];
+	lib::Xyz_Angle_Axis_vector tool_vector;
+	tmp=the_robot->reply_package.arm.pf_def.arm_frame;
+	tmp.get_xyz_angle_axis(tool_vector);
+	tool_vector.to_table(current_position);
+	for(int i=0; i<6; i++)
+		std::cout<<current_position[i]<<"\t";
+	std::cout<<std::endl;
+	sprintf(msg.text, "%f;%f;%f;%f;%f;%f;",current_position[0],current_position[1],current_position[2],current_position[3],current_position[4],current_position[5]);
+
+	if (log_client.get() != NULL) {
+		std::cout<<"logowanie\n";
+		log_client->log(msg);
+	}
+	error[1]=-(2.2-current_position[1]);
+	control = reg->compute_control(error, 0.02);
+
 	lib::Homog_matrix homog_matrix;
 	double nextChange[6];
 	the_robot->ecp_command.instruction_type = lib::SET_GET;
 	nextChange[0]=0;
-	nextChange[1]=-0.02;
+	nextChange[1]=control[1];
 	nextChange[2]=0;
 	nextChange[3]=0;
 	nextChange[4]=0;
 	nextChange[5]=0;
 	homog_matrix.set_from_xyz_angle_axis(lib::Xyz_Angle_Axis_vector(nextChange[0], nextChange[1], nextChange[2], nextChange[3], nextChange[4], nextChange[5]));
-
 	the_robot->ecp_command.arm.pf_def.arm_frame = homog_matrix;
 	the_robot->ecp_command.instruction_type = lib::SET_GET;
 
 	// Obliczenie zadanej pozycji posredniej w tym kroku ruchu
-	 
+
 	lib::Homog_matrix current_frame_wo_offset(the_robot->reply_package.arm.pf_def.arm_frame);
 	current_frame_wo_offset.remove_translation();
-
 	lib::Ft_v_vector force_torque(the_robot->reply_package.arm.pf_def.force_xyz_torque_xyz);
 	std::cout<< "Next_STEP \n"<<std::endl;
 

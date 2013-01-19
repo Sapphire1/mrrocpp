@@ -17,7 +17,7 @@ bool terminate_in_right_condition::check(mrrocpp::ecp::common::generator::behavi
   	tmp=bh->the_robot->reply_package.arm.pf_def.arm_frame;
  	tmp.get_xyz_angle_axis(tool_vector);
  	tool_vector.to_table(current_position);
- 	if(current_position[1]>=2.2)
+ 	if(current_position[1]>=2.18)
  	{
  		return false;
  	}

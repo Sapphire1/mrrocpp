@@ -43,15 +43,16 @@ public:
 	Eigen::Matrix <double, 6, 1> control;
 	Eigen::Matrix <double, 6, 1> error;
 	boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo_regulator> reg;
-	in_left_behaviour(common::task::task& _ecp_task , boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo_regulator> & reg);
+	in_left_behaviour(common::task::task& _ecp_task , boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo_regulator> & reg, boost::shared_ptr <logger_client> & log_client);
 	~in_left_behaviour(){};
 	/**
 	 * @brief generates first step of transition function
 	 * @return 
 	 */
-	boost::shared_ptr<logger_client> log_client;
 	bool first_step();
 	bool next_step();
+	boost::shared_ptr<logger_client> log_client;
+	logger::log_message msg;
 };
 
 } // namespace generator

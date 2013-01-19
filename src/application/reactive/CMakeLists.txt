@@ -15,6 +15,7 @@ add_executable(reactive
 target_link_libraries(reactive
 	ecp_r_irp6p_m
 	ecp_r_irp6ot_m
+	visual_servoing2
 	ecp ${COMMON_LIBRARIES}
 )
 

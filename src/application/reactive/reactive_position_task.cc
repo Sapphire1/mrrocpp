@@ -27,6 +27,8 @@ namespace task {
 
 reactive_position_task::reactive_position_task(mrrocpp::lib::configurator & configurator) : common::task::reactive_task(configurator)
 {
+	log_client = boost::shared_ptr <logger_client>(new logger_client(500, "127.0.0.1", 7000,"X;Y;Z;AX;AY;AZ"));
+	log_client->set_connect();
 	try{
  		if(config.robot_name == lib::irp6p_m::ROBOT_NAME) 
 	{
@@ -39,8 +41,8 @@ reactive_position_task::reactive_position_task(mrrocpp::lib::configurator & conf
  		char config_section_name[] = { "[regulator_p]" };
  		reg = boost::shared_ptr <visual_servo_regulator> (new regulator_p(configurator, config_section_name));
  		/// create_behaviour	
- 		boost::shared_ptr<behaviour> move_left=boost::shared_ptr<behaviour>(new in_left_behaviour(*this, reg));
- 		boost::shared_ptr<behaviour> move_right= boost::shared_ptr<behaviour>(new in_right_behaviour(*this));
+ 		boost::shared_ptr<behaviour> move_left=boost::shared_ptr<behaviour>(new in_left_behaviour(*this, reg,log_client));
+ 		boost::shared_ptr<behaviour> move_right= boost::shared_ptr<behaviour>(new in_right_behaviour(*this, reg, log_client));
 		///TODO
 		/// create_begin_cond
  		boost::shared_ptr<begin_condition> begLeftCod=boost::shared_ptr<begin_condition>(new begin_in_left_condition());

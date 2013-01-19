@@ -18,13 +18,17 @@ namespace generator {
 
 
 
-in_left_behaviour::in_left_behaviour(common::task::task& _ecp_task, boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo_regulator> & reg) :	common::generator::behaviour(_ecp_task)
+in_left_behaviour::in_left_behaviour(common::task::task& _ecp_task, boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo_regulator> & reg,  boost::shared_ptr <logger_client> & log_client) :	common::generator::behaviour(_ecp_task)
 {
+//	log_client = boost::shared_ptr <logger_client>(new logger_client(500, "127.0.0.1", 7000,"X;Y;Z;AX;AY;AZ"));
+//	log_client->set_connect();
 	this->reg=reg;
+	this->log_client=log_client;
 }
 
 bool in_left_behaviour::first_step()
 {	
+
 	the_robot->ecp_command.instruction_type = lib::GET;
 	the_robot->ecp_command.get_type = ARM_DEFINITION;
 	the_robot->ecp_command.set_type = ARM_DEFINITION;
@@ -33,13 +37,10 @@ bool in_left_behaviour::first_step()
 	the_robot->ecp_command.interpolation_type = lib::MIM;
  	the_robot->ecp_command.motion_steps = 100;
  	the_robot->ecp_command.value_in_step_no = 97;
- 	int capacity=500;
- 	std::string server_addr="127.0.0.1";
- 	int server_port=7000;
-	//log_client = boost::shared_ptr <logger_client>(new logger_client(capacity, server_addr, server_port, "requestSentTime;sendTime;receiveTime;processingStart;processingEnd;object_visible;np_0_0;np_0_1;np_0_2;np_0_3;np_1_0;np_1_1;np_1_2;np_1_3;np_2_0;np_2_1;np_2_2;np_2_3;error_x;error_y;error_z;error_alpha;error_betha;error_gamma;"));
 
 	return true;
 }
+
 bool in_left_behaviour::next_step()
 {	
 	lib::Homog_matrix tmp;
@@ -51,6 +52,12 @@ bool in_left_behaviour::next_step()
 	for(int i=0; i<6; i++)
 		std::cout<<current_position[i]<<"\t";
 	std::cout<<std::endl;
+	sprintf(msg.text, "%f;%f;%f;%f;%f;%f;",current_position[0],current_position[1],current_position[2],current_position[3],current_position[4],current_position[5]);
+
+	if (log_client.get() != NULL) {
+		std::cout<<"logowanie\n";
+		log_client->log(msg);
+	}
 
 	error[1]=current_position[1]-1.8;
 	control = reg->compute_control(error, 0.02);
@@ -76,7 +83,6 @@ bool in_left_behaviour::next_step()
 
 	lib::Ft_v_vector force_torque(the_robot->reply_package.arm.pf_def.force_xyz_torque_xyz);
 	std::cout<< "Next_STEP \n"<<std::endl;
-
 
 	 return true;
 }
