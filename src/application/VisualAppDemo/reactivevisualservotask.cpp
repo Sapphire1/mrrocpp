@@ -19,6 +19,10 @@ namespace common {
 namespace task {
 reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurator & configurator) : common::task::reactive_task(configurator)
 {
+
+	log_client = boost::shared_ptr <logger_client>(new logger_client(500, "127.0.0.1", 7000,"Ellipse_factor;X;Y;Z;AX;AY;AZ"));
+	log_client->set_connect();
+
 	log_dbg_enabled = true;
 	log_enabled = true;
 	try{
@@ -36,8 +40,9 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 
 	 	log_dbg("reactive_servo_task: 1\n");
 	 	//! creating behaviours
-	 	arm_bh=boost::shared_ptr<behaviour>(new visual_arm_behaviour(*this, config_section_name));
-	 	wrist_bh=boost::shared_ptr<behaviour>(new visual_wrist_behaviour(*this, config_section_name));
+	 	arm_bh=boost::shared_ptr<behaviour>(new visual_arm_behaviour(*this, config_section_name, log_client));
+	 	wrist_bh=boost::shared_ptr<behaviour>(new visual_wrist_behaviour(*this, config_section_name, log_client));
+	 	start_beh = boost::shared_ptr<behaviour>(new begin_behaviour(*this,log_client));
 
 	 	obj_reach_ter_cond = boost::shared_ptr <terminate_condition>(new object_reached_termination_condition(configurator, config_section_name_arm));
 	 	log_dbg("reactive_servo_task: 2\n");
@@ -58,13 +63,13 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 	 	wrist_bh->add_terminate_condition(term_in_left);
 
 
-		start_beh = boost::shared_ptr<behaviour>(new begin_behaviour(*this));
+
 		start_beh->add_begin_condition(bgStartPosCond);
 		start_beh->add_terminate_condition(term_beg_move);
 
 		add_behaviour(1, start_beh);
-		add_behaviour(2, arm_bh);
-		add_behaviour(3, wrist_bh);
+	//	add_behaviour(2, arm_bh);
+	//	add_behaviour(3, wrist_bh);
 
 		log_dbg("reactive_servo_task: end\n");
 	}
@@ -77,6 +82,7 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 
 reactive_visual_servo_task::~reactive_visual_servo_task()
 {
+	log_client->set_disconnect();
 }
 task_base* return_created_ecp_task(lib::configurator &config)
 {

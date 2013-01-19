@@ -33,10 +33,11 @@ namespace common {
 namespace generator {
 
 
-visual_wrist_behaviour::visual_wrist_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name)
+visual_wrist_behaviour::visual_wrist_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name, boost::shared_ptr<logger::logger_client> & log_client)
 : common::generator::visual_behaviour(ecp_task, section_name)
 {
-  char config_section_name[] = { "[object_follower_ib]" };
+   this->log_client=log_client;
+   char config_section_name[] = { "[object_follower_ib]" };
    char config_section_name_wrist[] = { "[servovision_wrist]" };
 
    reg = boost::shared_ptr <visual_servo_regulator> (new regulator_p(ecp_task.config, config_section_name_wrist));

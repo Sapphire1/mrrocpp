@@ -60,13 +60,7 @@ max_angular_speed(0), max_acceleration(0), max_angular_acceleration(0)
   std::string server_addr = ecp_task.config.value <std::string> ("vs_log_server_addr", section_name);
   int server_port = ecp_task.config.value <int> ("vs_log_server_port", section_name);
   std::cout << "Logger initialized\n";
-  log_client = boost::shared_ptr <logger_client>(new logger_client(500, "127.0.0.1", 7000,
-  "ellipse_factor;prev_real_position_0_0;prev_real_position_0_1;prev_real_position_0_2;prev_real_position_0_3;prev_real_position_1_0;prev_real_position_1_1;"
-  "prev_real_position_1_2;prev_real_position_1_3;prev_real_position_2_0;prev_real_position_2_1;prev_real_position_2_2;prev_real_position_2_3;"
-  "np_0_0;np_0_1;np_0_2;np_0_3;np_1_0;np_1_1;np_1_2;np_1_3;np_2_0;np_2_1;np_2_2;np_2_3;velocity_0;velocity_1;velocity_2;acceleration_0;"
-  "acceleration_1;acceleration_2;angular_velocity_0;angular_velocity_1;angular_velocity_2;angular_acceleration_0;angular_acceleration_1;"
-  "angular_acceleration_2;"));
-  log_client->set_connect();
+
   }
  
   image_sampling_period=0;
@@ -81,7 +75,6 @@ max_angular_speed(0), max_acceleration(0), max_angular_acceleration(0)
 }
 visual_behaviour::~visual_behaviour()
 {
-	log_client->set_disconnect();
 }
 
 bool visual_behaviour::first_step()
@@ -161,22 +154,22 @@ bool visual_behaviour::next_step()
   the_robot->ecp_command.arm.pf_def.arm_frame = next_position;
   the_robot->ecp_command.motion_steps = motion_steps;
   the_robot->ecp_command.value_in_step_no = value_in_step_no;
- 
+
   float ellipse_factor = vs->get_ellipse_factor();
 
   std::cout <<"Ellipse factor" <<ellipse_factor<<"\n";
   dt = motion_steps * step_time;
- 
-  sprintf(msg.text, "%f;",ellipse_factor);
-  msg.append_Homog_matrix(the_robot->reply_package.arm.pf_def.arm_frame);
-  msg.append_Homog_matrix(next_position);
-  msg.append_matrix(velocity);
-  msg.append_matrix(acceleration);
-  msg.append_matrix(angular_velocity);
-  msg.append_matrix(angular_acceleration);
+
+  double actual_position[6];
+  lib::Homog_matrix tmp;
+  lib::Xyz_Angle_Axis_vector tool_vector;
+  tmp=the_robot->reply_package.arm.pf_def.arm_frame;
+  tmp.get_xyz_angle_axis(tool_vector);
+  tool_vector.to_table(actual_position);
+
+  sprintf(msg.text, "%f;%f;%f;%f;%f;%f;%f;",ellipse_factor,actual_position[0],actual_position[1],actual_position[2],actual_position[3],actual_position[4],actual_position[5]);
 
   if (log_client.get() != NULL) {
-	  std::cout<<"logowanie\n";
 	  log_client->log(msg);
 }
   log_dbg("visual_behaviour::next_step() end\n");

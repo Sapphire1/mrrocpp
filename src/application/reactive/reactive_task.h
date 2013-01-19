@@ -52,8 +52,6 @@ protected:
 
 reactive_task::reactive_task(mrrocpp::lib::configurator& configurator) : common::task::task(configurator)
 {
-// jak nie bedzie zdefiniowane to bedzie krzyczal przy starcie MP
-// std::string robot_name = config.value<std::string>("robot_name", "[visualservo_tester]");
 	
 }
 

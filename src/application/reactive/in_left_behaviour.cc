@@ -20,8 +20,6 @@ namespace generator {
 
 in_left_behaviour::in_left_behaviour(common::task::task& _ecp_task, boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo_regulator> & reg,  boost::shared_ptr <logger_client> & log_client) :	common::generator::behaviour(_ecp_task)
 {
-//	log_client = boost::shared_ptr <logger_client>(new logger_client(500, "127.0.0.1", 7000,"X;Y;Z;AX;AY;AZ"));
-//	log_client->set_connect();
 	this->reg=reg;
 	this->log_client=log_client;
 }

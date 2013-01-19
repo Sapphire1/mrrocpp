@@ -23,8 +23,10 @@
 #include "beginvisiblecondition.h"
 #include "begin_start_pos_condition.h"
 #include "begin_behaviour.h"
+#include "base/lib/logger_client/logger_client.h"
+
 using namespace mrrocpp::ecp::servovision;
-//using namespace mrrocpp::ecp::condition;
+
 namespace mrrocpp {
 namespace ecp {
 namespace condition {
@@ -39,6 +41,8 @@ namespace ecp {
 namespace common {
 
 namespace task {
+using logger::logger_client;
+using logger::log_message;
 
 class reactive_visual_servo_task : public reactive_task
 {
@@ -60,9 +64,13 @@ private:
 	boost::shared_ptr<begin_condition> bgVisCond;
 	boost::shared_ptr<begin_condition> bgStartPosCond;
 
+
+
 public:
+	boost::shared_ptr<logger_client> log_client;
+	logger::log_message msg;
 	reactive_visual_servo_task(mrrocpp::lib::configurator & configurator);
-	virtual ~reactive_visual_servo_task();
+	~reactive_visual_servo_task();
 };
 
 }//task

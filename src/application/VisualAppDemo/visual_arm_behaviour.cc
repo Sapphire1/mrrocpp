@@ -34,9 +34,10 @@ namespace generator {
 
 
 
-visual_arm_behaviour::visual_arm_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name)
+visual_arm_behaviour::visual_arm_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name, boost::shared_ptr<logger::logger_client> & log_client)
 : common::generator::visual_behaviour(ecp_task, section_name)
 {
+  this->log_client=log_client;
   char config_section_name[] = { "[object_follower_ib]" };
   char config_section_name_arm[] = { "[servovision_arm]" };
 

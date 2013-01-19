@@ -52,7 +52,8 @@ public:
 boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo_regulator> reg;
 boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds;
 boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo>  vs;
-
+boost::shared_ptr<logger::logger_client> log_client;
+logger::log_message msg;
 
 visual_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name);
 ~visual_behaviour();
@@ -114,7 +115,6 @@ const boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo> & get_servo() 
 
 const lib::Homog_matrix& get_current_position() const;
 
-boost::shared_ptr<logger::logger_client> log_client;
 protected:
 
 /**
@@ -208,7 +208,6 @@ bool speed_constrained, accel_constrained;
 /** Set to true, if position was constrained by constrain_position() */
 bool is_position_constrained;
 
-logger::log_message msg;
 
 void constrain_position(lib::Homog_matrix & new_position);
 
@@ -229,6 +228,7 @@ double, 3, 1> &v, Eigen::Matrix <double, 3, 1> &a, double max_v, double max_a);
 * @param position_change
 */
 void constrain_speed_accel(lib::Homog_matrix & position_change);
+
 };
 
 /** @} */

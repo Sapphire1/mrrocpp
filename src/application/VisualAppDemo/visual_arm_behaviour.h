@@ -52,7 +52,7 @@ class visual_arm_behaviour: public visual_behaviour
 {
 public: 
 
-visual_arm_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name);
+visual_arm_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name, boost::shared_ptr<logger::logger_client> & log_client);
 ~visual_arm_behaviour();
 };
 
