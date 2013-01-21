@@ -7,6 +7,7 @@
 
 #include "beginvisiblecondition.h"
 #include "application/VisualApp/behaviour.h"
+using namespace mrrocpp::ecp::common::generator;
 namespace mrrocpp {
 namespace ecp {
 namespace condition {
@@ -40,6 +41,10 @@ bool begin_visible_condition::check(const boost::shared_ptr<mrrocpp::ecp::common
 	std::cout << "Begin_visible_condition : \n" << current_position[0]<<"\t"<<
 	current_position[1]<<"\t\t"<< current_position[2]<<"\n"<< 	current_position[3]<<"\t\t"<<
 	current_position[4]<<"\t"<< current_position[5]<<"\n";
+
+	//	   boost::shared_ptr<visual_behaviour> bh =
+	//	      boost::dynamic_pointer_cast<visual_behaviour>(bhvr);
+	//	   bh->vs->is_object_visible();
 	if(current_position[1]<=1.8)
 	{
 		std::cout<<"Begin Condition in left is not met!!!\n";
