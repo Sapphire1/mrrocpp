@@ -1,6 +1,7 @@
 #ifndef BEGIN_IN_LEFT_CONDITION_H_
 #define BEGIN_IN_LEFT_CONDITION_H_
 #include "begin_condition.h"
+#include "in_left_behaviour.h"
 #include <vector>
 using namespace mrrocpp::ecp::common::generator;
 

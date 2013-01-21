@@ -36,9 +36,9 @@ using logger::log_message;
 class behaviour : public common::generator::generator
 {
 public:
-//   dodac liczbe elementow w wektorach werunkow???
+//   dodac liczbe elementow w wektorach warunkow???
   behaviour(common::task::task& _ecp_task);
-  virtual ~behaviour(){};
+  virtual ~behaviour();
   void Move();
   void add_begin_condition(boost::shared_ptr <begin_condition> &);
   void add_terminate_condition(boost::shared_ptr <terminate_condition> &);

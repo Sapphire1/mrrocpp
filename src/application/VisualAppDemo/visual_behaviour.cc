@@ -79,9 +79,7 @@ visual_behaviour::~visual_behaviour()
 
 bool visual_behaviour::first_step()
 {
-  //! configuration of sensor if state is equal DSS_NOT_CONNECTED (0)
 
-  configure();
 
   new_motion_steps = motion_steps = motion_steps_base;
   value_in_step_no = motion_steps_base - 4;
