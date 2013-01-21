@@ -19,7 +19,7 @@
 #include "object_reached_termination_condition.h"
 #include "timeout_terminate_condition.h"
 #include "terminate_in_left_condition.h"
-#include "terminate_in_right_condition.h"
+#include "terminate_beg_pos_condition.h"
 #include "beginvisiblecondition.h"
 #include "begin_start_pos_condition.h"
 #include "begin_behaviour.h"

@@ -1,6 +1,6 @@
 /**
- *  @file terminate_in_right_condition.h
- *  @date 2012
+ *  @file terminate_beg_pos_condition.h
+ *  @date 2013
  *  @author lzmuda
  */
 
@@ -17,14 +17,14 @@ namespace common {
 namespace generator {
 
 
-class terminate_in_right_condition: public terminate_condition
+class terminate_beg_pos_condition: public terminate_condition
 {
 private:
 	double limit;
 public:
-	terminate_in_right_condition();
-	terminate_in_right_condition(double lim){limit=lim;};
-	~terminate_in_right_condition(){};
+	terminate_beg_pos_condition();
+	terminate_beg_pos_condition(double lim){limit=lim;};
+	~terminate_beg_pos_condition(){};
  	bool check(mrrocpp::ecp::common::generator::behaviour *);
  	void reset();
  	Eigen::Matrix <double, 6, 1> actual_position;

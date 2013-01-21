@@ -1,4 +1,4 @@
-#include "terminate_in_right_condition.h"
+#include "terminate_beg_pos_condition.h"
 #include "base/ecp/ecp_robot.h"
 #include "base/ecp/ecp_generator.h"
 
@@ -7,7 +7,7 @@ namespace ecp {
 namespace common {
 namespace generator {
   
-bool terminate_in_right_condition::check(mrrocpp::ecp::common::generator::behaviour* bh)
+bool terminate_beg_pos_condition::check(mrrocpp::ecp::common::generator::behaviour* bh)
 {
 	bh->the_robot->ecp_command.instruction_type = lib::SET_GET;
 	bh->the_robot->ecp_command.get_type = ARM_DEFINITION; // arm - ORYGINAL
@@ -35,7 +35,7 @@ bool terminate_in_right_condition::check(mrrocpp::ecp::common::generator::behavi
  	}
 	return false;
 }
-void terminate_in_right_condition::reset()
+void terminate_beg_pos_condition::reset()
 {
 }
 } // namespace generator

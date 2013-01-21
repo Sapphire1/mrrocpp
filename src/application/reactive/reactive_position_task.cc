@@ -27,8 +27,7 @@ namespace task {
 
 reactive_position_task::reactive_position_task(mrrocpp::lib::configurator & configurator) : common::task::reactive_task(configurator)
 {
-	log_client = boost::shared_ptr <logger_client>(new logger_client(500, "127.0.0.1", 7000,"X;Y;Z;AX;AY;AZ"));
-	log_client->set_connect();
+
 	try{
  		if(config.robot_name == lib::irp6p_m::ROBOT_NAME) 
 	{
@@ -38,6 +37,8 @@ reactive_position_task::reactive_position_task(mrrocpp::lib::configurator & conf
 	{
 		throw std::runtime_error("Robot not supported");
 	}
+ 		log_client = boost::shared_ptr <logger_client>(new logger_client(500, "127.0.0.1", 7000,"X;Y;Z;AX;AY;AZ"));
+ 		log_client->set_connect();
  		char config_section_name[] = { "[regulator_p]" };
  		reg = boost::shared_ptr <visual_servo_regulator> (new regulator_p(configurator, config_section_name));
  		/// create_behaviour	
