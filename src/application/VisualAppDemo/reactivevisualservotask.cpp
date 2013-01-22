@@ -54,22 +54,20 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 
 	 	bgVisCond = boost::shared_ptr<begin_condition>(new begin_visible_condition());
 	 	bgStartPosCond=boost::shared_ptr<begin_condition>(new begin_start_pos_condition());
-
+	 	bgHybridCond=boost::shared_ptr<begin_condition>(new hybrid_beg_condition());
 	 	arm_bh->add_begin_condition(bgVisCond);
 	 	arm_bh->add_terminate_condition(time_ter_cond);
 	 	arm_bh->add_terminate_condition(obj_reach_ter_cond);
 
-	 	wrist_bh->add_begin_condition(bgVisCond);
+	 	wrist_bh->add_begin_condition(bgHybridCond);
 	 	wrist_bh->add_terminate_condition(term_in_left);
-
-
 
 		start_beh->add_begin_condition(bgStartPosCond);
 		start_beh->add_terminate_condition(term_beg_move);
 
 		add_behaviour(1, start_beh);
-	//	add_behaviour(2, arm_bh);
-	//	add_behaviour(3, wrist_bh);
+		add_behaviour(2, arm_bh);
+		add_behaviour(3, wrist_bh);
 
 		log_dbg("reactive_servo_task: end\n");
 	}

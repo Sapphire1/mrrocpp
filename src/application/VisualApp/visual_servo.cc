@@ -46,7 +46,7 @@ visual_servo::~visual_servo()
 
 lib::Homog_matrix visual_servo::get_position_change(const lib::Homog_matrix& current_position, double dt)
 {
-	//	log_dbg("visual_servo::get_position_change(): begin\n");
+    log_dbg("visual_servo::get_position_change(): begin\n");
 
 	lib::Homog_matrix delta_position;
 
@@ -82,6 +82,8 @@ lib::Homog_matrix visual_servo::get_position_change(const lib::Homog_matrix& cur
 		}
 			break;
 		case discode_sensor::DSS_CONNECTED: // processing in DisCODe hasn't finished yet
+			std::cout<<"lalalaal\n";
+			break;
 		case discode_sensor::DSS_REQUEST_SENT: // communication or synchronisation in DisCODe took too long
 			predict_reading();
 			steps_without_reading++;
@@ -99,7 +101,7 @@ lib::Homog_matrix visual_servo::get_position_change(const lib::Homog_matrix& cur
 	}
 
 	if (object_visible) {
-		//		log_dbg("visual_servo::get_position_change(): object_visible, calling compute_position_change\n");
+		log_dbg("visual_servo::get_position_change(): object_visible, calling compute_position_change\n");
 		delta_position = compute_position_change(current_position, dt);
 	} else {
 		notify_object_considered_not_visible();

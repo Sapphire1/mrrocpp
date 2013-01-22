@@ -20,6 +20,7 @@
 #include "timeout_terminate_condition.h"
 #include "terminate_in_left_condition.h"
 #include "terminate_beg_pos_condition.h"
+#include "hybridbegcondition.h"
 #include "beginvisiblecondition.h"
 #include "begin_start_pos_condition.h"
 #include "begin_behaviour.h"
@@ -62,6 +63,7 @@ private:
 	boost::shared_ptr<terminate_condition> term_in_left;
 	boost::shared_ptr<terminate_condition> term_beg_move;
 	boost::shared_ptr<begin_condition> bgVisCond;
+	boost::shared_ptr<begin_condition> bgHybridCond;
 	boost::shared_ptr<begin_condition> bgStartPosCond;
 
 

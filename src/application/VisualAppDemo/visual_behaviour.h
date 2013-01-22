@@ -54,6 +54,7 @@ boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds;
 boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo>  vs;
 boost::shared_ptr<logger::logger_client> log_client;
 logger::log_message msg;
+bool sensor_configured;
 
 visual_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name);
 ~visual_behaviour();
@@ -64,7 +65,7 @@ bool next_step();
 * After that updates sensor map
 */
 void configure(const std::string & sensor_prefix = "VSM_SENSOR_");
-
+lib::Homog_matrix get_aggregated_position_change();
 /**
 * Add position constraint.
 * At least one position constraint must be met to move end effector.
@@ -121,7 +122,7 @@ protected:
 * Called in next_step() to get aggregated control to pass to EDP.
 * @return
 */
-lib::Homog_matrix get_aggregated_position_change();
+
 /**
 * Called from constructor to initialize all servos. After this call, servos field must be initialized.
 */

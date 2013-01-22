@@ -41,9 +41,10 @@ visual_behaviour::visual_behaviour(mrrocpp::ecp::common::task::task & ecp_task, 
 : common::generator::behaviour(ecp_task), current_position_saved(false), max_speed(0),
 max_angular_speed(0), max_acceleration(0), max_angular_acceleration(0)
 {
-  this->vs=vs;
+  sensor_configured=false;
+//  this->vs=vs;
   char config_section_name[] = { "[object_follower_ib]" };
-  boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds = boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor>(new mrrocpp::ecp_mp::sensor::discode::discode_sensor(ecp_task.config, config_section_name));
+//  boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds = boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor>(new mrrocpp::ecp_mp::sensor::discode::discode_sensor(ecp_task.config, config_section_name));
   new_motion_steps = motion_steps = motion_steps_base = ecp_task.config.exists("motion_steps", section_name) ? ecp_task.config.value <unsigned int> ("motion_steps", section_name) : motion_steps_default;
 
   dt = motion_steps * step_time;
@@ -79,8 +80,12 @@ visual_behaviour::~visual_behaviour()
 
 bool visual_behaviour::first_step()
 {
-
-
+  //! configuration of sensor if state is equal DSS_NOT_CONNECTED (0)
+  if(!sensor_configured)
+  {
+	  configure();
+	  sensor_configured=true;
+  }
   new_motion_steps = motion_steps = motion_steps_base;
   value_in_step_no = motion_steps_base - 4;
  
@@ -92,7 +97,6 @@ bool visual_behaviour::first_step()
   the_robot->ecp_command.set_arm_type = lib::FRAME;
   the_robot->ecp_command.interpolation_type = lib::TCIM;
   the_robot->ecp_command.motion_steps = motion_steps;
-  //the_robot->ecp_command.value_in_step_no = motion_steps - motion_steps_value_in_step_no;
   the_robot->ecp_command.value_in_step_no = value_in_step_no;
   dt = motion_steps * step_time;
  

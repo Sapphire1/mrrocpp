@@ -44,9 +44,6 @@ visual_arm_behaviour::visual_arm_behaviour(mrrocpp::ecp::common::task::task & ec
   reg = boost::shared_ptr <visual_servo_regulator> (new regulator_p(ecp_task.config, config_section_name_arm));
   ds = boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor>(new mrrocpp::ecp_mp::sensor::discode::discode_sensor(ecp_task.config, config_section_name));
   vs = boost::shared_ptr <visual_servo> (new ib_eih_visual_servo(reg, ds, config_section_name, ecp_task.config));
-  //! configuration of sensor if state is equal DSS_NOT_CONNECTED (0)
-  configure();
-
 }
 visual_arm_behaviour::~visual_arm_behaviour()
 {

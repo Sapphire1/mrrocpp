@@ -114,7 +114,11 @@ void ib_eih_wrist_move::predict_reading()
 bool ib_eih_wrist_move::is_object_visible_in_latest_reading()
 {
 	log_dbg("ib_eih_visual_servo::is_object_visible_in_latest_reading()\n");
-	return reading.objectVisible;
+		if(reading.objectVisible)
+			log_dbg("Jest piłka!!!\n");
+		else
+			log_dbg("nie ma piłki\n");
+		return reading.objectVisible;
 }
 
 Types::Mrrocpp_Proxy::IBReading* ib_eih_wrist_move::get_reading()

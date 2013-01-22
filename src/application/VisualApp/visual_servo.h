@@ -108,8 +108,9 @@ protected:
 	 * This method should check latest reading, if object in that reading is visible.
 	 * @return true if object was visible.
 	 */
-	virtual bool is_object_visible_in_latest_reading() = 0;
-
+	public:
+		virtual bool is_object_visible_in_latest_reading() = 0;
+	protected:
 	/**
 	 *
 	 */
