@@ -77,6 +77,7 @@ bool hybrid_beg_condition::check(const boost::shared_ptr<mrrocpp::ecp::common::g
 		return false;
 	}
 	std::cout<<"Hybride Begin Condition in left is met!!!\n";
+
 	return true;
 
 };

@@ -91,7 +91,7 @@ lib::Homog_matrix ib_eih_wrist_move::compute_position_change(const lib::Homog_ma
 
 float ib_eih_wrist_move::get_ellipse_factor(){
 	Eigen::Matrix <double, Types::ImagePosition::elementsSize, 1> imagePosition(reading.imagePosition.elements);
-	return reading.imagePosition.elements[2];
+	return reading.imagePosition.elements[3];
 }
 
 void ib_eih_wrist_move::retrieve_reading()

@@ -45,16 +45,15 @@ bool object_reached_termination_condition::check(mrrocpp::ecp::common::generator
 	std::cout<<"Object reached termination condition::check\n";
 	visual_behaviour *v_bhr = dynamic_cast<visual_behaviour *>(bh1);
  	bool object_visible_and_error_small = false;
-
- 		Eigen::Matrix <double, 6, 1> e = v_bhr->vs->get_error();
- 		Eigen::Matrix <double, 2, 1> linear_error = e.block(0, 0, 2, 1);
- 		Eigen::Matrix <double, 3, 1> angular_error = e.block(3, 0, 3, 1);
- 		std::cout<<"linear_error : "<<linear_error <<std::endl;
- 		if (v_bhr->vs->is_object_visible() && linear_error.norm() <= max_linear_error
- 				&& angular_error.norm() <= max_angular_error) {
- 			std::cout<<"Set object_visible_and_error_small \n";
- 			object_visible_and_error_small = true;
- 		}
+ 	Eigen::Matrix <double, 6, 1> e = v_bhr->vs->get_error();
+ 	Eigen::Matrix <double, 2, 1> linear_error = e.block(0, 0, 2, 1);
+ 	Eigen::Matrix <double, 3, 1> angular_error = e.block(3, 0, 3, 1);
+ 	std::cout<<"linear_error : "<<linear_error <<std::endl;
+ 	if (v_bhr->vs->is_object_visible() && linear_error.norm() <= max_linear_error /*&& angular_error.norm() <= max_angular_error*/)
+ 	{
+ 		std::cout<<"Set object_visible_and_error_small \n";
+ 		object_visible_and_error_small = true;
+ 	}
  		/*if(linear_error.norm() <= max_linear_error)
  		{
  			std::cout<<"Maly blad, konczymy!\n";

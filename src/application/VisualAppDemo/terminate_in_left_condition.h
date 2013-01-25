@@ -8,6 +8,7 @@
 #define TERMINATE_IN_LEFT_CONDITION_H_
 #include "application/VisualApp/terminate_condition.h"
 #include "application/VisualApp/behaviour.h"
+#include "application/VisualAppDemo/visual_behaviour.h"
 using namespace mrrocpp::ecp::common::generator;
 
 namespace mrrocpp {
@@ -19,10 +20,14 @@ class terminate_in_left_condition: public terminate_condition
 {
 private:
 	double limit;
+	int counter;
 public:
-	terminate_in_left_condition();
-	terminate_in_left_condition(double lim){limit=lim;};
-	~terminate_in_left_condition(){};
+	terminate_in_left_condition()
+	{
+		counter=0;
+	}
+	terminate_in_left_condition(double lim){limit=lim;counter=0;}
+	~terminate_in_left_condition(){counter=0;}
  	bool check(mrrocpp::ecp::common::generator::behaviour *);
  	void reset();
 };
