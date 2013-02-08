@@ -20,7 +20,7 @@ namespace task {
 reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurator & configurator) : common::task::reactive_task(configurator)
 {
 
-	log_client = boost::shared_ptr <logger_client>(new logger_client(500, "127.0.0.1", 7000,"Ellipse_factor;X;Y;Z;AX;AY;AZ"));
+	log_client = boost::shared_ptr <logger_client>(new logger_client(500, "127.0.0.1", 7000,"Ellipse_factor;X;Y;Z;alfa;beta;gamma"));
 	log_client->set_connect();
 
 	log_dbg_enabled = true;

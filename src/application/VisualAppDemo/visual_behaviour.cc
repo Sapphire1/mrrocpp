@@ -166,8 +166,10 @@ bool visual_behaviour::next_step()
   lib::Homog_matrix tmp;
   lib::Xyz_Angle_Axis_vector tool_vector;
   tmp=the_robot->reply_package.arm.pf_def.arm_frame;
-  tmp.get_xyz_angle_axis(tool_vector);
-  tool_vector.to_table(actual_position);
+  //tmp.get_xyz_angle_axis(tool_vector);
+  lib::Xyz_Euler_Zyz_vector euler_vector;
+  tmp.get_xyz_euler_zyz(euler_vector);
+  euler_vector.to_table(actual_position);
 
   sprintf(msg.text, "%f;%f;%f;%f;%f;%f;%f;",ellipse_factor,actual_position[0],actual_position[1],actual_position[2],actual_position[3],actual_position[4],actual_position[5]);
 
