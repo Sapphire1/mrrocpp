@@ -51,6 +51,8 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 	 	log_dbg("reactive_servo_task: 3\n");
 	 	term_in_left=boost::shared_ptr <terminate_condition>(new terminate_in_left_condition(1.98));
 	 	term_beg_move=boost::shared_ptr <terminate_condition>(new terminate_beg_pos_condition(1.98));
+	 	term_obj_not_visible=boost::shared_ptr <terminate_condition>(new objectNotVisibleTerminate);
+
 
 	 	bgVisCond = boost::shared_ptr<begin_condition>(new begin_visible_condition());
 	 	bgStartPosCond=boost::shared_ptr<begin_condition>(new begin_start_pos_condition());
@@ -58,9 +60,11 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 	 	arm_bh->add_begin_condition(bgVisCond);
 	 	arm_bh->add_terminate_condition(time_ter_cond);
 	 	arm_bh->add_terminate_condition(obj_reach_ter_cond);
+	 	arm_bh->add_terminate_condition(term_obj_not_visible);
 
 	 	wrist_bh->add_begin_condition(bgHybridCond);
 	 	wrist_bh->add_terminate_condition(term_in_left);
+	 	wrist_bh->add_terminate_condition(term_obj_not_visible);
 
 		start_beh->add_begin_condition(bgStartPosCond);
 		start_beh->add_terminate_condition(term_beg_move);

@@ -13,6 +13,7 @@ add_executable(ecp_vsdemo_objectfollower_ib_eih2
     begin_behaviour.cc
     visual_arm_behaviour.cc
     visual_wrist_behaviour.cc
+    objectNotVisibleTerminate.cpp
 )
 
 target_link_libraries(ecp_vsdemo_objectfollower_ib_eih2
