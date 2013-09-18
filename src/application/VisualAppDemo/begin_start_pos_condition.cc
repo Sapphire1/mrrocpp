@@ -36,16 +36,21 @@ bool begin_start_pos_condition::check(const boost::shared_ptr<mrrocpp::ecp::comm
 	actual_position_matrix = bhvr->the_robot->reply_package.arm.pf_def.arm_frame;
 	actual_position_matrix.get_xyz_angle_axis(angle_axis_vector);
 	angle_axis_vector.to_vector(current_position);
-	std::cout << "Begin_visible_condition : \n" << current_position[0]<<"\t"<<
+	std::cout << "begin_start_pos_condition::check : \n" << current_position[0]<<"\t"<<
 	current_position[1]<<"\t\t"<< current_position[2]<<"\n"<< 	current_position[3]<<"\t\t"<<
 	current_position[4]<<"\t"<< current_position[5]<<"\n";
 	//! if robot is synchronized
-	if(		current_position[0]>=0.48 && current_position[0]<=0.55 &&
+	/*if(		current_position[0]>=0.48 && current_position[0]<=0.55 &&
 			current_position[1]>=1.8 && current_position[1]<=1.9 &&
 			current_position[6] <=0.1 && current_position[6]>=-0.1)
 	{
 		std::cout<<"Start Condition is met!!!\n";
 		return true;
+	}*/
+	if(current_position[0]>=0.48)
+	{
+			std::cout<<"Start Condition is met!!!\n";
+			return true;
 	}
 	std::cout<<"Start Condition is not met!!!\n";
 	return false;

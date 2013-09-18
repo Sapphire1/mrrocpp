@@ -9,6 +9,7 @@
 #define BEGIN_CONDITION_RIGHT_H_
 
 #include "../VisualApp/begin_condition.h"
+#include "../VisualAppDemo/visual_behaviour.h"
 #include "base/ecp/ecp_robot.h"
 #include "base/ecp/ecp_generator.h"
 

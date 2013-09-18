@@ -63,7 +63,7 @@ void behaviour::Move()
 		// for every termination condition
 		for(int i=0; i<terminate_conditions.size(); i++)
 		{  	// if condition is met then end Move method
-			if(terminate_conditions[i]->check(this)==true)
+			if(terminate_conditions[i]->check(this))
 			{
 				std::cout<<"Fulfilled termination condition!\n";
 				ex=false;

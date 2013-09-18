@@ -1,9 +1,9 @@
 /*
- * begin_condition_right.cpp
- *
- *  Created on: Dec 4, 2012
- *      Author: lzmuda
- */
+* begin_condition_right.cpp
+*
+* Created on: Dec 4, 2012
+* Author: lzmuda
+*/
 
 #include "begin_condition_right.h"
 #include "application/VisualApp/behaviour.h"
@@ -38,8 +38,8 @@ bool begin_condition_right::check(const boost::shared_ptr<mrrocpp::ecp::common::
 	actual_position_matrix = bhvr->the_robot->reply_package.arm.pf_def.arm_frame;
 	actual_position_matrix.get_xyz_angle_axis(angle_axis_vector);
 	angle_axis_vector.to_vector(current_position);
-	std::cout << "Begin_visible_condition : \n" << current_position[0]<<"\t"<<
-	current_position[1]<<"\t\t"<< current_position[2]<<"\n"<< 	current_position[3]<<"\t\t"<<
+	std::cout << "begin_condition_right::check : \n" << current_position[0]<<"\t"<<
+	current_position[1]<<"\t\t"<< current_position[2]<<"\n"<< current_position[3]<<"\t\t"<<
 	current_position[4]<<"\t"<< current_position[5]<<"\n";
 	if(current_position[1]<=1.8)
 	{
@@ -48,7 +48,7 @@ bool begin_condition_right::check(const boost::shared_ptr<mrrocpp::ecp::common::
 	}
 	std::cout<<"Begin Condition in left is met!!!\n";
 	return true;
-};
+	};
 
 } /* namespace condition */
 } /* namespace ecp */

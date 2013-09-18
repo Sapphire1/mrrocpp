@@ -8,7 +8,7 @@ namespace condition {
   
 bool terminate_in_left_condition::check(mrrocpp::ecp::common::generator::behaviour* bh)
 {
-	std::cout<<"terminate_position_condition::check()\n";
+	std::cout<<"Terminate_position_condition::check()\n";
 	lib::Homog_matrix tmp;
  	double current_position[6];
 	lib::Xyz_Angle_Axis_vector tool_vector;
@@ -25,7 +25,7 @@ bool terminate_in_left_condition::check(mrrocpp::ecp::common::generator::behavio
  	std::cout<<"Wspolczynnik elipsy "<<bhvr->vs->get_ellipse_factor();
  	std::cout<<"Counter "<< counter;
 
- 	if(bhvr->vs->get_ellipse_factor()<=0.8 &&bhvr->vs->get_ellipse_factor()>=0.5)
+ 	if(bhvr->vs->get_ellipse_factor()<=0.8 && bhvr->vs->get_ellipse_factor()>=0.5)
     {
     	std::cout<<"Wspolczynnik elipsy "<<bhvr->vs->get_ellipse_factor();
     	++counter;
@@ -42,6 +42,7 @@ bool terminate_in_left_condition::check(mrrocpp::ecp::common::generator::behavio
 		current_position[5]<<"\n";
  		return true;
  	}
+ 	std::cout<<"Terminate_position_condition::check, end\n";
 	return false;
 }
 void terminate_in_left_condition::reset()
