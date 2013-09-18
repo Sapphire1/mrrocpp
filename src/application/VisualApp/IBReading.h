@@ -46,7 +46,6 @@ private:
 	{
 //		LOG(LTRACE) << "IBReading::serialize()\n";
 		ar & boost::serialization::base_object <Reading>(*this);
-
 		ar & objectVisible;
 		ar & imagePosition;
 	}

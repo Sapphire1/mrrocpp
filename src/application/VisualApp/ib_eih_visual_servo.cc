@@ -84,16 +84,18 @@ bool ib_eih_visual_servo::is_object_visible_in_latest_reading()
 {
 	log_dbg("ib_eih_visual_servo::is_object_visible_in_latest_reading()\n");
 	if(reading.objectVisible)
-		log_dbg("Jest piłka!!!\n");
+		log_dbg("ib_eih_visual_servo::Object is visible\n");
+	else
+		log_dbg("ib_eih_visual_servo::Object is not visible\n");
 	return reading.objectVisible;
 }
 
 void ib_eih_visual_servo::retrieve_reading()
 {
 	try {
-				log_dbg("pb_visual_servo::retrieve_reading()\n");
+		log_dbg("pb_visual_servo::retrieve_reading()\n");
 		if (sensor->get_state() == discode_sensor::DSS_READING_RECEIVED) {
-			//			log_dbg("pb_visual_servo::retrieve_reading(): sensor->get_state() == discode_sensor::DSS_READING_RECEIVED.\n");
+		//			log_dbg("pb_visual_servo::retrieve_reading(): sensor->get_state() == discode_sensor::DSS_READING_RECEIVED.\n");
 			reading = sensor->retreive_reading <Types::Mrrocpp_Proxy::IBReading> ();
 		}
 	} catch (exception &ex) {
