@@ -159,7 +159,7 @@ bool visual_behaviour::next_step()
 
   float ellipse_factor = vs->get_ellipse_factor();
 
-  std::cout <<"Ellipse factor" <<ellipse_factor<<"\n";
+  std::cout <<"Ellipse factor = " <<ellipse_factor<<"\n";
   dt = motion_steps * step_time;
 
   double actual_position[6];
@@ -263,7 +263,8 @@ aa_vector.block(3, 0, 3, 1) = dalpha;
  void visual_behaviour::configure(const std::string & sensor_prefix)
  {
  // log_dbg("void visual_servo_manager::configure() 1\n");
-  log_dbg("void visual_servo_manager::configure() 2\n");
+  // connect to discode
+  log_dbg("void visual_servo_manager::configure() start\n");
   int i = 0;
   vs->get_sensor()->configure_sensor();
   char sensor_suffix[64];
@@ -271,7 +272,7 @@ aa_vector.block(3, 0, 3, 1) = dalpha;
   lib::sensor::SENSOR_t sensor_id = sensor_prefix + sensor_suffix;
   sensor_m[sensor_id] = vs->get_sensor().get();
 
-  log_dbg("void visual_behaviour::configure() 3\n");
+  log_dbg("void visual_behaviour::configure() end\n");
  }
  
 void visual_behaviour::add_position_constraint(boost::shared_ptr <position_constraint> new_constraint)
