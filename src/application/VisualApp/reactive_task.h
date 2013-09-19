@@ -76,7 +76,7 @@ void reactive_task::main_task_algorithm(void)
 			  {	  // check if it can to be execute
 				  if((*it).second->begin_conditions[i]->check((*it).second)==true)
 				  {
-					  std::cout<<"move()\n";
+					  std::cout<<"ReactiveTask::Move()\n";
 					  (*it).second->Move();
 				  }
 			  }//for
