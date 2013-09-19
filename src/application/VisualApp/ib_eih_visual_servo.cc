@@ -63,10 +63,13 @@ lib::Homog_matrix ib_eih_visual_servo::compute_position_change(const lib::Homog_
 	log_dbg("ib_eih_visual_servo::get_position_change() control: [%+07.3lg; %+07.3lg; %+07.3lg; %+07.3lg]\n", control(0, 0), control(1, 0), control(2, 0), control(3, 0));
 
 	Eigen::Matrix <double, 3, 1> camera_to_object_translation;
-	camera_to_object_translation(0, 0) = control(0, 0);
-	camera_to_object_translation(1, 0) = control(1, 0);
-	camera_to_object_translation(2, 0) = control(2, 0);
 
+	if(reading.imagePosition.elements[2]>0)
+	{
+		camera_to_object_translation(0, 0) = control(0, 0);
+		camera_to_object_translation(1, 0) = control(1, 0);
+		camera_to_object_translation(2, 0) = control(2, 0);
+	}
 	u_translation = e_T_c_position * camera_to_object_translation;
 	log_dbg("ib_eih_visual_servo::get_position_change() u_translation: %+07.3lg, %+07.3lg, %+07.3lg\n", u_translation(0, 0), u_translation(1, 0), u_translation(2, 0));
 
@@ -113,6 +116,12 @@ Types::Mrrocpp_Proxy::IBReading* ib_eih_visual_servo::get_reading()
 	std::cout<<"GET_READING\n";
 	return &reading;
 }
+
+float ib_eih_visual_servo::get_objects_diameter(){
+	Eigen::Matrix <double, Types::ImagePosition::elementsSize, 1> imagePosition(reading.imagePosition.elements);
+	return reading.imagePosition.elements[2];
+}
+
 
 void ib_eih_visual_servo::reset()
 {

@@ -23,15 +23,7 @@ public:
 	virtual ~objectNotVisibleTerminate();
 	virtual void reset();
 	bool check(mrrocpp::ecp::common::generator::behaviour * v_bhr);
-protected:
-	double max_linear_speed;
-	double max_angular_speed;
-	double max_linear_accel;
-	double max_angular_accel;
-	double max_linear_error;
-	double max_angular_error;
-	int min_steps;
-	int steps_delay;
+
 
 	lib::Homog_matrix position;
 };

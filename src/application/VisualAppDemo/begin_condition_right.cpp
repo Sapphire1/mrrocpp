@@ -41,7 +41,20 @@ bool begin_condition_right::check(const boost::shared_ptr<mrrocpp::ecp::common::
 	std::cout << "begin_condition_right::check : \n" << current_position[0]<<"\t"<<
 	current_position[1]<<"\t\t"<< current_position[2]<<"\n"<< current_position[3]<<"\t\t"<<
 	current_position[4]<<"\t"<< current_position[5]<<"\n";
-	if(current_position[1]<=1.8)
+	boost::shared_ptr<visual_behaviour> bh = boost::dynamic_pointer_cast<visual_behaviour>(bhvr);
+	if(!bh->sensor_configured)
+	{
+		bh->configure();
+		bh->sensor_configured=true;
+	}
+	lib::Homog_matrix tmp;
+	bh->vs->get_sensor()->get_reading();
+	bh->vs->get_position_change(tmp, 0.1);
+
+	float diameter = bh->vs->get_objects_diameter();
+	std::cout << "Srednica obiektu to :" << diameter<< "\n";
+
+	if(diameter>0 && current_position[1]<=1.8)
 	{
 		std::cout<<"Begin Condition in left is not met!!!\n";
 		return false;

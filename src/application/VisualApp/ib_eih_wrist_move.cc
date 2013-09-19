@@ -94,6 +94,11 @@ float ib_eih_wrist_move::get_ellipse_factor(){
 	return reading.imagePosition.elements[3];
 }
 
+float ib_eih_wrist_move::get_objects_diameter(){
+	Eigen::Matrix <double, Types::ImagePosition::elementsSize, 1> imagePosition(reading.imagePosition.elements);
+	return reading.imagePosition.elements[2];
+}
+
 void ib_eih_wrist_move::retrieve_reading()
 {
         try {

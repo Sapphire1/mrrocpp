@@ -26,6 +26,7 @@ public:
 
 	virtual Types::Mrrocpp_Proxy::IBReading* get_reading();
 	virtual float get_ellipse_factor();
+	virtual float get_objects_diameter();
 	virtual void reset();
 protected:
 	virtual lib::Homog_matrix compute_position_change(const lib::Homog_matrix& current_position, double dt);
