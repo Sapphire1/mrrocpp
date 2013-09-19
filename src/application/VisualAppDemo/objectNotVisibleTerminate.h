@@ -32,6 +32,7 @@ protected:
 	double max_angular_error;
 	int min_steps;
 	int steps_delay;
+	bool object_visible_and_error_small;
 
 	lib::Homog_matrix position;
 };
