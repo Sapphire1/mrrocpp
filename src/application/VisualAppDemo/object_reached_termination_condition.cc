@@ -65,7 +65,6 @@ bool object_reached_termination_condition::check(mrrocpp::ecp::common::generator
 		  position = v_bhr->get_current_position();
 		  std::cout<<"Object reached terminate condition-przekroczona liczba krokow...\n";
 		  std::cout<<"Terminate VisualServo\n";
-		 // v_bhr->vs->get_sensor()->terminate2();
 		  return true;
 	 }
   } else {

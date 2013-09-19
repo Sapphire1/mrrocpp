@@ -34,8 +34,8 @@ bool hybrid_beg_condition::check(const boost::shared_ptr<mrrocpp::ecp::common::g
 	bhvr->the_robot->ecp_command.get_type = ARM_DEFINITION;
 
 	// te dwie linie umozliwiaja odczytanie aktualnej pozycji
-	//bhvr->initiate_sensors_readings();
-	//bhvr->execute_motion();
+	bhvr->initiate_sensors_readings();
+	bhvr->execute_motion();
 
 	actual_position_matrix = bhvr->the_robot->reply_package.arm.pf_def.arm_frame;
 	actual_position_matrix.get_xyz_angle_axis(angle_axis_vector);
@@ -46,8 +46,9 @@ bool hybrid_beg_condition::check(const boost::shared_ptr<mrrocpp::ecp::common::g
 	boost::shared_ptr<visual_behaviour> bh = boost::dynamic_pointer_cast<visual_behaviour>(bhvr);
 	if(!bh->sensor_configured)
 	{
-		bh->configure();
-		bh->sensor_configured=true;
+	  std::cout<<"Konfiguracja sensora\n";
+	  bh->configure();
+	  bh->sensor_configured=true;
 	}
 	lib::Homog_matrix tmp;
 	bh->vs->get_sensor()->get_reading();
