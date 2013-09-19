@@ -36,12 +36,13 @@ const int visual_behaviour::motion_steps_default = 30;
 const int visual_behaviour::motion_steps_min = 10;
 const int visual_behaviour::motion_steps_max = 60;
 const double visual_behaviour::step_time = 0.002;
+bool visual_behaviour::sensor_configured=false;
 
 visual_behaviour::visual_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name)
 : common::generator::behaviour(ecp_task), current_position_saved(false), max_speed(0),
 max_angular_speed(0), max_acceleration(0), max_angular_acceleration(0)
 {
-  sensor_configured=false;
+	sensor_configured=false;
 //  this->vs=vs;
   char config_section_name[] = { "[object_follower_ib]" };
 //  boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds = boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor>(new mrrocpp::ecp_mp::sensor::discode::discode_sensor(ecp_task.config, config_section_name));
@@ -264,7 +265,6 @@ aa_vector.block(3, 0, 3, 1) = dalpha;
  
  void visual_behaviour::configure(const std::string & sensor_prefix)
  {
- // log_dbg("void visual_servo_manager::configure() 1\n");
   // connect to discode
   log_dbg("visual_servo_manager::configure() start\n");
   int i = 0;
