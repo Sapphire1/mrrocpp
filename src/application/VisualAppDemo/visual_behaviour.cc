@@ -80,6 +80,7 @@ visual_behaviour::~visual_behaviour()
 
 bool visual_behaviour::first_step()
 {
+  std::cout<<"visual_behaviour::first_step";
   //! configuration of sensor if state is equal DSS_NOT_CONNECTED (0)
   if(!sensor_configured)
   {
@@ -112,9 +113,9 @@ bool visual_behaviour::first_step()
   angular_velocity.setZero();
   acceleration.setZero();
   angular_acceleration.setZero();
-  vs->reset();
+  //vs->reset();
 
-
+  std::cout<<"visual_behaviour::first_step end";
 
 log_dbg("visual_behaviour::first_step() end\n");
 return true;

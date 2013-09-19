@@ -46,7 +46,11 @@ bool object_reached_termination_condition::check(mrrocpp::ecp::common::generator
 	Eigen::Matrix <double, 2, 1> linear_error = e.block(0, 0, 2, 1);
 	Eigen::Matrix <double, 3, 1> angular_error = e.block(3, 0, 3, 1);
 	//std::cout<<"linear_error : "<<linear_error <<std::endl;
-	if (v_bhr->vs->is_object_visible() && linear_error.norm() <= max_linear_error /*&& angular_error.norm() <= max_angular_error*/)
+	lib::Homog_matrix tmp;
+	v_bhr->vs->get_sensor()->get_reading();
+	v_bhr->vs->get_position_change(tmp, 0.1);
+	float diameter = v_bhr->vs->get_objects_diameter();
+	if (diameter>0 && linear_error.norm() <= max_linear_error)
 	{
 		std::cout<<"Set object_visible_and_error_small \n";
 		object_visible_and_error_small = true;

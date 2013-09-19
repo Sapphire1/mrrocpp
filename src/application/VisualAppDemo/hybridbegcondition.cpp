@@ -43,42 +43,27 @@ bool hybrid_beg_condition::check(const boost::shared_ptr<mrrocpp::ecp::common::g
 	std::cout << "Begin_visible_condition : \n" << current_position[0]<<"\t"<<
 	current_position[1]<<"\t\t"<< current_position[2]<<"\n"<< 	current_position[3]<<"\t\t"<<
 	current_position[4]<<"\t"<< current_position[5]<<"\n";
-
-	/*
-
 	boost::shared_ptr<visual_behaviour> bh = boost::dynamic_pointer_cast<visual_behaviour>(bhvr);
 	if(!bh->sensor_configured)
 	{
-	  	  bh->configure();
-	  	  bh->sensor_configured=true;
+		bh->configure();
+		bh->sensor_configured=true;
 	}
-	bh->get_aggregated_position_change();
-	/*lib::Homog_matrix tmp;
-	std::cout<<"GET_READING\n";
+	lib::Homog_matrix tmp;
 	bh->vs->get_sensor()->get_reading();
-	std::cout<<"AFTER GET_READING\n";
 	bh->vs->get_position_change(tmp, 0.1);
 
-	if(bh->vs->is_object_visible())
+	float diameter = bh->vs->get_objects_diameter();
+	std::cout << "Srednica obiektu to :" << diameter<< "\n";
+
+	if(diameter>0 && current_position[1]>=1.8)
 	{
-		std::cout << "Object visible, object visible\n";
+		std::cout<<"Hybride Begin Condition in left is met!!!\n";
 		return true;
 	}
-	else
-	{
-		std::cout << "No i gdzie jest ta piłka?\n";
-		return false;
-	}
-	*/
+	std::cout<<"Hybride Begin Condition in left is not met!!!\n";
+	return false;
 
-	if(current_position[1]<=1.8)
-	{
-		std::cout<<"Hybride Begin Condition in left is not met!!!\n";
-		return false;
-	}
-	std::cout<<"Hybride Begin Condition in left is met!!!\n";
-
-	return true;
 
 };
 
