@@ -13,7 +13,6 @@ namespace condition {
 
 begin_start_pos_condition::begin_start_pos_condition()
 {
-	// TODO Auto-generated constructor stub
 }
 
 begin_start_pos_condition::~begin_start_pos_condition()

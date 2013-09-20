@@ -65,26 +65,17 @@ lib::Homog_matrix ib_eih_wrist_move::compute_position_change(const lib::Homog_ma
         control = regulator->compute_control(e, dt);
         log_dbg("ib_eih_visual_servo::get_position_change() control: [%+07.3lg; %+07.3lg; %+07.3lg; %+07.3lg]\n", control(0, 0), control(1, 0), control(2, 0), control(3, 0));
 
-
-
-
         Eigen::Matrix <double, 3, 1> camera_to_object_translation;
-        camera_to_object_translation(0, 0) = -control(2, 0);
+        camera_to_object_translation(0, 0) = control(2, 0)/5;
         camera_to_object_translation(1, 0) = 0;//control(1, 0);
         camera_to_object_translation(2, 0) = 0;//control(2, 0);
-
         u_translation = e_T_c_position * camera_to_object_translation;
-
         log_dbg("ib_eih_visual_servo::wrist::get_position_change() u_translation: %+07.3lg, %+07.3lg, %+07.3lg\n", u_translation(0, 0), u_translation(1, 0), u_translation(2, 0));
-
         // jak mam uchyb w x to sterowanie mam miec dla az
-
         u_rotation.set_from_xyz_angle_axis(lib::Xyz_Angle_Axis_vector(0, 0, 0, -2*control(1, 0), 3*control(0, 0), 0));
-
         lib::Homog_matrix delta_position;
         delta_position.set_rotation_matrix(u_rotation);
         delta_position.set_translation_vector(u_translation);
-
         log_dbg("wrist::ib_eih_visual_servo::compute_position_change() end\n");
         return delta_position;
 }
@@ -118,12 +109,7 @@ void ib_eih_wrist_move::predict_reading()
 }
 bool ib_eih_wrist_move::is_object_visible_in_latest_reading()
 {
-	log_dbg("ib_eih_visual_servo::is_object_visible_in_latest_reading()\n");
-		if(reading.objectVisible)
-			log_dbg("Jest piłka!!!\n");
-		else
-			log_dbg("nie ma piłki\n");
-		return reading.objectVisible;
+	return reading.objectVisible;
 }
 
 Types::Mrrocpp_Proxy::IBReading* ib_eih_wrist_move::get_reading()

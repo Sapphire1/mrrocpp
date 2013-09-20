@@ -52,7 +52,8 @@ class visual_wrist_behaviour: public visual_behaviour
 public: 
 
 
-visual_wrist_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name, boost::shared_ptr<logger::logger_client> & log_client);
+visual_wrist_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name, boost::shared_ptr<logger::logger_client> & log_client,
+		boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo>);
 ~visual_wrist_behaviour();
 };
 

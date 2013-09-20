@@ -41,48 +41,40 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 	 	reg = boost::shared_ptr <visual_servo_regulator> (new regulator_p(configurator, config_section_name_arm));
 	 	ds = boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor>(new mrrocpp::ecp_mp::sensor::discode::discode_sensor(configurator, config_section_name));
 	 	ib_eih_vs = boost::shared_ptr <visual_servo> (new ib_eih_visual_servo(reg, ds, config_section_name, configurator));
+	 	wrist_vs = boost::shared_ptr <visual_servo> (new ib_eih_wrist_move(reg, ds, config_section_name, configurator));
 
-	 	log_dbg("reactive_servo_task: 1\n");
-	 	// creating behaviours
 	 	arm_bh=boost::shared_ptr<behaviour>(new visual_arm_behaviour(*this, config_section_name, log_client, ib_eih_vs));
-	 	//wrist_bh=boost::shared_ptr<behaviour>(new visual_wrist_behaviour(*this, config_section_name, log_client));
-	 	//start_beh = boost::shared_ptr<behaviour>(new begin_behaviour(*this,log_client));
+	 	wrist_bh=boost::shared_ptr<behaviour>(new visual_wrist_behaviour(*this, config_section_name, log_client, wrist_vs ));
+	 	start_beh = boost::shared_ptr<behaviour>(new begin_behaviour(*this,log_client));
+
+	 	bgStartPosCond=boost::shared_ptr<begin_condition>(new begin_start_pos_condition());
+	 	bgVisCond = boost::shared_ptr<begin_condition>(new begin_visible_condition());
+	 	bgHybridCond=boost::shared_ptr<begin_condition>(new hybrid_beg_condition());
+	 	//grippTwisted=boost::shared_ptr<begin_condition>(new GripperNotTwistedBeginCondition());
 
 	 	obj_reach_ter_cond = boost::shared_ptr <terminate_condition>(new object_reached_termination_condition(configurator, config_section_name_arm));
-<<<<<<< HEAD
-	 	log_dbg("reactive_servo_task: 2\n");
-
 	 	time_ter_cond = boost::shared_ptr <terminate_condition>(new timeout_terminate_condition(5000));
-	 	log_dbg("reactive_servo_task: 3\n");
 	 	term_in_left=boost::shared_ptr <terminate_condition>(new terminate_in_left_condition(1.98));
 	 	term_beg_move=boost::shared_ptr <terminate_condition>(new terminate_beg_pos_condition(1.98));
-=======
-	 	time_ter_cond = boost::shared_ptr <terminate_condition>(new timeout_terminate_condition(5000));
-	 	//term_in_left=boost::shared_ptr <terminate_condition>(new terminate_in_left_condition(1.98));
-	 	//term_beg_move=boost::shared_ptr <terminate_condition>(new terminate_beg_pos_condition(1.98));
->>>>>>> 665e0b3c729d9d3602a034405f735bd662842366
 	 	term_obj_not_visible=boost::shared_ptr <terminate_condition>(new objectNotVisibleTerminate(configurator, config_section_name_arm));
 
-
-	 	bgVisCond = boost::shared_ptr<begin_condition>(new begin_visible_condition());
-	 	//bgStartPosCond=boost::shared_ptr<begin_condition>(new begin_start_pos_condition());
-	 	//bgHybridCond=boost::shared_ptr<begin_condition>(new hybrid_beg_condition());
+	 	//arm_bh->add_begin_condition(grippTwisted);
 	 	arm_bh->add_begin_condition(bgVisCond);
 	 	arm_bh->add_terminate_condition(time_ter_cond);
 	 	arm_bh->add_terminate_condition(term_obj_not_visible);
 	 	arm_bh->add_terminate_condition(obj_reach_ter_cond);
 
+	 	//wrist_bh->add_begin_condition(grippTwisted);
+	 	wrist_bh->add_begin_condition(bgHybridCond);
+	 	wrist_bh->add_terminate_condition(term_in_left);
+	 	wrist_bh->add_terminate_condition(term_obj_not_visible);
 
-	 	//wrist_bh->add_begin_condition(bgHybridCond);
-	 	//wrist_bh->add_terminate_condition(term_in_left);
-	 	//wrist_bh->add_terminate_condition(term_obj_not_visible);
-
-		//start_beh->add_begin_condition(bgStartPosCond);
-		//start_beh->add_terminate_condition(term_beg_move);
+		start_beh->add_begin_condition(bgStartPosCond);
+		start_beh->add_terminate_condition(term_beg_move);
 
 		//add_behaviour(1, start_beh);
 		add_behaviour(1, arm_bh);
-		//add_behaviour(2, wrist_bh);
+		add_behaviour(2, wrist_bh);
 
 		log_dbg("reactive_servo_task: end\n");
 	}

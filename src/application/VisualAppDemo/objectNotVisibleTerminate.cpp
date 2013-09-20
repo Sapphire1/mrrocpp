@@ -30,14 +30,14 @@ bool objectNotVisibleTerminate::check(mrrocpp::ecp::common::generator::behaviour
 	std::cout << "Srednica obiektu to :" << diameter<< "\n";
 	if(diameter>0)
 	{
-		std::cout << "Object is visible\n";
+		std::cout << "objectNotVisibleTerminate::check\n";
 		std::cout<<"begin_visible_condition::check() end\n";
 		return false;
 	}
 	else
 	{
 		std::cout << "Object is not visible\n";
-		std::cout<<"begin_visible_condition::check() end\n";
+		std::cout<<"objectNotVisibleTerminate::check end\n";
 		return true;
 	}
 }

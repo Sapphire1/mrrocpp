@@ -23,6 +23,7 @@
 #include "objectNotVisibleTerminate.h"
 #include "hybridbegcondition.h"
 #include "beginvisiblecondition.h"
+#include "GripperNotTwistedBeginCondition.h"
 #include "begin_start_pos_condition.h"
 #include "begin_behaviour.h"
 #include "base/lib/logger_client/logger_client.h"
@@ -65,6 +66,7 @@ private:
 	boost::shared_ptr<begin_condition> bgVisCond;
 	boost::shared_ptr<begin_condition> bgHybridCond;
 	boost::shared_ptr<begin_condition> bgStartPosCond;
+	boost::shared_ptr<begin_condition> grippTwisted;
 
 	boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo_regulator> reg;
 	boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds;

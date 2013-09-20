@@ -76,6 +76,7 @@ discode_sensor::discode_sensor(mrrocpp::lib::configurator& config, const std::st
 	header_oarchive.clear_buffer();
 
 	state = DSS_NOT_CONNECTED;
+	configured=false;
 }
 
 discode_sensor::~discode_sensor()
@@ -83,6 +84,10 @@ discode_sensor::~discode_sensor()
 
 }
 
+bool discode_sensor::is_configured()
+{
+	return configured;
+}
 void discode_sensor::configure_sensor()
 {
 	std::cout<<"discode_sensor::configure_sensor()\n";
@@ -130,6 +135,8 @@ void discode_sensor::configure_sensor()
 
 	// connected to discode
 	state = DSS_CONNECTED;
+
+	configured=true;
 }
 
 void discode_sensor::initiate_reading()
@@ -181,7 +188,7 @@ void discode_sensor::get_reading()
 
 void discode_sensor::terminate()
 {
-	std::cout<<"State of sensor discode " <<state<<std::endl;
+	std::cout<<"Terminate socket!!!" <<state<<std::endl;
 	if (!(state == DSS_CONNECTED || state == DSS_ERROR)) {
 		throw ds_wrong_state_exception(
 				"discode_sensor::terminate(): !(state == DSS_CONNECTED || state == DSS_ERROR)");
@@ -191,21 +198,8 @@ void discode_sensor::terminate()
 	state = DSS_NOT_CONNECTED;
 }
 
-void discode_sensor::terminate2()
-{
-	std::cout<<"State of sensor discode " <<state<<std::endl;
-	/*if (!(state == DSS_CONNECTED || state == DSS_ERROR)) {
-		throw ds_wrong_state_exception(
-				"discode_sensor::terminate(): !(state == DSS_CONNECTED || state == DSS_ERROR)");
-	}
-	*/
-	close(sockfd);
-	state = DSS_NOT_CONNECTED;
-}
-
 discode_sensor::discode_sensor_state discode_sensor::get_state()
 {
-	//	log_dbg("discode_sensor::get_state(): state = %d\n", state);
 	return state;
 }
 
@@ -346,9 +340,6 @@ double discode_sensor::get_mrroc_discode_time_offset() const
 }
 
 } // namespace discode
-
 } // namespace mrrocpp
-
 } // namespace ecp_mp
-
 } // namespace mrrocpp

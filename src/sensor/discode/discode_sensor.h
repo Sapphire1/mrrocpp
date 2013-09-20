@@ -84,7 +84,7 @@ public:
 	 * @brief Disconnect from discode.
 	 */
 	virtual void terminate();
-	virtual void terminate2();
+	//virtual void terminate2();
 
 	/**
 	 * Get current state of discode_sensor.
@@ -122,6 +122,9 @@ private:
 	xdr_oarchive <> header_oarchive;
 	xdr_oarchive <> oarchive;
 
+	/** If ds is configured.    */
+	bool configured;
+
 	/** @brief Socket file descriptor.  */
 	int sockfd;
 
@@ -156,6 +159,9 @@ private:
 	 * @brief Fills header_oarchive, then sends header_oarchive and oarchive to discode.
 	 */
 	void send_buffers_to_discode();
+
+	/** Check if configured is true or false. */
+	bool is_configured();
 
 	double reading_timeout;
 	double rpc_call_timeout;

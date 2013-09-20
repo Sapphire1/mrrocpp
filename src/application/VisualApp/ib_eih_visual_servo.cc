@@ -63,7 +63,7 @@ lib::Homog_matrix ib_eih_visual_servo::compute_position_change(const lib::Homog_
 	log_dbg("ib_eih_visual_servo::get_position_change() control: [%+07.3lg; %+07.3lg; %+07.3lg; %+07.3lg]\n", control(0, 0), control(1, 0), control(2, 0), control(3, 0));
 
 	Eigen::Matrix <double, 3, 1> camera_to_object_translation;
-
+	// srednica wieksza od 0
 	if(reading.imagePosition.elements[2]>0)
 	{
 		camera_to_object_translation(0, 0) = control(0, 0);
@@ -85,11 +85,6 @@ lib::Homog_matrix ib_eih_visual_servo::compute_position_change(const lib::Homog_
 
 bool ib_eih_visual_servo::is_object_visible_in_latest_reading()
 {
-	log_dbg("ib_eih_visual_servo::is_object_visible_in_latest_reading()\n");
-	if(reading.objectVisible)
-		log_dbg("ib_eih_visual_servo::Object is visible\n");
-	else
-		log_dbg("ib_eih_visual_servo::Object is not visible\n");
 	return reading.objectVisible;
 }
 
@@ -98,7 +93,6 @@ void ib_eih_visual_servo::retrieve_reading()
 	try {
 		log_dbg("pb_visual_servo::retrieve_reading()\n");
 		if (sensor->get_state() == discode_sensor::DSS_READING_RECEIVED) {
-		//			log_dbg("pb_visual_servo::retrieve_reading(): sensor->get_state() == discode_sensor::DSS_READING_RECEIVED.\n");
 			reading = sensor->retreive_reading <Types::Mrrocpp_Proxy::IBReading> ();
 		}
 	} catch (exception &ex) {
@@ -113,7 +107,6 @@ void ib_eih_visual_servo::predict_reading()
 
 Types::Mrrocpp_Proxy::IBReading* ib_eih_visual_servo::get_reading()
 {
-	std::cout<<"GET_READING\n";
 	return &reading;
 }
 

@@ -51,7 +51,6 @@ bool hybrid_beg_condition::check(const boost::shared_ptr<mrrocpp::ecp::common::g
 	  bh->sensor_configured=true;
 	}
 	lib::Homog_matrix tmp;
-	std::cout<<"bh->vs->get_sensor()->get_reading()\n";
 	bh->vs->get_sensor()->get_reading();
 	bh->vs->get_position_change(tmp, 0.1);
 

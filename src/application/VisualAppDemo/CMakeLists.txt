@@ -9,6 +9,7 @@ add_executable(ecp_vsdemo_objectfollower_ib_eih2
     hybridbegcondition.cpp
     begin_condition_right.cpp
     begin_start_pos_condition.cc
+    GripperNotTwistedBeginCondition.cpp
     reactivevisualservotask.cpp
     begin_behaviour.cc
     visual_arm_behaviour.cc

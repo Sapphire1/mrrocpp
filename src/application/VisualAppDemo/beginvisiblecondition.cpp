@@ -56,8 +56,10 @@ bool begin_visible_condition::check(const boost::shared_ptr<mrrocpp::ecp::common
 	bh->vs->get_position_change(tmp, 0.1);
 
 	float diameter = bh->vs->get_objects_diameter();
-	std::cout << "Srednica obiektu to :" << diameter<< "\n";
-	if(diameter>0 && current_position[1]>=1.8)
+	std::cout << "Diameter :" << diameter<< "\n";
+
+	// diameter>0; manipulator is not too far; gripper is not twisted
+	if(diameter>0 && current_position[1]>=1.8 && current_position[3]>=2.1 && current_position[4]>=2)
 	{
 		std::cout << "Object is visible and position is ok\n";
 		std::cout<<"begin_visible_condition::check() end\n";
@@ -67,7 +69,6 @@ bool begin_visible_condition::check(const boost::shared_ptr<mrrocpp::ecp::common
 	{
 		std::cout << "Object is not visible or position is wrong\n";
 		std::cout<<"begin_visible_condition::check() end\n";
-		bh->vs->get_sensor()->terminate2();
 		return false;
 	}
 	/* if()
