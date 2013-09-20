@@ -64,6 +64,10 @@ bool object_reached_termination_condition::check(mrrocpp::ecp::common::generator
 	  if (steps_delay >= min_steps) {
 		  position = v_bhr->get_current_position();
 		  std::cout<<"Object reached terminate condition-przekroczona liczba krokow...\n";
+<<<<<<< HEAD
+=======
+		  std::cout<<"Terminate VisualServo\n";
+>>>>>>> 665e0b3c729d9d3602a034405f735bd662842366
 		  return true;
 	 }
   } else {

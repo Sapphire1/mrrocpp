@@ -34,16 +34,12 @@ namespace generator {
 
 
 
-visual_arm_behaviour::visual_arm_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name, boost::shared_ptr<logger::logger_client> & log_client)
+visual_arm_behaviour::visual_arm_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name, boost::shared_ptr<logger::logger_client> & log_client,
+			boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo> ib_eih_vs)
 : common::generator::visual_behaviour(ecp_task, section_name)
 {
+  this->vs=ib_eih_vs;
   this->log_client=log_client;
-  char config_section_name[] = { "[object_follower_ib]" };
-  char config_section_name_arm[] = { "[servovision_arm]" };
-
-  reg = boost::shared_ptr <visual_servo_regulator> (new regulator_p(ecp_task.config, config_section_name_arm));
-  ds = boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor>(new mrrocpp::ecp_mp::sensor::discode::discode_sensor(ecp_task.config, config_section_name));
-  vs = boost::shared_ptr <visual_servo> (new ib_eih_visual_servo(reg, ds, config_section_name, ecp_task.config));
 }
 visual_arm_behaviour::~visual_arm_behaviour()
 {

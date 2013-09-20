@@ -54,12 +54,12 @@ boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds;
 boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo>  vs;
 boost::shared_ptr<logger::logger_client> log_client;
 logger::log_message msg;
-bool sensor_configured;
-
+static bool sensor_configured;
 visual_behaviour(mrrocpp::ecp::common::task::task & ecp_task, const char * section_name);
 ~visual_behaviour();
 bool first_step();
 bool next_step();
+
 /** Configures all servos.
 * Calls configure_all_servos() of derived class and then for all sensors calls configure_sensor().
 * After that updates sensor map

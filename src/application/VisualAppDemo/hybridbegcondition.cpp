@@ -46,8 +46,9 @@ bool hybrid_beg_condition::check(const boost::shared_ptr<mrrocpp::ecp::common::g
 	boost::shared_ptr<visual_behaviour> bh = boost::dynamic_pointer_cast<visual_behaviour>(bhvr);
 	if(!bh->sensor_configured)
 	{
-		bh->configure();
-		bh->sensor_configured=true;
+	  std::cout<<"Konfiguracja sensora\n";
+	  bh->configure();
+	  bh->sensor_configured=true;
 	}
 	lib::Homog_matrix tmp;
 	std::cout<<"bh->vs->get_sensor()->get_reading()\n";

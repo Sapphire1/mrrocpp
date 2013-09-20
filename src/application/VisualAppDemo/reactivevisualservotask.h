@@ -54,8 +54,6 @@ private:
 	boost::shared_ptr<behaviour> wrist_bh;
 	boost::shared_ptr<visual_servo_regulator> reg_wrist;
 	boost::shared_ptr<visual_servo_regulator> reg_arm;
-	boost::shared_ptr<mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds;
-	boost::shared_ptr<mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds_2;
 	boost::shared_ptr<visual_servo> arm_vs;
 	boost::shared_ptr<visual_servo> wrist_vs;
 
@@ -68,7 +66,9 @@ private:
 	boost::shared_ptr<begin_condition> bgHybridCond;
 	boost::shared_ptr<begin_condition> bgStartPosCond;
 
-
+	boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo_regulator> reg;
+	boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds;
+	boost::shared_ptr <mrrocpp::ecp::servovision::visual_servo>  ib_eih_vs;
 
 public:
 	boost::shared_ptr<logger_client> log_client;
