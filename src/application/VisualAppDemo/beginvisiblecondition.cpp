@@ -66,6 +66,7 @@ bool begin_visible_condition::check(const boost::shared_ptr<mrrocpp::ecp::common
 	{
 		std::cout << "Object is not visible or position is wrong\n";
 		std::cout<<"begin_visible_condition::check() end\n";
+		bh->vs->get_sensor()->terminate2();
 		return false;
 	}
 	/* if()

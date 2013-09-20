@@ -29,13 +29,6 @@ bool terminate_beg_pos_condition::check(mrrocpp::ecp::common::generator::behavio
 		{
 			actual_position[i]=bh->the_robot->reply_package.arm.pf_def.joint_coordinates[i];
 		}
-    /*
- 	if(actual_position[0]<0 && actual_position[1]<-1,5 && actual_position[2]<-0.0
- 			&& actual_position[3]>0.0 && actual_position[4]>4.6 && actual_position[5]>=-0.023)
- 	{
-		std::cout<<"Terminate Condition of begin move!!!\n";
- 		return true;
- 	}*/
 
  	if(/*actual_position[0]<0 && actual_position[1]<-1,5 && actual_position[2]<-0.0
  	 			&& actual_position[3]>0.0 && actual_position[4]>4.6 && */actual_position[5]>=-0.023 && actual_position[5]<=0.0036)

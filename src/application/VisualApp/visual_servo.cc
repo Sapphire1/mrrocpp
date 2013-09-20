@@ -1,8 +1,8 @@
 /*
  * $Id$
  *
- *  Created on: Mar 3, 2010
- *      Author: mboryn
+ *  Created on: Mar 3, 2013
+ *      Author: lzmuda
  */
 
 #include <ctime>
