@@ -19,23 +19,27 @@ bool terminate_beg_pos_condition::check(mrrocpp::ecp::common::generator::behavio
 	bh->the_robot->ecp_command.interpolation_type = lib::TCIM;
 	bh->the_robot->ecp_command.motion_steps = 30;
 	bh->the_robot->ecp_command.value_in_step_no = 30 - 2;
-
+	begin_behaviour* bhvr=dynamic_cast<begin_behaviour*>(bh);
 
 	bh->the_robot->ecp_command.instruction_type = lib::SET_GET;
-		// read actual position
-	  std::cout<<"Actual_position \n";
 
-		for (int i = 0; i < 6; i++)
-		{
-			actual_position[i]=bh->the_robot->reply_package.arm.pf_def.joint_coordinates[i];
-		}
+	// read actual position
+	std::cout<<"Actual_position \n";
 
- 	if(/*actual_position[0]<0 && actual_position[1]<-1,5 && actual_position[2]<-0.0
- 	 			&& actual_position[3]>0.0 && actual_position[4]>4.6 && */actual_position[5]>=-0.023 && actual_position[5]<=0.0036)
- 	 {
- 			std::cout<<"Terminate Condition of begin move!!!\n";
- 	 		return true;
- 	 }
+	for (int i = 0; i < 6; i++)
+	{
+		std::cout<<std::endl<<"Actual position " << i <<"= "<<actual_position[i]<<"\n";
+		actual_position[i]=bh->the_robot->reply_package.arm.pf_def.joint_coordinates[i];
+	}
+
+ 	if(fabs(actual_position[0])<0.1 && actual_position[1]<-1.55 &&  /*actual_position[2]<-0.0
+ 	 			&&  */  fabs(actual_position[3])<0.06 && actual_position[4]<4.8 && actual_position[5]>=-0.023 && actual_position[5]<=0.0036)
+ 	{
+ 		std::cout<<"Set first move done!\n";
+ 		bhvr->firstMoveFinished=true;
+ 		std::cout<<"Terminate Condition of begin move!!!\n";
+ 	 	return true;
+ 	}
 	return false;
 }
 void terminate_beg_pos_condition::reset()

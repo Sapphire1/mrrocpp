@@ -85,13 +85,20 @@ lib::Homog_matrix ib_eih_visual_servo::compute_position_change(const lib::Homog_
 
 bool ib_eih_visual_servo::is_object_visible_in_latest_reading()
 {
-	return reading.objectVisible;
+	std::cout<<"ib_eih_visual_servo::is_object_visible_in_latest_reading";
+	//return reading.objectVisible;
+	if(reading.imagePosition.elements[2]==0)
+		std::cout<<"Obiekt jest niewidoczny\n";
+	else
+		std::cout<<"Obiekt jest widoczny\n";
+	std::cout<<"ib_eih_visual_servo::is_object_visible_in_latest_reading end";
+	return reading.imagePosition.elements[2]>0;
 }
 
 void ib_eih_visual_servo::retrieve_reading()
 {
 	try {
-		log_dbg("pb_visual_servo::retrieve_reading()\n");
+		log_dbg("ib_eih_visual_servo::retrieve_reading()\n");
 		if (sensor->get_state() == discode_sensor::DSS_READING_RECEIVED) {
 			reading = sensor->retreive_reading <Types::Mrrocpp_Proxy::IBReading> ();
 		}
@@ -118,6 +125,7 @@ float ib_eih_visual_servo::get_objects_diameter(){
 
 void ib_eih_visual_servo::reset()
 {
+	std::cout<<"Reset widocznosci\n";
 	visual_servo::reset();
 	reading.objectVisible = false;
 }

@@ -36,6 +36,7 @@ public:
 	 * @param _ecp_task ecp task object reference.
 	 */
 	bool arm_stop;
+	bool firstMoveFinished;
 	Eigen::Matrix <double, 6, 1> error;
 	Eigen::Matrix <double, 6, 1> control;
 	Eigen::Matrix <double, 6, 1> actual_position;

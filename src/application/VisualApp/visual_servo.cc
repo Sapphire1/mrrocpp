@@ -91,11 +91,15 @@ lib::Homog_matrix visual_servo::get_position_change(const lib::Homog_matrix& cur
 			log_dbg("visual_servo::get_position_change(): error\n");
 	}
 
-	if (steps_without_reading > max_steps_without_reading) {
+	if (steps_without_reading > max_steps_without_reading)
+	{
+		std::cout<<"steps_without_reading > max_steps_without_reading\n";
 		// The object is no longer visible
 		log_dbg("visual_servo::get_position_change(): steps_without_reading > max_steps_without_reading.\n");
 		object_visible = false;
-	} else {
+	} else
+	{
+		std::cout<<"steps_without_reading =< max_steps_without_reading\n";
 		object_visible = is_object_visible_in_latest_reading();
 	}
 
@@ -128,7 +132,7 @@ lib::Homog_matrix visual_servo::get_position_change(const lib::Homog_matrix& cur
 	if (log_client.get() != NULL) {
 		log_client->log(msg);
 	}
-	//	log_dbg("visual_servo::get_position_change(): end\n");
+		log_dbg("visual_servo::get_position_change(): end\n");
 	return delta_position;
 } // get_position_change
 

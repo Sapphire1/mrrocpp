@@ -8,6 +8,7 @@
 #define TERMINATE_IN_RIGHT_CONDITION_H_
 #include "application/VisualApp/terminate_condition.h"
 #include "application/VisualApp/behaviour.h"
+#include "application/VisualAppDemo/begin_behaviour.h"
 #include <Eigen/Core>
 using namespace mrrocpp::ecp::common::generator;
 

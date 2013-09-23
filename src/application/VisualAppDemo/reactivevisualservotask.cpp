@@ -72,9 +72,9 @@ reactive_visual_servo_task::reactive_visual_servo_task(mrrocpp::lib::configurato
 		start_beh->add_begin_condition(bgStartPosCond);
 		start_beh->add_terminate_condition(term_beg_move);
 
-		//add_behaviour(1, start_beh);
-		add_behaviour(1, arm_bh);
-		add_behaviour(2, wrist_bh);
+		add_behaviour(1, start_beh);
+		add_behaviour(2, arm_bh);
+		add_behaviour(3, wrist_bh);
 
 		log_dbg("reactive_servo_task: end\n");
 	}

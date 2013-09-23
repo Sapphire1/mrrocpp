@@ -109,7 +109,15 @@ void ib_eih_wrist_move::predict_reading()
 }
 bool ib_eih_wrist_move::is_object_visible_in_latest_reading()
 {
-	return reading.objectVisible;
+	std::cout<<"ib_eih_visual_servo::is_object_visible_in_latest_reading";
+
+	if(reading.imagePosition.elements[2]==0)
+		std::cout<<"\nObiekt jest niewidoczny\n";
+	else
+		std::cout<<"\nObiekt jest widoczny\n";
+	std::cout<<"ib_eih_visual_servo::is_object_visible_in_latest_reading end";
+	return reading.imagePosition.elements[2]>0;
+	//return reading.objectVisible;
 }
 
 Types::Mrrocpp_Proxy::IBReading* ib_eih_wrist_move::get_reading()
@@ -119,8 +127,9 @@ Types::Mrrocpp_Proxy::IBReading* ib_eih_wrist_move::get_reading()
 
 void ib_eih_wrist_move::reset()
 {
-        visual_servo::reset();
-        reading.objectVisible = false;
+	std::cout<<"Reset widocznosci\n";
+    visual_servo::reset();
+    reading.objectVisible = false;
 }
 
 }//namespace generator

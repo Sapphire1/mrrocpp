@@ -148,6 +148,8 @@ void discode_sensor::get_reading()
 	if (state == DSS_REQUEST_SENT) {
 		// in last call to get_reading() request was sent, but no reading was received,
 		// so try receiving reading now.
+
+		// to moze nie dzialac u mnie dlatego ustawia nie ten stan
 		if (is_data_available()) {
 			// reading has been received.
 			receive_buffers_from_discode();

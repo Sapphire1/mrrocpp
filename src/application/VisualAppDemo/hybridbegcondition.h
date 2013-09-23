@@ -9,7 +9,7 @@
 #define HYBRIDBEGCONDITION_H_
 
 #include "../VisualApp/begin_condition.h"
-#include "../VisualAppDemo/visual_behaviour.h"
+#include "../VisualAppDemo/visual_arm_behaviour.h"
 #include "base/ecp/ecp_robot.h"
 #include "base/ecp/ecp_generator.h"
 

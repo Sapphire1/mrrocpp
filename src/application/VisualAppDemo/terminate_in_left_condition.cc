@@ -15,7 +15,6 @@ bool terminate_in_left_condition::check(mrrocpp::ecp::common::generator::behavio
   	tmp=bh->the_robot->reply_package.arm.pf_def.arm_frame;
  	tmp.get_xyz_angle_axis(tool_vector);
  	tool_vector.to_table(current_position);
- 	std::cout << "Pozycja 1: "<< current_position[1]<<"\n";
  	visual_behaviour* bhvr=dynamic_cast<visual_behaviour*>(bh);
  	std::cout<<"Wspolczynnik elipsy "<<bhvr->vs->get_ellipse_factor();
 

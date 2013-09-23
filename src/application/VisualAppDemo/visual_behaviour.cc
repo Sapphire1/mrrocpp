@@ -43,9 +43,7 @@ visual_behaviour::visual_behaviour(mrrocpp::ecp::common::task::task & ecp_task, 
 max_angular_speed(0), max_acceleration(0), max_angular_acceleration(0)
 {
 	sensor_configured=false;
-//  this->vs=vs;
   char config_section_name[] = { "[object_follower_ib]" };
-//  boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> ds = boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor>(new mrrocpp::ecp_mp::sensor::discode::discode_sensor(ecp_task.config, config_section_name));
   new_motion_steps = motion_steps = motion_steps_base = ecp_task.config.exists("motion_steps", section_name) ? ecp_task.config.value <unsigned int> ("motion_steps", section_name) : motion_steps_default;
 
   dt = motion_steps * step_time;

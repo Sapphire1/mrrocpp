@@ -40,7 +40,7 @@ bool begin_visible_condition::check(const boost::shared_ptr<mrrocpp::ecp::common
 	actual_position_matrix.get_xyz_angle_axis(angle_axis_vector);
 	angle_axis_vector.to_vector(current_position);
 	std::cout << "Begin_visible_condition : \n" << current_position[0]<<"\t"<<
-	current_position[1]<<"\t\t"<< current_position[2]<<"\n"<< current_position[3]<<"\t\t"<<
+	current_position[1]<<"\t"<< current_position[2]<<"\n"<< current_position[3]<<"\t"<<
 	current_position[4]<<"\t"<< current_position[5]<<"\n";
 
 	std::cout<<"begin_visible_condition::check()\n";
@@ -59,7 +59,7 @@ bool begin_visible_condition::check(const boost::shared_ptr<mrrocpp::ecp::common
 	std::cout << "Diameter :" << diameter<< "\n";
 
 	// diameter>0; manipulator is not too far; gripper is not twisted
-	if(diameter>0 && current_position[1]>=1.8 && current_position[3]>=2.1 && current_position[4]>=2)
+	if(diameter>0 && current_position[1]>=1.8 && fabs(current_position[3])>=2.1 && fabs(current_position[4])>=2)
 	{
 		std::cout << "Object is visible and position is ok\n";
 		std::cout<<"begin_visible_condition::check() end\n";
