@@ -33,8 +33,6 @@ ib_eih_wrist_move::ib_eih_wrist_move(boost::shared_ptr <visual_servo_regulator> 
         e_T_c.setZero();
         e_T_c.block(0,0,3,3) = configurator.value <3, 3> ("e_t_c_rotation", section_name);
         e_T_c_position = lib::Homog_matrix(e_T_c);
-
-        reading.objectVisible = false;
 }
 
 ib_eih_wrist_move::~ib_eih_wrist_move()
@@ -43,30 +41,30 @@ ib_eih_wrist_move::~ib_eih_wrist_move()
 
 lib::Homog_matrix ib_eih_wrist_move::compute_position_change(const lib::Homog_matrix& current_position, double dt)
 {
-        log_dbg("ib_eih_visual_servo::wrist::compute_position_change() begin\n");
-        lib::Xyz_Angle_Axis_vector tool_vector;
-        current_position.get_xyz_angle_axis(tool_vector);
+        log_dbg("wrist::ib_eih_visual_servo::compute_position_change() begin\n");
+
         lib::K_vector u_translation(0, 0, 0);
         lib::Homog_matrix u_rotation;
         Eigen::Matrix <double, 6, 1> e;
+
 
         e.setZero();
 
         Eigen::Matrix <double, Types::ImagePosition::elementsSize, 1> imagePosition(reading.imagePosition.elements);
         e.block(0, 0, 4, 1) = imagePosition - desired_position;
 
-        log_dbg("wrist::reading.imagePosition.elements = [%g; %g; %g; %g]\n", reading.imagePosition.elements[0], reading.imagePosition.elements[1], reading.imagePosition.elements[2], reading.imagePosition.elements[3]);
+    	log_dbg("reading.imagePosition.elements = [%g; %g; %g; %g]\n", reading.imagePosition.elements[0], reading.imagePosition.elements[1], reading.imagePosition.elements[2], reading.imagePosition.elements[3]);
 
         error = e;
 
         Eigen::Matrix <double, 6, 1> control;
         // poruszanie manipulatorem w bok
-        e(2,0)=tool_vector[1]-1.7;
+       // e(2,0)=tool_vector[1]-1.7;
         control = regulator->compute_control(e, dt);
         log_dbg("ib_eih_visual_servo::get_position_change() control: [%+07.3lg; %+07.3lg; %+07.3lg; %+07.3lg]\n", control(0, 0), control(1, 0), control(2, 0), control(3, 0));
 
         Eigen::Matrix <double, 3, 1> camera_to_object_translation;
-        camera_to_object_translation(0, 0) = control(2, 0)/5;
+        camera_to_object_translation(0, 0) = -0.005;//control(2, 0)/5;
         camera_to_object_translation(1, 0) = 0;//control(1, 0);
         camera_to_object_translation(2, 0) = 0;//control(2, 0);
         u_translation = e_T_c_position * camera_to_object_translation;
@@ -93,9 +91,9 @@ float ib_eih_wrist_move::get_objects_diameter(){
 void ib_eih_wrist_move::retrieve_reading()
 {
         try {
-                //              log_dbg("pb_visual_servo::retrieve_reading()\n");
+                 log_dbg("pb_visual_servo::retrieve_reading()\n");
                 if (sensor->get_state() == discode_sensor::DSS_READING_RECEIVED) {
-                        //                      log_dbg("pb_visual_servo::retrieve_reading(): sensor->get_state() == discode_sensor::DSS_READING_RECEIVED.\n");
+                                              log_dbg("pb_visual_servo::retrieve_reading(): sensor->get_state() == discode_sensor::DSS_READING_RECEIVED.\n");
                         reading = sensor->retreive_reading <Types::Mrrocpp_Proxy::IBReading> ();
                 }
         } catch (exception &ex) {
@@ -109,10 +107,10 @@ void ib_eih_wrist_move::predict_reading()
 }
 bool ib_eih_wrist_move::is_object_visible_in_latest_reading()
 {
-	std::cout<<"ib_eih_visual_servo::is_object_visible_in_latest_reading";
+	std::cout<<"wrist::ib_eih_visual_servo::is_object_visible_in_latest_reading";
 
 	if(reading.imagePosition.elements[2]==0)
-		std::cout<<"\nObiekt jest niewidoczny\n";
+		std::cout<<"\nwrist::Obiekt jest niewidoczny\n";
 	else
 		std::cout<<"\nObiekt jest widoczny\n";
 	std::cout<<"ib_eih_visual_servo::is_object_visible_in_latest_reading end";
@@ -122,7 +120,9 @@ bool ib_eih_wrist_move::is_object_visible_in_latest_reading()
 
 Types::Mrrocpp_Proxy::IBReading* ib_eih_wrist_move::get_reading()
 {
-        return &reading;
+	std::cout<<"ib_eih_wrist_move::get_reading\n";
+	std::cout<<reading.imagePosition.elements[2];
+    return &reading;
 }
 
 void ib_eih_wrist_move::reset()

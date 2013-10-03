@@ -23,7 +23,7 @@ using namespace std;
 
 visual_servo::visual_servo(boost::shared_ptr <visual_servo_regulator> regulator, boost::shared_ptr <
 		mrrocpp::ecp_mp::sensor::discode::discode_sensor> sensor, const std::string& section_name, mrrocpp::lib::configurator& configurator) :
-	regulator(regulator), sensor(sensor), object_visible(false), max_steps_without_reading(10000), steps_without_reading(0)
+	regulator(regulator), sensor(sensor), object_visible(true), max_steps_without_reading(3), steps_without_reading(0)
 {
 	log_dbg("visual_servo::visual_servo() begin\n");
 
@@ -82,6 +82,7 @@ lib::Homog_matrix visual_servo::get_position_change(const lib::Homog_matrix& cur
 		}
 			break;
 		case discode_sensor::DSS_CONNECTED: // processing in DisCODe hasn't finished yet
+			std::cout<<"discode_sensor::DSS_CONNECTED\n";
 			break;
 		case discode_sensor::DSS_REQUEST_SENT: // communication or synchronisation in DisCODe took too long
 			predict_reading();
@@ -100,6 +101,8 @@ lib::Homog_matrix visual_servo::get_position_change(const lib::Homog_matrix& cur
 	} else
 	{
 		std::cout<<"steps_without_reading =< max_steps_without_reading\n";
+		if(object_visible)
+			std::cout<<"object was visible\n";
 		object_visible = is_object_visible_in_latest_reading();
 	}
 
@@ -158,9 +161,12 @@ boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor> visual_serv
 
 void visual_servo::notify_object_considered_not_visible()
 {
+	std::cout<<"visual_servo::notify_object_considered_not_visible\n";
 	if(regulator.get() != NULL){
 		regulator->reset();
 	}
+	std::cout<<"visual_servo::notify_object_considered_not_visible end\n";
+
 }
 
 } // namespace servovision

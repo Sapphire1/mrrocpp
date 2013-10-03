@@ -42,12 +42,11 @@ ib_eih_visual_servo::~ib_eih_visual_servo()
 lib::Homog_matrix ib_eih_visual_servo::compute_position_change(const lib::Homog_matrix& current_position, double dt)
 {
 
-	log_dbg("ib_eih_visual_servo::compute_position_change() begin\n");
+	log_dbg("arm::ib_eih_visual_servo::compute_position_change() begin\n");
 
 	lib::K_vector u_translation(0, 0, 0);
 	lib::Homog_matrix u_rotation;
 	Eigen::Matrix <double, 6, 1> e;
-	//Eigen::Matrix <double, 3, 1> e_translation;
 
 	e.setZero();
 
@@ -79,7 +78,7 @@ lib::Homog_matrix ib_eih_visual_servo::compute_position_change(const lib::Homog_
 	delta_position.set_rotation_matrix(u_rotation);
 	delta_position.set_translation_vector(u_translation);
 
-	log_dbg("ib_eih_visual_servo::compute_position_change() end\n");
+	log_dbg("arm::ib_eih_visual_servo::compute_position_change() end\n");
 	return delta_position;
 }
 
@@ -109,11 +108,13 @@ void ib_eih_visual_servo::retrieve_reading()
 
 void ib_eih_visual_servo::predict_reading()
 {
-
+	std::cout<<"predict reading\n";
 }
 
 Types::Mrrocpp_Proxy::IBReading* ib_eih_visual_servo::get_reading()
 {
+	std::cout<<"ib_eih_wrist_move::get_reading\n";
+	std::cout<<reading.imagePosition.elements[2];
 	return &reading;
 }
 

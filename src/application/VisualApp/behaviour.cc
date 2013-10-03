@@ -53,7 +53,7 @@ void behaviour::Move()
 			}
 		 }
 
-			// reading data from all sensors
+		// reading data from all sensors
 		get_sensors_readings();
 		node_counter++;
 		if (ecp_t.pulse_check()) 
